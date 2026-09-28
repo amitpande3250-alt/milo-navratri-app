@@ -173,7 +173,11 @@
       <div class="space-y-3.5 text-xs">
         <div>
           <label class="block text-slate-300 mb-1 font-semibold">Your Display Name</label>
-          <input type="text" id="auth-name" placeholder="E.g. GarbaKing_2026" class="w-full bg-[#120822]/90 border border-slate-700 rounded-2xl p-3 text-slate-100 outline-none focus:border-amber-400 text-xs shadow-inner" />
+          <input type="text" id="auth-name" placeholder="E.g. Garba King" class="w-full bg-[#120822]/90 border border-slate-700 rounded-2xl p-3 text-slate-100 outline-none focus:border-amber-400 text-xs shadow-inner" />
+        </div>
+        <div>
+          <label class="block text-slate-300 mb-1 font-semibold">Unique Username (@username)</label>
+          <input type="text" id="auth-username" placeholder="E.g. garba_king_07" class="w-full bg-[#120822]/90 border border-slate-700 rounded-2xl p-3 text-slate-100 outline-none focus:border-amber-400 text-xs shadow-inner" />
         </div>
         <div>
           <label class="block text-slate-300 mb-1 font-semibold">Email ID</label>
@@ -198,7 +202,7 @@
     </div>
   </section>
 
-  <!-- SCREEN 1.5: NEW USER ONBOARDING WITH RANDOM FESTIVE NAME -->
+  <!-- SCREEN 1.5: NEW USER ONBOARDING -->
   <section id="screen-onboarding" class="hidden relative z-50 flex-1 flex items-center justify-center p-4 w-full max-w-sm mx-auto my-auto">
     <div class="dark-navratri-glass w-full rounded-3xl p-6 shadow-2xl border-2 border-amber-400 max-h-[90vh] overflow-y-auto">
       <div class="text-center mb-4">
@@ -214,6 +218,10 @@
           <label class="block text-slate-300 mb-1 font-semibold">Full Display Name</label>
           <input type="text" id="onboard-name" class="w-full bg-[#120822]/90 border border-purple-800 rounded-xl p-2.5 text-slate-100 outline-none focus:border-amber-400 text-xs" />
         </div>
+        <div>
+          <label class="block text-slate-300 mb-1 font-semibold">Unique Username (@username)</label>
+          <input type="text" id="onboard-username" placeholder="Must be unique (use _ or nos if taken)" class="w-full bg-[#120822]/90 border border-purple-800 rounded-xl p-2.5 text-slate-100 outline-none focus:border-amber-400 text-xs" />
+        </div>
         <div class="grid grid-cols-2 gap-2">
           <div>
             <label class="block text-slate-300 mb-1 font-semibold">Gender</label>
@@ -225,12 +233,12 @@
           </div>
           <div>
             <label class="block text-slate-300 mb-1 font-semibold">City / Location</label>
-            <input type="text" id="onboard-city" value="Nashik, Maharashtra" class="w-full bg-[#120822]/90 border border-purple-800 rounded-xl p-2.5 text-xs text-slate-100 outline-none focus:border-amber-400" />
+            <input type="text" id="onboard-city" value="Sinnar, Maharashtra" class="w-full bg-[#120822]/90 border border-purple-800 rounded-xl p-2.5 text-xs text-slate-100 outline-none focus:border-amber-400" />
           </div>
         </div>
         <div>
           <label class="block text-slate-300 mb-1 font-semibold">Studies / College / Profession</label>
-          <input type="text" id="onboard-studies" placeholder="E.g. Computer Science Student / Engineer" class="w-full bg-[#120822]/90 border border-purple-800 rounded-xl p-2.5 text-xs text-slate-100 outline-none focus:border-amber-400" />
+          <input type="text" id="onboard-studies" placeholder="E.g. Computer Science Student" class="w-full bg-[#120822]/90 border border-purple-800 rounded-xl p-2.5 text-xs text-slate-100 outline-none focus:border-amber-400" />
         </div>
         <div>
           <label class="block text-slate-300 mb-1 font-semibold">Garba Style / Vibe</label>
@@ -243,7 +251,7 @@
         </div>
         <div>
           <label class="block text-slate-300 mb-1 font-semibold">Hobbies & Interests (Comma separated)</label>
-          <input type="text" id="onboard-hobbies" placeholder="Garba, Coding, Music, Travel, Coffee" class="w-full bg-[#120822]/90 border border-purple-800 rounded-xl p-2.5 text-xs text-slate-100 outline-none focus:border-amber-400" />
+          <input type="text" id="onboard-hobbies" placeholder="Garba, Coding, Music, Travel" class="w-full bg-[#120822]/90 border border-purple-800 rounded-xl p-2.5 text-xs text-slate-100 outline-none focus:border-amber-400" />
         </div>
         <div>
           <label class="block text-slate-300 mb-1 font-semibold">Bio / Tagline</label>
@@ -301,7 +309,7 @@
       </div>
     </div>
 
-    <!-- 1-on-1 Chat Room with Hold to Edit/Delete -->
+    <!-- 1-on-1 Chat Room -->
     <div id="chats-room-view" class="hidden dark-navratri-glass rounded-3xl overflow-hidden shadow-2xl flex flex-col h-[74vh] border border-amber-500/30">
       <div class="p-3.5 border-b border-purple-900/50 flex items-center justify-between bg-[#120822]/80">
         <div class="flex items-center gap-2.5">
@@ -363,18 +371,18 @@
       <div class="flex items-center gap-2">
         <div class="flex-1 relative">
           <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-xs text-slate-400"></i>
-          <input type="text" id="partner-search-input" oninput="applyPartnerFilters()" placeholder="Search partner by name..." class="w-full bg-[#120822] border border-purple-900/80 rounded-xl pl-8 pr-3 py-2 text-xs text-slate-100 outline-none focus:border-amber-400 placeholder:text-slate-500" />
+          <input type="text" id="partner-search-input" oninput="applyPartnerFilters()" placeholder="Search partner by name or @username..." class="w-full bg-[#120822] border border-purple-900/80 rounded-xl pl-8 pr-3 py-2 text-xs text-slate-100 outline-none focus:border-amber-400 placeholder:text-slate-500" />
         </div>
         <div class="shrink-0 relative">
           <select id="partner-city-filter" onchange="applyPartnerFilters()" class="bg-[#120822] border border-purple-900/80 rounded-xl px-2.5 py-2 text-xs text-amber-300 font-bold outline-none focus:border-amber-400">
-            <option value="NEAR_ME">📍 Near Me</option>
-            <option value="Nashik">📍 Nashik</option>
             <option value="ALL">🌐 All Cities</option>
+            <option value="Sinnar">📍 Sinnar</option>
+            <option value="Nashik">📍 Nashik</option>
           </select>
         </div>
       </div>
       <div class="flex items-center justify-between px-1 text-[10px] text-slate-400">
-        <span>Find & connect with Nashik partners</span>
+        <span>Find & connect with verified partners</span>
         <span id="filtered-partners-count" class="text-amber-400 font-bold">0 Partners</span>
       </div>
     </div>
@@ -405,7 +413,7 @@
     </div>
   </section>
 
-  <!-- SCREEN 5: PROFILE -->
+  <!-- SCREEN 5: PROFILE WITH USERNAME EDIT -->
   <section id="screen-profile" class="hidden relative z-20 flex-1 max-w-md mx-auto w-full px-4 py-4">
     <div class="dark-navratri-glass rounded-3xl p-5 shadow-2xl border border-amber-500/30 text-center max-h-[85vh] overflow-y-auto">
       
@@ -428,11 +436,11 @@
       </div>
 
       <h3 id="profile-user-name" class="text-lg font-black text-slate-100"></h3>
-      <p id="profile-user-email" class="text-xs text-amber-400 font-medium"></p>
+      <p id="profile-username-tag" class="text-xs text-amber-400 font-bold"></p>
       
       <div class="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-950/70 border border-amber-500/30 text-xs font-bold text-amber-300">
         <i class="fa-solid fa-location-dot text-rose-400"></i>
-        <span id="profile-display-city">Nashik</span>
+        <span id="profile-display-city">Sinnar</span>
       </div>
 
       <div id="admin-launcher-box" class="hidden mt-3">
@@ -443,10 +451,21 @@
       </div>
 
       <div class="mt-4 space-y-2.5 text-left text-xs">
+        <div class="grid grid-cols-2 gap-2">
+          <div class="p-3 bg-[#120822]/80 rounded-2xl border border-purple-900/60 shadow-sm">
+            <label class="text-[10px] text-slate-400 font-bold block mb-1">DISPLAY NAME</label>
+            <input type="text" id="profile-name-input" class="w-full bg-[#1a0e2e] border border-purple-900 rounded-xl px-2.5 py-1.5 text-xs text-slate-100 font-bold outline-none" />
+          </div>
+          <div class="p-3 bg-[#120822]/80 rounded-2xl border border-purple-900/60 shadow-sm">
+            <label class="text-[10px] text-amber-400 font-bold block mb-1">UNIQUE @USERNAME</label>
+            <input type="text" id="profile-username-input" class="w-full bg-[#1a0e2e] border border-amber-500/60 rounded-xl px-2.5 py-1.5 text-xs text-amber-300 font-bold outline-none" />
+          </div>
+        </div>
+
         <div class="p-3 bg-[#120822]/80 rounded-2xl border border-purple-900/60 shadow-sm flex items-center justify-between">
           <div>
             <span class="text-[10px] text-slate-400 font-bold block">CURRENT CITY</span>
-            <input type="text" id="profile-city-input" placeholder="Nashik, Maharashtra" class="bg-transparent font-bold text-slate-100 outline-none text-xs w-44" />
+            <input type="text" id="profile-city-input" placeholder="Sinnar, Maharashtra" class="bg-transparent font-bold text-slate-100 outline-none text-xs w-44" />
           </div>
           <button onclick="detectUserCity()" id="btn-detect-city" class="px-3 py-1.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-amber-300 border border-amber-500/30 font-bold text-[11px] flex items-center gap-1 shrink-0">
             <i class="fa-solid fa-location-crosshairs"></i> Detect 📍
@@ -614,7 +633,7 @@
             <div class="grid grid-cols-2 gap-2">
               <div>
                 <label class="block text-[10px] text-amber-300 font-bold mb-1">📍 Venue / City:</label>
-                <input type="text" id="admin-event-location" placeholder="Nashik Club" class="w-full bg-[#1a0e2e] border border-purple-800 rounded-xl p-2 text-xs text-slate-100 outline-none focus:border-amber-400" />
+                <input type="text" id="admin-event-location" placeholder="Sinnar Club" class="w-full bg-[#1a0e2e] border border-purple-800 rounded-xl p-2 text-xs text-slate-100 outline-none focus:border-amber-400" />
               </div>
               <div>
                 <label class="block text-[10px] text-amber-300 font-bold mb-1">🎟️ Pass Type:</label>
@@ -729,10 +748,11 @@
         </div>
 
         <h3 id="detail-user-name" class="text-xl font-black text-amber-100"></h3>
+        <p id="detail-username-tag" class="text-xs text-amber-400 font-bold"></p>
         
         <div class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-rose-950/90 border border-amber-500/40 text-xs font-bold text-amber-300 mt-1.5 shadow-md">
           <i class="fa-solid fa-location-dot text-rose-400 animate-bounce"></i>
-          <span>Partner City: <strong id="detail-user-city" class="text-white">Nashik</strong></span>
+          <span>Partner City: <strong id="detail-user-city" class="text-white">Sinnar</strong></span>
         </div>
 
         <div id="detail-social-wrap" class="hidden mt-2">
@@ -800,23 +820,30 @@
 
   <script>
     /* =========================================================
-       1. RANDOM FESTIVE NAME GENERATOR
+       1. RANDOM FESTIVE NAME & UNIQUE USERNAME GENERATOR
        ========================================================= */
-    const festiveAdjectives = ["Garba", "Dandiya", "Royal", "Festive", "Midnight", "Neon", "Cyber", "Desi", "Balle", "Raas"];
-    const festiveNouns = ["King", "Queen", "Vibe", "Rhythm", "Star", "Rockstar", "Knight", "Diva", "Legend", "Partner"];
+    const festiveAdjectives = ["Garba", "Dandiya", "Royal", "Festive", "Midnight", "Neon", "Cyber", "Desi", "Raas"];
+    const festiveNouns = ["King", "Queen", "Vibe", "Rhythm", "Star", "Rockstar", "Knight", "Diva", "Legend"];
     
     function generateRandomFestiveName() {
       const adj = festiveAdjectives[Math.floor(Math.random() * festiveAdjectives.length)];
       const noun = festiveNouns[Math.floor(Math.random() * festiveNouns.length)];
       const num = Math.floor(100 + Math.random() * 900);
-      return `${adj}${noun}_${num}`;
+      return `${adj} ${noun} ${num}`;
+    }
+
+    function generateRandomUsername() {
+      const adj = festiveAdjectives[Math.floor(Math.random() * festiveAdjectives.length)].toLowerCase();
+      const noun = festiveNouns[Math.floor(Math.random() * festiveNouns.length)].toLowerCase();
+      const num = Math.floor(10 + Math.random() * 90);
+      return `${adj}_${noun}_${num}`;
     }
 
     window.addEventListener('DOMContentLoaded', () => {
       const nameInput = document.getElementById('auth-name');
-      if (nameInput) {
-        nameInput.value = generateRandomFestiveName();
-      }
+      const userField = document.getElementById('auth-username');
+      if (nameInput && !nameInput.value) nameInput.value = generateRandomFestiveName();
+      if (userField && !userField.value) userField.value = generateRandomUsername();
     });
 
     /* =========================================================
@@ -1220,7 +1247,7 @@
           rawDate: date,
           rawTime: time,
           displayDateTime: formattedDate,
-          location: location || "Nashik Club",
+          location: location || "Sinnar Club",
           passInfo: passInfo || "VIP Passes Available",
           desc: desc || "Exclusive Navratri Dandiya celebration.",
           photoUrl: eventPhotoBase64,
@@ -1331,7 +1358,7 @@
     }
 
     /* =========================================================
-       7. APP SETTINGS & ONBOARDING / PROFILE SETUP
+       7. APP SETTINGS & UNIQUE USERNAME VALIDATION
        ========================================================= */
     function listenToAppSettings() {
       if (unsubscribeSettings) unsubscribeSettings();
@@ -1388,10 +1415,9 @@
         const userRef = db.collection("milo_users").doc(cleanEmail);
         userRef.get().then(docSnap => {
           if (!docSnap.exists) {
-            // Show Onboarding Setup Page for New User with Random Name
             document.getElementById('screen-onboarding').classList.remove('hidden');
-            const defaultRandomName = document.getElementById('auth-name').value || generateRandomFestiveName();
-            document.getElementById('onboard-name').value = defaultRandomName;
+            document.getElementById('onboard-name').value = document.getElementById('auth-name').value || generateRandomFestiveName();
+            document.getElementById('onboard-username').value = document.getElementById('auth-username').value || generateRandomUsername();
           } else {
             document.getElementById('screen-onboarding').classList.add('hidden');
             document.getElementById('top-user-pill').classList.remove('hidden');
@@ -1438,9 +1464,20 @@
       }
     });
 
+    async function isUsernameTaken(username, myEmail) {
+      const cleanUname = username.trim().toLowerCase().replace('@', '');
+      const snap = await db.collection("milo_users").where("username", "==", cleanUname).get();
+      let taken = false;
+      snap.forEach(doc => {
+        if (doc.id.toLowerCase() !== myEmail.toLowerCase()) taken = true;
+      });
+      return taken;
+    }
+
     async function saveOnboardingProfile() {
       if (!currentUser) return;
       const name = document.getElementById('onboard-name').value.trim() || generateRandomFestiveName();
+      let username = document.getElementById('onboard-username').value.trim().toLowerCase().replace('@', '') || generateRandomUsername();
       const gender = document.getElementById('onboard-gender').value;
       const city = document.getElementById('onboard-city').value.trim();
       const studies = document.getElementById('onboard-studies').value.trim();
@@ -1452,12 +1489,20 @@
       const cleanEmail = currentUser.email.toLowerCase();
       const isAdmin = SUPER_ADMINS.includes(cleanEmail);
 
+      // Check if username is already taken by someone else
+      const taken = await isUsernameTaken(username, cleanEmail);
+      if (taken) {
+        alert(`❌ Username '@${username}' pehle se kisi aur ne liya hua hai! Kripya kuch underscore (_) ya numbers lagakar alag username daalein.`);
+        return;
+      }
+
       try {
         await db.collection("milo_users").doc(cleanEmail).set({
           email: cleanEmail,
           name: name,
+          username: username,
           gender: gender,
-          city: city || "Nashik, Maharashtra",
+          city: city || "Sinnar, Maharashtra",
           studies: studies || "Student",
           garbaStyle: garbaStyle,
           hobbies: hobbies.length ? hobbies : ["Garba", "Music"],
@@ -1484,9 +1529,12 @@
       const initial = (profile.name || profile.email || 'U')[0].toUpperCase();
       document.getElementById('header-user-email').innerText = profile.name || profile.email.split('@')[0];
       document.getElementById('profile-user-name').innerText = profile.name;
-      document.getElementById('profile-user-email').innerText = profile.email;
+      document.getElementById('profile-username-tag').innerText = `@${profile.username || profile.email.split('@')[0]}`;
       
-      const city = profile.city || "Nashik, Maharashtra";
+      document.getElementById('profile-name-input').value = profile.name || '';
+      document.getElementById('profile-username-input').value = profile.username || '';
+
+      const city = profile.city || "Sinnar, Maharashtra";
       document.getElementById('profile-display-city').innerText = city;
       document.getElementById('profile-city-input').value = profile.city || '';
       document.getElementById('header-user-city').innerText = `📍 ${city.split(',')[0]}`;
@@ -1554,7 +1602,7 @@
           const data = await res.json();
           const address = data.address || {};
           
-          const city = address.city || address.town || address.village || address.suburb || address.county || "Nashik";
+          const city = address.city || address.town || address.village || address.suburb || address.county || "Sinnar";
           const state = address.state || "Maharashtra";
           const fullLocation = `${city}, ${state}`;
 
@@ -1574,6 +1622,8 @@
 
     async function saveCompleteUserProfile() {
       if (!currentUser) return;
+      const name = document.getElementById('profile-name-input').value.trim();
+      const username = document.getElementById('profile-username-input').value.trim().toLowerCase().replace('@', '');
       const city = document.getElementById('profile-city-input').value.trim();
       const bio = document.getElementById('profile-bio-input').value.trim();
       const handle = document.getElementById('profile-insta-input').value.trim();
@@ -1583,9 +1633,21 @@
       const hobbiesRaw = document.getElementById('profile-hobbies-input').value.trim();
       const hobbies = hobbiesRaw.split(',').map(h => h.trim()).filter(Boolean);
 
+      if (!name) return alert("Display name khali nahi ho sakta!");
+      if (!username) return alert("Username khali nahi ho sakta!");
+
+      const cleanEmail = currentUser.email.toLowerCase();
+      const taken = await isUsernameTaken(username, cleanEmail);
+      if (taken) {
+        alert(`❌ Username '@${username}' pehle se kisi aur ne liya hua hai! Kripya alag username daalein.`);
+        return;
+      }
+
       try {
-        await db.collection("milo_users").doc(currentUser.email.toLowerCase()).update({
-          city: city || "Nashik, Maharashtra",
+        await db.collection("milo_users").doc(cleanEmail).update({
+          name: name,
+          username: username,
+          city: city || "Sinnar, Maharashtra",
           gender: gender,
           garbaStyle: garbaStyle,
           studies: studies,
@@ -1593,7 +1655,7 @@
           bio: bio || "Navratri festival companion 🪔",
           socialHandle: handle
         });
-        alert("Profile details saved successfully! ✨");
+        alert("Profile details & username saved successfully! ✨");
       } catch(e) { alert("Error: " + e.message); }
     }
 
@@ -1604,19 +1666,27 @@
 
     async function handleSignUp() {
       const name = document.getElementById('auth-name').value.trim() || generateRandomFestiveName();
+      let username = document.getElementById('auth-username').value.trim().toLowerCase().replace('@', '') || generateRandomUsername();
       const email = document.getElementById('auth-email').value.trim();
       const pass = document.getElementById('auth-password').value;
       const btn = document.getElementById('btn-signup');
 
       if (!email || !pass) return showAuthError("Email aur Password dono likhein!");
-      btn.innerText = "Signing Up..."; btn.disabled = true;
+      
+      btn.innerText = "Checking Username..."; btn.disabled = true;
 
       try {
+        const taken = await isUsernameTaken(username, email);
+        if (taken) {
+          showAuthError(`❌ Username '@${username}' pehle se taken hai! Dusra try karein (e.g. _07).`);
+          btn.innerText = "Sign Up"; btn.disabled = false;
+          return;
+        }
+
         const res = await auth.createUserWithEmailAndPassword(email, pass);
         if (name) await res.user.updateProfile({ displayName: name });
       } catch (err) {
         showAuthError(err.message);
-      } finally {
         btn.innerText = "Sign Up"; btn.disabled = false;
       }
     }
@@ -1719,7 +1789,7 @@
       }
 
       incomingPendingRequests.forEach(req => {
-        const sender = cachedUsersMap[req.from.toLowerCase()] || { name: req.fromName || req.from.split('@')[0], photoUrl: '', city: 'Nashik' };
+        const sender = cachedUsersMap[req.from.toLowerCase()] || { name: req.fromName || req.from.split('@')[0], photoUrl: '', city: 'Sinnar' };
         const row = document.createElement('div');
         row.className = "p-3 bg-[#120822] rounded-2xl border border-purple-900 flex items-center justify-between shadow-sm";
 
@@ -1734,7 +1804,7 @@
             </div>
             <div class="overflow-hidden">
               <h4 class="font-black text-xs text-slate-100 truncate">${sender.name}</h4>
-              <span class="text-[9px] text-amber-400 font-semibold truncate block">📍 ${sender.city || 'Nashik'}</span>
+              <span class="text-[9px] text-amber-400 font-semibold truncate block">📍 ${sender.city || 'Sinnar'}</span>
             </div>
           </div>
           <div class="flex items-center gap-1.5 shrink-0">
@@ -1782,7 +1852,8 @@
 
       document.getElementById('modal-buddy-profile').classList.remove('hidden');
       document.getElementById('detail-user-name').innerText = u.name || u.email.split('@')[0];
-      document.getElementById('detail-user-city').innerText = u.city || 'Nashik';
+      document.getElementById('detail-username-tag').innerText = `@${u.username || u.email.split('@')[0]}`;
+      document.getElementById('detail-user-city').innerText = u.city || 'Sinnar';
       document.getElementById('detail-user-bio').innerText = `"${u.bio || 'Navratri festive companion & partner 🪔'}"`;
 
       const avatarBox = document.getElementById('detail-avatar-box');
@@ -1840,15 +1911,15 @@
 
       const cities = new Set();
       globalAllUsers.forEach(u => {
-        if (u.city && u.city.trim() && u.city !== "Nashik" && u.city !== "Not Set") {
+        if (u.city && u.city.trim() && u.city !== "Sinnar" && u.city !== "Not Set") {
           cities.add(u.city.trim());
         }
       });
 
       select.innerHTML = `
-        <option value="NEAR_ME">📍 Near Me</option>
-        <option value="Nashik">📍 Nashik</option>
         <option value="ALL">🌐 All Cities</option>
+        <option value="Sinnar">📍 Sinnar</option>
+        <option value="Nashik">📍 Nashik</option>
       `;
       cities.forEach(c => {
         const opt = document.createElement('option');
@@ -1856,7 +1927,7 @@
         opt.innerText = `📍 ${c}`;
         select.appendChild(opt);
       });
-      select.value = currentVal || 'NEAR_ME';
+      select.value = currentVal || 'ALL';
     }
 
     function applyPartnerFilters() {
@@ -1866,22 +1937,19 @@
 
       const myEmail = currentUser.email.toLowerCase();
       const searchQuery = (document.getElementById('partner-search-input')?.value || '').toLowerCase().trim();
-      const cityFilter = document.getElementById('partner-city-filter')?.value || 'NEAR_ME';
-      const myCity = (currentUserProfile && currentUserProfile.city) ? currentUserProfile.city.toLowerCase() : "nashik";
+      const cityFilter = document.getElementById('partner-city-filter')?.value || 'ALL';
 
       let filtered = globalAllUsers.filter(u => u.email.toLowerCase() !== myEmail);
 
       if (searchQuery) {
         filtered = filtered.filter(u => 
           (u.name && u.name.toLowerCase().includes(searchQuery)) ||
+          (u.username && u.username.toLowerCase().includes(searchQuery)) ||
           (u.email && u.email.toLowerCase().includes(searchQuery))
         );
       }
 
-      if (cityFilter === 'NEAR_ME') {
-        const primaryCityToken = myCity.split(',')[0].trim();
-        filtered = filtered.filter(u => u.city && u.city.toLowerCase().includes(primaryCityToken));
-      } else if (cityFilter !== 'ALL') {
+      if (cityFilter !== 'ALL') {
         filtered = filtered.filter(u => u.city && u.city.toLowerCase().includes(cityFilter.toLowerCase()));
       }
 
@@ -1892,7 +1960,7 @@
         buddiesSlider.innerHTML = `
           <div class="col-span-2 text-center py-12 text-xs text-slate-400 bg-[#120822]/80 rounded-3xl border border-purple-900/60 p-5">
             <i class="fa-solid fa-user-slash text-2xl text-amber-500 mb-2 block"></i>
-            No partners found in this location or matching search. Try "All Cities".
+            No partners found matching search or filter. Try switching city to "All Cities".
           </div>
         `;
         return;
@@ -1928,7 +1996,8 @@
               <h4 class="font-black text-sm text-slate-100 truncate max-w-[105px]">${u.name || u.email.split('@')[0]}</h4>
               ${statusBadge}
             </div>
-            <span class="text-[10px] text-amber-400 font-bold block truncate mt-0.5">📍 ${u.city || 'Nashik'}</span>
+            <span class="text-[10px] text-amber-400 font-bold block truncate mt-0.5">@${u.username || 'user'}</span>
+            <span class="text-[9px] text-slate-400 font-medium block truncate">📍 ${u.city || 'Sinnar'}</span>
           </div>
           <button class="mt-2.5 px-3 py-1 rounded-full romantic-btn text-[10px] font-bold shadow-sm active:scale-95 transition">${btnText}</button>
         `;
@@ -1980,8 +2049,8 @@
                 ${u.isVerified ? '<span class="text-amber-400 text-xs"><i class="fa-solid fa-circle-check"></i></span>' : ''}
               </div>
               <div class="flex items-center gap-2 mt-0.5">
-                <span class="text-[10px] ${isConnected ? 'text-emerald-400 font-bold' : 'text-slate-400'} truncate">${isConnected ? '● Connected' : '● Not Connected'}</span>
-                <span class="text-[10px] text-amber-400 font-medium truncate">📍 ${u.city || 'Nashik'}</span>
+                <span class="text-[10px] text-amber-400 font-bold truncate">@${u.username || 'user'}</span>
+                <span class="text-[10px] text-slate-400 truncate">📍 ${u.city || 'Sinnar'}</span>
               </div>
             </div>
           </div>
@@ -2008,9 +2077,9 @@
           <div class="overflow-hidden pr-2">
             <div class="flex items-center gap-1.5">
               <span class="font-bold text-slate-200 truncate">${u.name || u.email}</span>
-              ${u.isVerified ? '<span class="text-amber-400 font-bold text-[10px]">Verified ✅</span>' : '<span class="text-slate-400 text-[10px]">Unverified</span>'}
+              <span class="text-amber-400 text-[10px]">@${u.username || 'user'}</span>
             </div>
-            <p class="text-[10px] text-slate-400 truncate">${u.email} • 📍 ${u.city || 'Nashik'}</p>
+            <p class="text-[10px] text-slate-400 truncate">${u.email} • 📍 ${u.city || 'Sinnar'}</p>
           </div>
           <div class="flex items-center gap-1.5 shrink-0">
             <button onclick="adminToggleVerify('${u.email}', ${!u.isVerified})" class="px-2.5 py-1 rounded-xl text-[10px] font-bold ${u.isVerified ? 'bg-amber-950 text-amber-300 border border-amber-500/40' : 'bg-purple-950 text-slate-300 border border-purple-800'}">${u.isVerified ? 'Revoke' : 'Verify ✅'}</button>
@@ -2046,10 +2115,10 @@
       document.getElementById('chats-room-view').classList.remove('hidden');
 
       const partnerDoc = await db.collection("milo_users").doc(activePartnerEmail).get();
-      const pData = partnerDoc.exists ? partnerDoc.data() : { name: activePartnerEmail.split('@')[0], isVerified: false, photoUrl: "", city: "Nashik" };
+      const pData = partnerDoc.exists ? partnerDoc.data() : { name: activePartnerEmail.split('@')[0], isVerified: false, photoUrl: "", city: "Sinnar" };
 
       document.getElementById('room-partner-name').innerText = pData.name || activePartnerEmail.split('@')[0];
-      document.getElementById('room-partner-city-tag').innerText = `📍 ${pData.city || 'Nashik'}`;
+      document.getElementById('room-partner-city-tag').innerText = `📍 ${pData.city || 'Sinnar'}`;
       
       const avatarBox = document.getElementById('room-partner-avatar-box');
       if (pData.photoUrl) avatarBox.innerHTML = `<img src="${pData.photoUrl}" class="w-full h-full object-cover" />`;
