@@ -17,11 +17,18 @@
       user-select: none; -webkit-tap-highlight-color: transparent; scroll-behavior: smooth;
     }
 
+    @keyframes subtlePulse {
+      0% { transform: scale(1); opacity: 0.95; }
+      50% { transform: scale(1.01); opacity: 1; }
+      100% { transform: scale(1); opacity: 0.95; }
+    }
+
     .clean-glass-card {
       background: rgba(24, 24, 27, 0.75);
       backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.08);
       box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
+      animation: subtlePulse 6s ease-in-out infinite;
     }
 
     .tinder-btn {
@@ -175,7 +182,7 @@
         </div>
         <div class="grid grid-cols-2 gap-2">
           <div>
-            <label class="block text-zinc-300 mb-1 font-semibold">Gender</label>
+            <label class="block text-zinc-300 mb-1 font-semibold">My Gender</label>
             <select id="onboard-gender" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-2.5 text-xs text-rose-400 font-bold outline-none">
               <option value="Male">Male ♂</option>
               <option value="Female">Female ♀</option>
@@ -183,9 +190,17 @@
             </select>
           </div>
           <div>
-            <label class="block text-zinc-300 mb-1 font-semibold">City</label>
-            <input type="text" id="onboard-city" value="Sinnar, Maharashtra" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-2.5 text-xs text-zinc-100 outline-none" />
+            <label class="block text-zinc-300 mb-1 font-semibold">Looking For</label>
+            <select id="onboard-seeking" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-2.5 text-xs text-rose-400 font-bold outline-none">
+              <option value="Female">Female ♀</option>
+              <option value="Male">Male ♂</option>
+              <option value="Both">Anyone 🌐</option>
+            </select>
           </div>
+        </div>
+        <div>
+          <label class="block text-zinc-300 mb-1 font-semibold">City</label>
+          <input type="text" id="onboard-city" value="Sinnar, Maharashtra" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-2.5 text-xs text-zinc-100 outline-none" />
         </div>
         <div>
           <label class="block text-zinc-300 mb-1 font-semibold">Studies / Profession</label>
@@ -228,24 +243,17 @@
         <span class="px-3 py-1 rounded-xl tinder-btn text-[10px] font-bold">Review ➔</span>
       </div>
 
+      <!-- CHAT SUB-TABS (DIRECT / COMMUNITIES) -->
       <div class="clean-glass-card rounded-3xl p-4 shadow-xl">
-        <div class="flex items-center justify-between mb-3 px-1">
-          <div class="flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-            <h4 class="font-bold text-xs text-zinc-200 uppercase tracking-wider">Online Connections</h4>
-          </div>
-          <span id="active-online-count" class="text-[10px] font-bold text-rose-400 bg-rose-950/60 px-2.5 py-0.5 rounded-full border border-rose-500/20">0 Live</span>
+        <div class="flex items-center gap-1.5 p-1 bg-zinc-900 rounded-xl border border-zinc-800 text-xs font-bold mb-3">
+          <button onclick="switchChatSubTab('direct')" id="chattab-direct" class="flex-1 py-1.5 rounded-lg bg-rose-600 text-white transition">Direct Chats 💬</button>
+          <button onclick="switchChatSubTab('communities')" id="chattab-communities" class="flex-1 py-1.5 rounded-lg text-zinc-400 hover:text-white transition">Communities 👥</button>
         </div>
-        <div id="active-members-strip" class="flex items-center gap-3 overflow-x-auto pb-1">
-          <div class="text-xs text-zinc-400 py-2">Loading connected partners...</div>
-        </div>
-      </div>
 
-      <div class="clean-glass-card rounded-3xl p-4 shadow-xl">
         <div class="flex items-center justify-between pb-3 border-b border-zinc-800 mb-3">
           <div>
-            <h3 class="font-bold text-sm text-white">Direct Messages</h3>
-            <p class="text-[11px] text-zinc-400">Private 1-on-1 conversations</p>
+            <h3 id="chat-sec-title" class="font-bold text-sm text-white">Direct Messages</h3>
+            <p id="chat-sec-subtitle" class="text-[11px] text-zinc-400">Private 1-on-1 conversations</p>
           </div>
           <span id="active-contacts-count" class="px-2.5 py-1 rounded-full bg-zinc-800 text-rose-400 text-[11px] font-bold">0</span>
         </div>
@@ -256,7 +264,7 @@
       </div>
     </div>
 
-    <!-- 1-on-1 Chat Room -->
+    <!-- CHAT ROOM (Supports Both 1-on-1 & Groups) -->
     <div id="chats-room-view" class="hidden clean-glass-card rounded-3xl overflow-hidden shadow-2xl flex flex-col h-[76vh] border border-zinc-800">
       <div class="p-3 border-b border-zinc-800 flex items-center justify-between bg-zinc-900/80">
         <div class="flex items-center gap-2.5">
@@ -280,22 +288,9 @@
         <span class="text-[9px] text-zinc-400 bg-zinc-800 px-2 py-0.5 rounded-full font-bold">Encrypted</span>
       </div>
 
-      <div id="private-messages-stream" class="flex-1 p-3 overflow-y-auto space-y-2.5 text-xs relative bg-zinc-950/40" onclick="dismissActionPopover()"></div>
+      <div id="private-messages-stream" class="flex-1 p-3 overflow-y-auto space-y-2.5 text-xs relative bg-zinc-950/40"></div>
 
       <div class="p-2.5 border-t border-zinc-800 flex flex-col gap-1.5 bg-zinc-900/90">
-        <div id="reply-preview-bar" class="hidden flex items-center justify-between px-3 py-1.5 bg-zinc-800 rounded-xl border border-rose-500/30 text-[11px]">
-          <div class="overflow-hidden pr-2">
-            <span class="text-[9px] text-rose-400 font-bold block">Replying to <span id="reply-to-sender"></span>:</span>
-            <span id="reply-to-text" class="text-zinc-200 truncate block"></span>
-          </div>
-          <button onclick="cancelReplyMode()" class="text-zinc-400 hover:text-white font-bold text-base">&times;</button>
-        </div>
-
-        <div id="chat-edit-bar" class="hidden flex items-center justify-between px-2 text-[10px] text-rose-400 font-bold bg-zinc-800 py-1 rounded-lg">
-          <span><i class="fa-solid fa-pen"></i> Editing message...</span>
-          <button onclick="cancelEditingMode()" class="text-zinc-300 hover:text-white">&times; Cancel</button>
-        </div>
-        
         <div class="flex items-center gap-2">
           <input id="personal-chat-input" type="text" oninput="handleTypingInput()" onkeydown="if(event.key==='Enter') sendPersonalMessage()" placeholder="Type a message..." class="flex-1 bg-zinc-950 border border-zinc-800 rounded-xl px-3.5 py-2.5 text-xs outline-none focus:border-rose-500 text-zinc-100 placeholder:text-zinc-600" />
           <button onclick="sendPersonalMessage()" id="personal-send-btn" class="w-9 h-9 rounded-xl tinder-btn flex items-center justify-center text-white font-black">
@@ -306,7 +301,7 @@
     </div>
   </section>
 
-  <!-- SCREEN 3: PARTNERS -->
+  <!-- SCREEN 3: PARTNERS & GROUPS -->
   <section id="screen-buddies" class="hidden relative z-20 flex-1 max-w-md mx-auto w-full px-3 py-2 pt-16">
     <div class="mb-3">
       <div class="flex items-center justify-between mb-2 px-1">
@@ -322,23 +317,46 @@
       </div>
     </div>
 
-    <div class="mb-3 p-3 rounded-2xl clean-glass-card space-y-2">
-      <div class="flex items-center gap-2">
-        <div class="flex-1 relative">
-          <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-xs text-zinc-500"></i>
-          <input type="text" id="partner-search-input" oninput="applyPartnerFilters()" placeholder="Search partner..." class="w-full bg-zinc-900 border border-zinc-800 rounded-xl pl-8 pr-3 py-2 text-xs text-zinc-100 outline-none focus:border-rose-500" />
+    <!-- GROUPS & PARTNERS SWITCH & FILTERS -->
+    <div class="mb-3 p-3 rounded-2xl clean-glass-card space-y-2.5">
+      <div class="flex items-center gap-1.5 p-1 bg-zinc-900 rounded-xl border border-zinc-800 text-xs font-bold">
+        <button onclick="switchExploreTab('partners')" id="ex-tab-partners" class="flex-1 py-1.5 rounded-lg bg-rose-600 text-white transition">Partners</button>
+        <button onclick="switchExploreTab('groups')" id="ex-tab-groups" class="flex-1 py-1.5 rounded-lg text-zinc-400 hover:text-white transition">Communities 👥</button>
+      </div>
+
+      <!-- PARTNERS FILTERS -->
+      <div id="explore-sec-partners" class="space-y-2">
+        <div class="flex items-center gap-1.5 p-1 bg-zinc-950 rounded-xl border border-zinc-800 text-xs font-bold">
+          <button onclick="setGenderFilter('ALL')" id="gfilter-ALL" class="flex-1 py-1 rounded-lg bg-rose-600 text-white transition">All</button>
+          <button onclick="setGenderFilter('Male')" id="gfilter-Male" class="flex-1 py-1 rounded-lg text-zinc-400 hover:text-white transition">Boys ♂</button>
+          <button onclick="setGenderFilter('Female')" id="gfilter-Female" class="flex-1 py-1 rounded-lg text-zinc-400 hover:text-white transition">Girls ♀</button>
         </div>
-        <div class="shrink-0 relative">
-          <select id="partner-city-filter" onchange="applyPartnerFilters()" class="bg-zinc-900 border border-zinc-800 rounded-xl px-2.5 py-2 text-xs text-rose-400 font-bold outline-none">
-            <option value="ALL">🌐 All Cities</option>
-            <option value="Sinnar">📍 Sinnar</option>
-            <option value="Nashik">📍 Nashik</option>
-          </select>
+
+        <div class="flex items-center gap-2">
+          <div class="flex-1 relative">
+            <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-xs text-zinc-500"></i>
+            <input type="text" id="partner-search-input" oninput="applyPartnerFilters()" placeholder="Search partner..." class="w-full bg-zinc-900 border border-zinc-800 rounded-xl pl-8 pr-3 py-2 text-xs text-zinc-100 outline-none focus:border-rose-500" />
+          </div>
+          <div class="shrink-0 relative">
+            <select id="partner-city-filter" onchange="applyPartnerFilters()" class="bg-zinc-900 border border-zinc-800 rounded-xl px-2.5 py-2 text-xs text-rose-400 font-bold outline-none">
+              <option value="ALL">🌐 All Cities</option>
+              <option value="Sinnar">📍 Sinnar</option>
+              <option value="Nashik">📍 Nashik</option>
+            </select>
+          </div>
         </div>
       </div>
+
+      <!-- GROUPS ACTIONS (Request to Admin or Admin Create) -->
+      <div id="explore-sec-groups" class="hidden space-y-2">
+        <button onclick="requestGroupCreation()" class="w-full py-2.5 rounded-xl tinder-btn text-xs font-bold flex items-center justify-center gap-2">
+          <i class="fa-solid fa-paper-plane"></i> Request Group Creation to Admin 👥
+        </button>
+      </div>
+
       <div class="flex items-center justify-between px-1 text-[10px] text-zinc-500">
-        <span>Find & connect with matches</span>
-        <span id="filtered-partners-count" class="text-rose-400 font-bold">0 Partners</span>
+        <span id="filtered-subtitle">Find & connect with matches</span>
+        <span id="filtered-partners-count" class="text-rose-400 font-bold">0 Results</span>
       </div>
     </div>
 
@@ -444,6 +462,17 @@
             </select>
           </div>
           <div class="p-3 bg-zinc-900 rounded-xl border border-zinc-800">
+            <label class="text-[10px] text-zinc-500 font-bold block mb-1">LOOKING FOR</label>
+            <select id="profile-seeking-input" class="w-full bg-transparent text-rose-400 font-bold outline-none text-xs">
+              <option value="Female">Female ♀</option>
+              <option value="Male">Male ♂</option>
+              <option value="Both">Anyone 🌐</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div class="p-3 bg-zinc-900 rounded-xl border border-zinc-800">
             <label class="text-[10px] text-zinc-500 font-bold block mb-1">VIBE</label>
             <select id="profile-garba-style" class="w-full bg-transparent text-rose-400 font-bold outline-none text-xs">
               <option value="Traditional Raas">Traditional Raas</option>
@@ -452,11 +481,10 @@
               <option value="Fusion Garba">Fusion Garba</option>
             </select>
           </div>
-        </div>
-
-        <div class="p-3 bg-zinc-900 rounded-xl border border-zinc-800">
-          <label class="text-[10px] text-zinc-500 font-bold block mb-1">PROFESSION</label>
-          <input type="text" id="profile-studies-input" class="w-full bg-transparent text-zinc-200 outline-none text-xs" />
+          <div class="p-3 bg-zinc-900 rounded-xl border border-zinc-800">
+            <label class="text-[10px] text-zinc-500 font-bold block mb-1">PROFESSION</label>
+            <input type="text" id="profile-studies-input" class="w-full bg-transparent text-zinc-200 outline-none text-xs" />
+          </div>
         </div>
 
         <div class="p-3 bg-zinc-900 rounded-xl border border-zinc-800">
@@ -482,21 +510,22 @@
     </div>
   </section>
 
-  <!-- SCREEN 6: ADMIN CONSOLE -->
+  <!-- SCREEN 6: ADMIN CONSOLE (Includes Community Group Creator & Requests) -->
   <section id="screen-admin-page" class="hidden relative z-40 flex-1 max-w-xl mx-auto w-full px-4 py-4 min-h-screen pb-28 pt-16">
     <div class="clean-glass-card rounded-3xl p-5 shadow-2xl space-y-4">
       <div class="flex items-center justify-between pb-3 border-b border-zinc-800">
-        <h2 class="text-base font-black text-white">Admin Console</h2>
+        <h2 class="text-base font-black text-white">Admin Console 🛡️</h2>
         <button onclick="exitAdminPage()" class="px-3 py-1 rounded-xl bg-zinc-800 text-rose-400 text-xs font-bold">Exit ➔</button>
       </div>
 
       <div class="grid grid-cols-4 gap-1 p-1 rounded-xl bg-zinc-900 border border-zinc-800 text-[10px] font-bold">
         <button onclick="switchAdminSubTab('banners')" id="adtab-btn-banners" class="py-2 rounded-lg bg-rose-600 text-white">Banners</button>
+        <button onclick="switchAdminSubTab('groups')" id="adtab-btn-groups" class="py-2 rounded-lg text-zinc-400">Groups 👥</button>
         <button onclick="switchAdminSubTab('events')" id="adtab-btn-events" class="py-2 rounded-lg text-zinc-400">Events</button>
-        <button onclick="switchAdminSubTab('footer')" id="adtab-btn-footer" class="py-2 rounded-lg text-zinc-400">Settings</button>
         <button onclick="switchAdminSubTab('users')" id="adtab-btn-users" class="py-2 rounded-lg text-zinc-400">Users</button>
       </div>
 
+      <!-- ADMIN SUB-TAB 1: BANNERS -->
       <div id="admin-sec-banners" class="space-y-3">
         <div class="p-3 bg-zinc-900 rounded-2xl border border-zinc-800 text-xs space-y-2">
           <h4 class="font-bold text-white">Publish Banner</h4>
@@ -512,6 +541,48 @@
         <div id="admin-banners-list" class="space-y-2"></div>
       </div>
 
+      <!-- ADMIN SUB-TAB 2: GROUPS MANAGEMENT -->
+      <div id="admin-sec-groups" class="hidden space-y-3">
+        <div class="p-3 bg-zinc-900 rounded-2xl border border-zinc-800 text-xs space-y-3">
+          <h4 class="font-bold text-white flex items-center gap-1.5"><i class="fa-solid fa-users-rectangle text-rose-400"></i> Create Community Group (Admin)</h4>
+          <input type="text" id="admin-group-name" placeholder="Group Name (e.g. Sinnar Dandiya Squad)" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-2.5 text-xs text-white outline-none" />
+          
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-[10px] text-zinc-400 mb-1">Group Audience Type</label>
+              <select id="admin-group-type" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-2 text-xs text-rose-400 font-bold outline-none">
+                <option value="Mixed">✨ Mixed (Boys & Girls)</option>
+                <option value="Boys Only">♂ Boys Only</option>
+                <option value="Girls Only">♀ Girls Only</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[10px] text-zinc-400 mb-1">Boys / Girls Limits</label>
+              <div class="grid grid-cols-2 gap-1">
+                <input type="number" id="admin-group-boys" placeholder="Boys" class="bg-zinc-950 border border-zinc-800 rounded-xl p-2 text-xs text-center text-white" />
+                <input type="number" id="admin-group-girls" placeholder="Girls" class="bg-zinc-950 border border-zinc-800 rounded-xl p-2 text-xs text-center text-white" />
+              </div>
+            </div>
+          </div>
+
+          <input type="text" id="admin-group-desc" placeholder="Description / Vibe" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-2 text-xs text-white outline-none" />
+          <button onclick="adminCreateGroup()" class="w-full py-2.5 rounded-xl tinder-btn font-bold text-xs uppercase">Create Group Live 👥</button>
+        </div>
+
+        <div>
+          <h5 class="text-xs font-bold text-zinc-400 uppercase mb-2">Pending Group Requests</h5>
+          <div id="admin-group-requests-list" class="space-y-2">
+            <div class="text-center py-4 text-xs text-zinc-500">No pending group requests.</div>
+          </div>
+        </div>
+
+        <div>
+          <h5 class="text-xs font-bold text-zinc-400 uppercase mb-2">Active Community Groups</h5>
+          <div id="admin-groups-list" class="space-y-2"></div>
+        </div>
+      </div>
+
+      <!-- ADMIN SUB-TAB 3: EVENTS -->
       <div id="admin-sec-events" class="hidden space-y-3">
         <div class="p-3 bg-zinc-900 rounded-2xl border border-zinc-800 text-xs space-y-2">
           <h4 class="font-bold text-white">Schedule Event</h4>
@@ -529,15 +600,7 @@
         <div id="admin-events-list" class="space-y-2"></div>
       </div>
 
-      <div id="admin-sec-footer" class="hidden space-y-3">
-        <div class="p-3 bg-zinc-900 rounded-2xl border border-zinc-800 text-xs space-y-2">
-          <h4 class="font-bold text-white">Settings</h4>
-          <input type="email" id="admin-setting-email" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-2 text-xs text-zinc-100 outline-none" />
-          <input type="text" id="admin-setting-insta" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-2 text-xs text-zinc-100 outline-none" />
-          <button onclick="adminSaveFooterSettings()" class="w-full py-2 rounded-xl tinder-btn font-bold text-xs">Save</button>
-        </div>
-      </div>
-
+      <!-- ADMIN SUB-TAB 4: USERS -->
       <div id="admin-sec-users" class="hidden space-y-2">
         <div id="admin-users-list" class="space-y-2"></div>
       </div>
@@ -663,14 +726,244 @@
     const MASTER_ADMIN_PASSCODE = "milo@2026";
 
     let currentUser = null, currentUserProfile = null, activePartnerEmail = null, activeRoomId = null;
-    let unsubscribePrivateChat = null, unsubscribeUsers = null, unsubscribeRequests = null, unsubscribeEvents = null, unsubscribeBanners = null, unsubscribeSettings = null, unsubscribeTyping = null;
+    let unsubscribePrivateChat = null, unsubscribeUsers = null, unsubscribeRequests = null, unsubscribeEvents = null, unsubscribeBanners = null, unsubscribeSettings = null, unsubscribeTyping = null, unsubscribeGroups = null, unsubscribeGroupReqs = null;
     
-    let userRequestsMap = {}, incomingPendingRequests = [], globalEvents = [], globalBanners = [];
+    let userRequestsMap = {}, incomingPendingRequests = [], globalEvents = [], globalBanners = [], globalGroups = [], globalGroupRequests = [];
     let cachedUsersMap = {}, globalAllUsers = [];
     let autoSlideInterval = null;
-    let editingMessageId = null;
-    let replyingToMessage = null;
     let typingTimeout = null;
+    let currentGenderFilter = 'ALL';
+    let currentExploreTab = 'partners';
+    let currentChatSubTab = 'direct';
+    let isGroupChat = false;
+
+    function switchChatSubTab(tab) {
+      currentChatSubTab = tab;
+      const dBtn = document.getElementById('chattab-direct');
+      const cBtn = document.getElementById('chattab-communities');
+      const title = document.getElementById('chat-sec-title');
+      const subtitle = document.getElementById('chat-sec-subtitle');
+
+      if (tab === 'direct') {
+        dBtn.className = "flex-1 py-1.5 rounded-lg bg-rose-600 text-white transition";
+        cBtn.className = "flex-1 py-1.5 rounded-lg text-zinc-400 hover:text-white transition";
+        title.innerText = "Direct Messages";
+        subtitle.innerText = "Private 1-on-1 conversations";
+      } else {
+        cBtn.className = "flex-1 py-1.5 rounded-lg bg-rose-600 text-white transition";
+        dBtn.className = "flex-1 py-1.5 rounded-lg text-zinc-400 hover:text-white transition";
+        title.innerText = "Community Groups";
+        subtitle.innerText = "Public & group chats";
+      }
+      renderChatsContactsList();
+    }
+
+    function switchExploreTab(tab) {
+      currentExploreTab = tab;
+      const pBtn = document.getElementById('ex-tab-partners');
+      const gBtn = document.getElementById('ex-tab-groups');
+      const pSec = document.getElementById('explore-sec-partners');
+      const gSec = document.getElementById('explore-sec-groups');
+
+      if (tab === 'partners') {
+        pBtn.className = "flex-1 py-1.5 rounded-lg bg-rose-600 text-white transition";
+        gBtn.className = "flex-1 py-1.5 rounded-lg text-zinc-400 hover:text-white transition";
+        pSec.classList.remove('hidden');
+        gSec.classList.add('hidden');
+        applyPartnerFilters();
+      } else {
+        gBtn.className = "flex-1 py-1.5 rounded-lg bg-rose-600 text-white transition";
+        pBtn.className = "flex-1 py-1.5 rounded-lg text-zinc-400 hover:text-white transition";
+        gSec.classList.remove('hidden');
+        pSec.classList.add('hidden');
+        renderGroupsList();
+      }
+    }
+
+    async function requestGroupCreation() {
+      const gName = prompt("Enter Group Name you want to create (e.g. Sinnar Dandiya Squad):");
+      if (!gName) return;
+      const gType = prompt("Group Type? Enter: Mixed, Boys Only, or Girls Only", "Mixed");
+      const boysLimit = prompt("How many Boys needed?", "5");
+      const girlsLimit = prompt("How many Girls needed?", "5");
+
+      try {
+        await db.collection("milo_group_requests").add({
+          name: gName,
+          groupType: gType || "Mixed",
+          boysLimit: boysLimit || "5",
+          girlsLimit: girlsLimit || "5",
+          requestedBy: currentUser.email.toLowerCase(),
+          requestedByName: currentUserProfile ? currentUserProfile.name : 'User',
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        alert("Group creation request sent to Admin! Admin will review and publish it 👥");
+      } catch(e) { alert("Error: " + e.message); }
+    }
+
+    function listenToGroupsAndRequests() {
+      if (unsubscribeGroups) unsubscribeGroups();
+      unsubscribeGroups = db.collection("milo_groups").onSnapshot(snapshot => {
+        globalGroups = [];
+        snapshot.forEach(doc => globalGroups.push({ id: doc.id, ...doc.data() }));
+        if (currentExploreTab === 'groups') renderGroupsList();
+        renderChatsContactsList();
+        renderAdminGroupsList();
+      });
+
+      if (unsubscribeGroupReqs) unsubscribeGroupReqs();
+      unsubscribeGroupReqs = db.collection("milo_group_requests").onSnapshot(snapshot => {
+        globalGroupRequests = [];
+        snapshot.forEach(doc => globalGroupRequests.push({ id: doc.id, ...doc.data() }));
+        renderAdminGroupRequestsList();
+      });
+    }
+
+    async function adminCreateGroup() {
+      const gName = sanitizeInput(document.getElementById('admin-group-name').value.trim());
+      const gType = document.getElementById('admin-group-type').value;
+      const boys = sanitizeInput(document.getElementById('admin-group-boys').value.trim()) || "5";
+      const girls = sanitizeInput(document.getElementById('admin-group-girls').value.trim()) || "5";
+      const gDesc = sanitizeInput(document.getElementById('admin-group-desc').value.trim());
+
+      if (!gName) return alert("Group name required!");
+
+      try {
+        await db.collection("milo_groups").add({
+          name: gName,
+          groupType: gType,
+          boysLimit: boys,
+          girlsLimit: girls,
+          desc: gDesc || `Group for ${gType} (Boys: ${boys}, Girls: ${girls})`,
+          createdBy: currentUser.email.toLowerCase(),
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        alert("Community Group Created Live! 👥");
+        document.getElementById('admin-group-name').value = '';
+        document.getElementById('admin-group-boys').value = '';
+        document.getElementById('admin-group-girls').value = '';
+        document.getElementById('admin-group-desc').value = '';
+      } catch(e) { alert("Error: " + e.message); }
+    }
+
+    async function adminApproveGroupRequest(reqId) {
+      const req = globalGroupRequests.find(r => r.id === reqId);
+      if (!req) return;
+
+      try {
+        await db.collection("milo_groups").add({
+          name: req.name,
+          groupType: req.groupType,
+          boysLimit: req.boysLimit || "5",
+          girlsLimit: req.girlsLimit || "5",
+          desc: `Approved community group (Boys: ${req.boysLimit}, Girls: ${req.girlsLimit})`,
+          createdBy: req.requestedBy,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        await db.collection("milo_group_requests").doc(reqId).delete();
+        alert("Group Request Approved & Published Live! 👥");
+      } catch(e) { alert("Error: " + e.message); }
+    }
+
+    async function adminRejectGroupRequest(reqId) {
+      if (confirm("Reject this request?")) {
+        await db.collection("milo_group_requests").doc(reqId).delete();
+      }
+    }
+
+    async function adminDeleteGroup(groupId) {
+      if (confirm("Delete this group?")) {
+        await db.collection("milo_groups").doc(groupId).delete();
+      }
+    }
+
+    function renderAdminGroupsList() {
+      const container = document.getElementById('admin-groups-list');
+      if (!container) return;
+      container.innerHTML = '';
+      if (globalGroups.length === 0) { container.innerHTML = `<span class="text-[11px] text-zinc-500">No active groups.</span>`; return; }
+
+      globalGroups.forEach(g => {
+        container.innerHTML += `
+          <div class="p-2.5 bg-zinc-950 rounded-xl flex items-center justify-between text-xs">
+            <div>
+              <span class="font-bold text-white block">${sanitizeInput(g.name)}</span>
+              <span class="text-[10px] text-rose-400">[${sanitizeInput(g.groupType)}] • ♂ Boys: ${g.boysLimit || 5}, ♀ Girls: ${g.girlsLimit || 5}</span>
+            </div>
+            <button onclick="adminDeleteGroup('${g.id}')" class="text-rose-400 p-1"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        `;
+      });
+    }
+
+    function renderAdminGroupRequestsList() {
+      const container = document.getElementById('admin-group-requests-list');
+      if (!container) return;
+      container.innerHTML = '';
+      if (globalGroupRequests.length === 0) {
+        container.innerHTML = `<div class="text-center py-3 text-xs text-zinc-500">No pending group requests.</div>`;
+        return;
+      }
+
+      globalGroupRequests.forEach(r => {
+        container.innerHTML += `
+          <div class="p-3 bg-zinc-950 rounded-xl border border-rose-500/30 flex items-center justify-between text-xs">
+            <div>
+              <span class="font-bold text-white block">📁 ${sanitizeInput(r.name)}</span>
+              <span class="text-[10px] text-zinc-400">Type: ${sanitizeInput(r.groupType)} | Req by: ${sanitizeInput(r.requestedByName)}</span>
+              <span class="text-[10px] text-amber-400 block">Limits -> ♂ Boys: ${r.boysLimit}, ♀ Girls: ${r.girlsLimit}</span>
+            </div>
+            <div class="flex gap-1.5">
+              <button onclick="adminApproveGroupRequest('${r.id}')" class="w-7 h-7 rounded-lg bg-emerald-600 text-white flex items-center justify-center"><i class="fa-solid fa-check"></i></button>
+              <button onclick="adminRejectGroupRequest('${r.id}')" class="w-7 h-7 rounded-lg bg-rose-950 text-rose-400 border border-rose-900 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    function renderGroupsList() {
+      const buddiesSlider = document.getElementById('buddies-slider');
+      if (!buddiesSlider) return;
+      buddiesSlider.innerHTML = '';
+      document.getElementById('filtered-partners-count').innerText = `${globalGroups.length} Groups`;
+      document.getElementById('filtered-subtitle').innerText = 'Join community group chats';
+
+      if (globalGroups.length === 0) {
+        buddiesSlider.innerHTML = `<div class="col-span-2 text-center py-10 text-xs text-zinc-500">No community groups yet. Request one above!</div>`;
+        return;
+      }
+
+      globalGroups.forEach(g => {
+        const card = document.createElement('div');
+        card.className = "buddy-card-item";
+        card.onclick = () => openGroupChat(g.id, g.name);
+        card.innerHTML = `
+          <div class="w-16 h-16 rounded-full overflow-hidden bg-gradient-to-tr from-rose-600 via-pink-600 to-amber-500 p-0.5 flex items-center justify-center mb-2 shadow-lg relative">
+            <div class="w-full h-full bg-zinc-950 rounded-full flex items-center justify-center text-rose-400 text-xl font-black">
+              <i class="fa-solid fa-robot"></i>
+            </div>
+          </div>
+          <h4 class="font-bold text-xs text-white truncate w-full">${sanitizeInput(g.name)}</h4>
+          <span class="text-[9px] bg-rose-950 text-rose-300 px-2 py-0.5 rounded-full font-bold my-1 border border-rose-800">${sanitizeInput(g.groupType || 'Mixed')}</span>
+          <span class="text-[9px] text-amber-400 font-mono block">♂ ${g.boysLimit || 5} | ♀ ${g.girlsLimit || 5}</span>
+          <button class="mt-2 px-3 py-1 rounded-full tinder-btn text-[10px] font-bold">Join Group 💬</button>
+        `;
+        buddiesSlider.appendChild(card);
+      });
+    }
+
+    function setGenderFilter(val) {
+      currentGenderFilter = val;
+      ['ALL', 'Male', 'Female'].forEach(g => {
+        const btn = document.getElementById(`gfilter-${g}`);
+        if (btn) {
+          if (g === val) btn.className = "flex-1 py-1 rounded-lg bg-rose-600 text-white transition";
+          else btn.className = "flex-1 py-1 rounded-lg text-zinc-400 hover:text-white transition";
+        }
+      });
+      applyPartnerFilters();
+    }
 
     function requestNotificationPermission() {
       if (!("Notification" in window)) return alert("Not supported");
@@ -719,12 +1012,16 @@
     }
 
     function switchAdminSubTab(tab) {
-      ['banners', 'events', 'footer', 'users'].forEach(t => {
-        document.getElementById(`admin-sec-${t}`).classList.add('hidden');
-        document.getElementById(`adtab-btn-${t}`).className = "py-2 rounded-lg text-zinc-400";
+      ['banners', 'groups', 'events', 'users'].forEach(t => {
+        const sec = document.getElementById(`admin-sec-${t}`);
+        const btn = document.getElementById(`adtab-btn-${t}`);
+        if (sec) sec.classList.add('hidden');
+        if (btn) btn.className = "py-2 rounded-lg text-zinc-400";
       });
-      document.getElementById(`admin-sec-${tab}`).classList.remove('hidden');
-      document.getElementById(`adtab-btn-${tab}`).className = "py-2 rounded-lg bg-rose-600 text-white";
+      const activeSec = document.getElementById(`admin-sec-${tab}`);
+      const activeBtn = document.getElementById(`adtab-btn-${tab}`);
+      if (activeSec) activeSec.classList.remove('hidden');
+      if (activeBtn) activeBtn.className = "py-2 rounded-lg bg-rose-600 text-white";
     }
 
     function openRequestsModal() { document.getElementById('modal-requests').classList.remove('hidden'); }
@@ -918,7 +1215,7 @@
           const baseUsername = cleanEmail.split('@')[0].replace(/[^a-z0-9_]/g, '') + '_' + Math.floor(10 + Math.random() * 90);
           const isAdmin = SUPER_ADMINS.includes(cleanEmail);
           await userRef.set({
-            email: cleanEmail, name: baseName, username: baseUsername, gender: "Other", city: "Sinnar, Maharashtra", studies: "Student", garbaStyle: "Traditional Raas", hobbies: ["Music"], bio: "Ready for meetups 🪔", photoUrl: user.photoURL || "", socialHandle: "", isVerified: isAdmin, role: isAdmin ? "admin" : "member", createdAt: firebase.firestore.FieldValue.serverTimestamp(), lastSeen: firebase.firestore.FieldValue.serverTimestamp()
+            email: cleanEmail, name: baseName, username: baseUsername, gender: "Other", seeking: "Female", city: "Sinnar, Maharashtra", studies: "Student", garbaStyle: "Traditional Raas", hobbies: ["Music"], bio: "Ready for meetups 🪔", photoUrl: user.photoURL || "", socialHandle: "", isVerified: isAdmin, role: isAdmin ? "admin" : "member", createdAt: firebase.firestore.FieldValue.serverTimestamp(), lastSeen: firebase.firestore.FieldValue.serverTimestamp()
           });
         }
         alert("Google Sign-In Successful!");
@@ -946,10 +1243,10 @@
           }
         });
         userRef.onSnapshot(doc => { if (doc.exists) { currentUserProfile = doc.data(); updateUIWithProfile(currentUserProfile); } });
-        listenToRequests(); listenToRegisteredUsers(); listenToBanners(); listenToEvents(); listenToAppSettings();
+        listenToRequests(); listenToRegisteredUsers(); listenToBanners(); listenToEvents(); listenToAppSettings(); listenToGroupsAndRequests();
       } else {
         currentUser = null; currentUserProfile = null;
-        if (unsubscribePrivateChat) unsubscribePrivateChat(); if (unsubscribeUsers) unsubscribeUsers(); if (unsubscribeRequests) unsubscribeRequests(); if (unsubscribeEvents) unsubscribeEvents(); if (unsubscribeBanners) unsubscribeBanners(); if (unsubscribeSettings) unsubscribeSettings(); if (unsubscribeTyping) unsubscribeTyping();
+        if (unsubscribePrivateChat) unsubscribePrivateChat(); if (unsubscribeUsers) unsubscribeUsers(); if (unsubscribeRequests) unsubscribeRequests(); if (unsubscribeEvents) unsubscribeEvents(); if (unsubscribeBanners) unsubscribeBanners(); if (unsubscribeSettings) unsubscribeSettings(); if (unsubscribeTyping) unsubscribeTyping(); if (unsubscribeGroups) unsubscribeGroups(); if (unsubscribeGroupReqs) unsubscribeGroupReqs();
         document.getElementById('screen-auth').classList.remove('hidden');
         document.getElementById('screen-onboarding').classList.add('hidden');
         ['chats', 'buddies', 'events', 'profile', 'admin-page'].forEach(t => document.getElementById(`screen-${t}`).classList.add('hidden'));
@@ -971,6 +1268,7 @@
       const name = sanitizeInput(document.getElementById('onboard-name').value.trim()) || generateRandomFestiveName();
       let username = sanitizeInput(document.getElementById('onboard-username').value.trim()).toLowerCase().replace('@', '') || generateRandomUsername();
       const gender = document.getElementById('onboard-gender').value;
+      const seeking = document.getElementById('onboard-seeking').value;
       const city = sanitizeInput(document.getElementById('onboard-city').value.trim());
       const studies = sanitizeInput(document.getElementById('onboard-studies').value.trim());
       const garbaStyle = document.getElementById('onboard-garba-style').value;
@@ -981,7 +1279,7 @@
       if (await isUsernameTaken(username, cleanEmail)) return alert("Username already taken!");
 
       await db.collection("milo_users").doc(cleanEmail).set({
-        email: cleanEmail, name, username, gender, city: city || "Sinnar", studies: studies || "Student", garbaStyle, bio: bio || "Ready for meetups", photoUrl: currentUser.photoURL || "", isVerified: isAdmin, role: isAdmin ? "admin" : "member", lastSeen: firebase.firestore.FieldValue.serverTimestamp()
+        email: cleanEmail, name, username, gender, seeking, city: city || "Sinnar", studies: studies || "Student", garbaStyle, bio: bio || "Ready for meetups", photoUrl: currentUser.photoURL || "", isVerified: isAdmin, role: isAdmin ? "admin" : "member", lastSeen: firebase.firestore.FieldValue.serverTimestamp()
       }, { merge: true });
 
       document.getElementById('screen-onboarding').classList.add('hidden');
@@ -1002,6 +1300,7 @@
       document.getElementById('profile-bio-input').value = profile.bio || '';
       document.getElementById('profile-insta-input').value = profile.socialHandle || '';
       if (profile.gender) document.getElementById('profile-gender-input').value = profile.gender;
+      if (profile.seeking) document.getElementById('profile-seeking-input').value = profile.seeking;
       if (profile.garbaStyle) document.getElementById('profile-garba-style').value = profile.garbaStyle;
       if (profile.studies) document.getElementById('profile-studies-input').value = profile.studies;
 
@@ -1053,13 +1352,14 @@
       const bio = sanitizeInput(document.getElementById('profile-bio-input').value.trim());
       const handle = sanitizeInput(document.getElementById('profile-insta-input').value.trim());
       const gender = document.getElementById('profile-gender-input').value;
+      const seeking = document.getElementById('profile-seeking-input').value;
       const garbaStyle = document.getElementById('profile-garba-style').value;
       const studies = sanitizeInput(document.getElementById('profile-studies-input').value.trim());
 
       if (await isUsernameTaken(username, currentUser.email.toLowerCase())) return alert("Username taken!");
 
       await db.collection("milo_users").doc(currentUser.email.toLowerCase()).update({
-        name, username, city, bio, socialHandle: handle, gender, garbaStyle, studies
+        name, username, city, bio, socialHandle: handle, gender, seeking, garbaStyle, studies
       });
       alert("Profile updated!");
     }
@@ -1218,6 +1518,7 @@
     }
 
     function applyPartnerFilters() {
+      if (currentExploreTab !== 'partners') return;
       const buddiesSlider = document.getElementById('buddies-slider');
       if (!buddiesSlider || !currentUser) return;
       buddiesSlider.innerHTML = '';
@@ -1226,6 +1527,11 @@
       const cityFilter = document.getElementById('partner-city-filter')?.value || 'ALL';
 
       let filtered = globalAllUsers.filter(u => u.email.toLowerCase() !== myEmail);
+
+      if (currentGenderFilter !== 'ALL') {
+        filtered = filtered.filter(u => u.gender && u.gender.toLowerCase() === currentGenderFilter.toLowerCase());
+      }
+
       if (searchQuery) filtered = filtered.filter(u => (u.name && u.name.toLowerCase().includes(searchQuery)) || (u.username && u.username.toLowerCase().includes(searchQuery)));
       if (cityFilter !== 'ALL') filtered = filtered.filter(u => u.city && u.city.toLowerCase().includes(cityFilter.toLowerCase()));
 
@@ -1233,7 +1539,6 @@
       if (filtered.length === 0) { buddiesSlider.innerHTML = `<div class="col-span-2 text-center py-10 text-xs text-zinc-500">No partners found.</div>`; return; }
 
       filtered.forEach(u => {
-        const req = userRequestsMap[u.email.toLowerCase()];
         const card = document.createElement('div');
         card.className = "buddy-card-item";
         card.onclick = () => openBuddyProfileModal(u.email);
@@ -1253,54 +1558,67 @@
 
     function renderChatsContactsList() {
       const chatList = document.getElementById('contacts-list');
-      const activeStrip = document.getElementById('active-members-strip');
       if (!chatList || !currentUser) return;
-      chatList.innerHTML = ''; activeStrip.innerHTML = '';
+      chatList.innerHTML = '';
 
       const myEmail = currentUser.email.toLowerCase();
-      const connectedUsers = globalAllUsers.filter(u => {
-        if (u.email.toLowerCase() === myEmail) return false;
-        const req = userRequestsMap[u.email.toLowerCase()];
-        return req && req.status === 'accepted';
-      });
 
-      document.getElementById('active-contacts-count').innerText = connectedUsers.length;
-      document.getElementById('active-online-count').innerText = `${connectedUsers.length} Online`;
+      if (currentChatSubTab === 'communities') {
+        document.getElementById('active-contacts-count').innerText = globalGroups.length;
+        if (globalGroups.length === 0) {
+          chatList.innerHTML = `<div class="text-center py-8 text-xs text-zinc-500">No community groups available. Admin will create them!</div>`;
+          return;
+        }
 
-      if (connectedUsers.length === 0) {
-        activeStrip.innerHTML = `<div class="text-xs text-zinc-500 py-2">No connected chats yet.</div>`;
-        chatList.innerHTML = `<div class="text-center py-6 text-xs text-zinc-500">No active conversations. Connect with matches in Explore!</div>`;
-        return;
+        globalGroups.forEach(g => {
+          chatList.innerHTML += `
+            <div class="p-3 rounded-2xl bg-zinc-900/80 hover:bg-zinc-900 cursor-pointer border border-zinc-800 flex items-center justify-between" onclick="openGroupChat('${g.id}', '${sanitizeInput(g.name)}')">
+              <div class="flex items-center gap-3 overflow-hidden">
+                <div class="relative w-10 h-10 rounded-full overflow-hidden bg-gradient-to-tr from-rose-600 to-amber-500 flex items-center justify-center text-white font-bold border border-rose-500/30">
+                  <i class="fa-solid fa-robot text-sm"></i>
+                </div>
+                <div class="overflow-hidden">
+                  <h4 class="font-bold text-xs text-white truncate">${sanitizeInput(g.name)} <span class="text-[9px] bg-rose-900/60 text-rose-300 px-1.5 py-0.2 rounded font-mono">${sanitizeInput(g.groupType || 'Mixed')}</span></h4>
+                  <span class="text-[10px] text-amber-400 font-mono block">♂ ${g.boysLimit || 5} | ♀ ${g.girlsLimit || 5}</span>
+                </div>
+              </div>
+              <button class="px-3 py-1.5 rounded-xl tinder-btn text-[10px] font-bold">Open ➔</button>
+            </div>
+          `;
+        });
+      } else {
+        const connectedUsers = globalAllUsers.filter(u => {
+          if (u.email.toLowerCase() === myEmail) return false;
+          const req = userRequestsMap[u.email.toLowerCase()];
+          return req && req.status === 'accepted';
+        });
+
+        document.getElementById('active-contacts-count').innerText = connectedUsers.length;
+
+        if (connectedUsers.length === 0) {
+          chatList.innerHTML = `<div class="text-center py-8 text-xs text-zinc-500">No active direct chats. Connect with matches in Explore!</div>`;
+          return;
+        }
+
+        connectedUsers.forEach(u => {
+          const avatar = u.photoUrl ? `<img src="${u.photoUrl}" class="w-full h-full object-cover" />` : u.name[0];
+          chatList.innerHTML += `
+            <div class="p-3 rounded-2xl bg-zinc-900/80 hover:bg-zinc-900 cursor-pointer border border-zinc-800 flex items-center justify-between" onclick="open1on1Chat('${u.email}')">
+              <div class="flex items-center gap-3 overflow-hidden">
+                <div class="relative w-10 h-10 rounded-full overflow-hidden bg-zinc-800 flex items-center justify-center text-rose-400 font-bold">
+                  ${avatar}
+                  <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-400 border border-zinc-900 rounded-full"></span>
+                </div>
+                <div class="overflow-hidden">
+                  <h4 class="font-bold text-xs text-white truncate">${sanitizeInput(u.name)}</h4>
+                  <span class="text-[10px] text-zinc-400 truncate">@${sanitizeInput(u.username || 'user')}</span>
+                </div>
+              </div>
+              <button class="px-3 py-1.5 rounded-xl tinder-btn text-[10px] font-bold">Chat ➔</button>
+            </div>
+          `;
+        });
       }
-
-      connectedUsers.forEach(u => {
-        const avatar = u.photoUrl ? `<img src="${u.photoUrl}" class="w-full h-full object-cover" />` : u.name[0];
-        activeStrip.innerHTML += `
-          <div class="flex flex-col items-center gap-1 cursor-pointer shrink-0" onclick="open1on1Chat('${u.email}')">
-            <div class="relative w-12 h-12 rounded-full overflow-hidden bg-zinc-800 flex items-center justify-center text-rose-400 font-bold border border-white/10">
-              ${avatar}
-              <span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-400 border-2 border-zinc-900 rounded-full"></span>
-            </div>
-            <span class="text-[10px] font-bold text-zinc-300 truncate w-14 text-center">${sanitizeInput(u.name)}</span>
-          </div>
-        `;
-
-        chatList.innerHTML += `
-          <div class="p-3 rounded-2xl bg-zinc-900/80 hover:bg-zinc-900 cursor-pointer border border-zinc-800 flex items-center justify-between" onclick="open1on1Chat('${u.email}')">
-            <div class="flex items-center gap-3 overflow-hidden">
-              <div class="relative w-10 h-10 rounded-full overflow-hidden bg-zinc-800 flex items-center justify-center text-rose-400 font-bold">
-                ${avatar}
-                <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-400 border border-zinc-900 rounded-full"></span>
-              </div>
-              <div class="overflow-hidden">
-                <h4 class="font-bold text-xs text-white truncate">${sanitizeInput(u.name)}</h4>
-                <span class="text-[10px] text-zinc-400 truncate">@${sanitizeInput(u.username || 'user')}</span>
-              </div>
-            </div>
-            <button class="px-3 py-1.5 rounded-xl tinder-btn text-[10px] font-bold">Chat ➔</button>
-          </div>
-        `;
-      });
     }
 
     function renderAdminUsersList() {
@@ -1323,6 +1641,7 @@
     function getRoomId(e1, e2) { return [e1.toLowerCase(), e2.toLowerCase()].sort().join('_'); }
 
     async function open1on1Chat(partnerEmail) {
+      isGroupChat = false;
       activePartnerEmail = partnerEmail.toLowerCase();
       activeRoomId = getRoomId(currentUser.email, activePartnerEmail);
       document.getElementById('chats-contacts-view').classList.add('hidden');
@@ -1334,11 +1653,25 @@
       document.getElementById('room-partner-city-tag').innerText = `📍 ${pData.city || 'Sinnar'}`;
 
       const avatarBox = document.getElementById('room-partner-avatar-box');
-      if (pData.photoUrl) avatarBox.innerHTML = `<img src="${pData.photoUrl}" class="w-full h-full object-cover rounded-full" />`;
-      else avatarBox.innerHTML = `<span>${pData.name[0]}</span>`;
+      avatarBox.innerHTML = pData.photoUrl ? `<img src="${pData.photoUrl}" class="w-full h-full object-cover rounded-full" />` : `<span>${pData.name[0]}</span>`;
 
       listenToPrivateMessages();
       listenToPartnerTypingStatus();
+    }
+
+    async function openGroupChat(groupId, groupName) {
+      isGroupChat = true;
+      activeRoomId = `group_${groupId}`;
+      activePartnerEmail = null;
+      document.getElementById('chats-contacts-view').classList.add('hidden');
+      document.getElementById('chats-room-view').classList.remove('hidden');
+
+      document.getElementById('room-partner-name').innerText = groupName;
+      document.getElementById('room-partner-city-tag').innerText = `👥 Community Group`;
+      const avatarBox = document.getElementById('room-partner-avatar-box');
+      avatarBox.innerHTML = `<i class="fa-solid fa-robot text-white text-xs"></i>`;
+
+      listenToPrivateMessages();
     }
 
     function backToContactsList() {
@@ -1346,11 +1679,11 @@
       document.getElementById('chats-contacts-view').classList.remove('hidden');
       if (unsubscribePrivateChat) unsubscribePrivateChat();
       if (unsubscribeTyping) unsubscribeTyping();
-      activePartnerEmail = null; activeRoomId = null;
+      activePartnerEmail = null; activeRoomId = null; isGroupChat = false;
     }
 
     function handleTypingInput() {
-      if (!activeRoomId || !currentUser) return;
+      if (isGroupChat || !activeRoomId || !currentUser) return;
       db.collection("milo_typing").doc(activeRoomId).set({ [currentUser.email.toLowerCase()]: true }, { merge: true });
       if (typingTimeout) clearTimeout(typingTimeout);
       typingTimeout = setTimeout(() => {
@@ -1359,6 +1692,7 @@
     }
 
     function listenToPartnerTypingStatus() {
+      if (isGroupChat) return;
       if (unsubscribeTyping) unsubscribeTyping();
       unsubscribeTyping = db.collection("milo_typing").doc(activeRoomId).onSnapshot(doc => {
         const stat = document.getElementById('room-partner-status-text');
@@ -1381,7 +1715,7 @@
         snapshot.forEach(doc => msgs.push({ id: doc.id, ...doc.data() }));
         msgs.sort((a, b) => ((a.timestamp?.toMillis() || a.localTime) - (b.timestamp?.toMillis() || b.localTime)));
 
-        if (!isInit) {
+        if (!isInit && !isGroupChat) {
           const latest = msgs[msgs.length - 1];
           if (latest && latest.senderEmail !== currentUser.email.toLowerCase()) showSystemNotification(latest.senderName, latest.text);
         }
@@ -1391,7 +1725,7 @@
           const isMe = m.senderEmail === currentUser.email.toLowerCase();
           const bubble = document.createElement('div');
           bubble.className = `max-w-[80%] px-3.5 py-2 rounded-2xl text-xs ${isMe ? 'tinder-btn text-white ml-auto' : 'bg-zinc-900 text-zinc-100 mr-auto border border-zinc-800'}`;
-          bubble.innerHTML = `<p>${sanitizeInput(m.text)}</p>`;
+          bubble.innerHTML = `${isGroupChat && !isMe ? `<span class="text-[9px] text-rose-400 font-bold block mb-0.5">${sanitizeInput(m.senderName)}</span>` : ''}<p>${sanitizeInput(m.text)}</p>`;
           stream.appendChild(bubble);
         });
         stream.scrollTop = stream.scrollHeight;
@@ -1403,9 +1737,22 @@
       const val = sanitizeInput(input.value.trim());
       if (!val || !currentUser || !activeRoomId) return;
       input.value = '';
-      await db.collection("milo_private_messages").add({
-        roomId: activeRoomId, senderEmail: currentUser.email.toLowerCase(), receiverEmail: activePartnerEmail, senderName: currentUserProfile.name || 'User', text: val, localTime: Date.now(), timestamp: firebase.firestore.FieldValue.serverTimestamp()
-      });
+      
+      const payload = {
+        roomId: activeRoomId,
+        senderEmail: currentUser.email.toLowerCase(),
+        senderName: currentUserProfile.name || 'User',
+        text: val,
+        localTime: Date.now(),
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      };
+
+      if (!isGroupChat) payload.receiverEmail = activePartnerEmail;
+
+      await db.collection("milo_private_messages").add(payload);
+      if (!isGroupChat) {
+        db.collection("milo_typing").doc(activeRoomId).set({ [currentUser.email.toLowerCase()]: false }, { merge: true });
+      }
     }
   </script>
 </body>
