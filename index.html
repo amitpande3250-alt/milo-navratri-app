@@ -39,6 +39,15 @@
     }
     .romantic-btn:active { transform: scale(0.97); }
 
+    .google-btn {
+      background: #ffffff;
+      color: #1f2937;
+      font-weight: 700;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+      transition: transform 0.15s ease;
+    }
+    .google-btn:active { transform: scale(0.97); }
+
     .bottom-nav-active {
       background: linear-gradient(135deg, rgba(225, 29, 72, 0.32), rgba(245, 158, 11, 0.22));
       border: 1px solid rgba(251, 191, 36, 0.6);
@@ -153,46 +162,58 @@
         </div>
         <div class="text-left">
           <span id="header-user-email" class="font-bold text-slate-200 max-w-[70px] truncate text-xs block leading-tight">User</span>
-          <span id="header-user-city" class="text-[9px] text-amber-400 font-semibold truncate block">📍 Nashik</span>
+          <span id="header-user-city" class="text-[9px] text-amber-400 font-semibold truncate block">📍 Sinnar</span>
         </div>
       </button>
     </div>
   </header>
 
-  <!-- SCREEN 1: LOGIN / SIGNUP -->
+  <!-- SCREEN 1: LOGIN / SIGNUP WITH GOOGLE BUTTON -->
   <section id="screen-auth" class="relative z-20 flex-1 flex items-center justify-center p-4 w-full max-w-sm mx-auto my-auto">
     <div class="dark-navratri-glass w-full rounded-3xl p-6 shadow-2xl border border-amber-500/30">
-      <div class="text-center mb-6">
+      <div class="text-center mb-5">
         <span class="text-[10px] font-bold tracking-widest text-amber-300 bg-rose-950/80 px-3 py-1 rounded-full border border-amber-500/40 uppercase">
           🪔 Navratri Romantic Nights
         </span>
-        <h2 class="text-2xl font-black text-amber-100 mt-3">Welcome to Milo</h2>
+        <h2 class="text-2xl font-black text-amber-100 mt-2.5">Welcome to Milo</h2>
         <p class="text-xs text-slate-400 mt-1">Dandiya, romantic meetups & private companions</p>
       </div>
 
-      <div class="space-y-3.5 text-xs">
+      <div class="space-y-3 text-xs">
+        <!-- DIRECT GOOGLE SIGN-IN BUTTON -->
+        <button type="button" onclick="handleGoogleSignIn()" class="w-full py-3 rounded-2xl google-btn flex items-center justify-center gap-2.5 shadow-md">
+          <i class="fa-brands fa-google text-rose-600 text-base"></i>
+          <span>Sign in with Google</span>
+        </button>
+
+        <div class="flex items-center my-3">
+          <div class="flex-1 border-t border-purple-900"></div>
+          <span class="px-3 text-[10px] text-slate-400 uppercase font-bold">Or with Email</span>
+          <div class="flex-1 border-t border-purple-900"></div>
+        </div>
+
         <div>
           <label class="block text-slate-300 mb-1 font-semibold">Your Display Name</label>
-          <input type="text" id="auth-name" placeholder="E.g. Garba King" class="w-full bg-[#120822]/90 border border-slate-700 rounded-2xl p-3 text-slate-100 outline-none focus:border-amber-400 text-xs shadow-inner" />
+          <input type="text" id="auth-name" placeholder="E.g. Garba King" class="w-full bg-[#120822]/90 border border-slate-700 rounded-2xl p-2.5 text-slate-100 outline-none focus:border-amber-400 text-xs shadow-inner" />
         </div>
         <div>
           <label class="block text-slate-300 mb-1 font-semibold">Unique Username (@username)</label>
-          <input type="text" id="auth-username" placeholder="E.g. garba_king_07" class="w-full bg-[#120822]/90 border border-slate-700 rounded-2xl p-3 text-slate-100 outline-none focus:border-amber-400 text-xs shadow-inner" />
+          <input type="text" id="auth-username" placeholder="E.g. garba_king_07" class="w-full bg-[#120822]/90 border border-slate-700 rounded-2xl p-2.5 text-slate-100 outline-none focus:border-amber-400 text-xs shadow-inner" />
         </div>
         <div>
           <label class="block text-slate-300 mb-1 font-semibold">Email ID</label>
-          <input type="email" id="auth-email" placeholder="name@email.com" class="w-full bg-[#120822]/90 border border-slate-700 rounded-2xl p-3 text-slate-100 outline-none focus:border-amber-400 text-xs shadow-inner" />
+          <input type="email" id="auth-email" placeholder="name@email.com" class="w-full bg-[#120822]/90 border border-slate-700 rounded-2xl p-2.5 text-slate-100 outline-none focus:border-amber-400 text-xs shadow-inner" />
         </div>
         <div>
           <label class="block text-slate-300 mb-1 font-semibold">Password</label>
-          <input type="password" id="auth-password" placeholder="At least 6 characters" class="w-full bg-[#120822]/90 border border-slate-700 rounded-2xl p-3 text-slate-100 outline-none focus:border-amber-400 text-xs shadow-inner" />
+          <input type="password" id="auth-password" placeholder="At least 6 characters" class="w-full bg-[#120822]/90 border border-slate-700 rounded-2xl p-2.5 text-slate-100 outline-none focus:border-amber-400 text-xs shadow-inner" />
         </div>
 
         <div class="grid grid-cols-2 gap-2 pt-1">
-          <button type="button" id="btn-signup" onclick="handleSignUp()" class="py-3 rounded-2xl bg-purple-950/80 border border-purple-800 text-slate-200 font-bold hover:bg-purple-900 transition shadow-sm">
+          <button type="button" id="btn-signup" onclick="handleSignUp()" class="py-2.5 rounded-2xl bg-purple-950/80 border border-purple-800 text-slate-200 font-bold hover:bg-purple-900 transition shadow-sm">
             Sign Up
           </button>
-          <button type="button" id="btn-signin" onclick="handleSignIn()" class="py-3 rounded-2xl romantic-btn uppercase tracking-wider transition">
+          <button type="button" id="btn-signin" onclick="handleSignIn()" class="py-2.5 rounded-2xl romantic-btn uppercase tracking-wider transition">
             Sign In ➔
           </button>
         </div>
@@ -1358,7 +1379,7 @@
     }
 
     /* =========================================================
-       7. APP SETTINGS & UNIQUE USERNAME VALIDATION
+       7. APP SETTINGS & GOOGLE AUTH INTEGRATION
        ========================================================= */
     function listenToAppSettings() {
       if (unsubscribeSettings) unsubscribeSettings();
@@ -1404,6 +1425,46 @@
       } catch(err) { alert("Error: " + err.message); }
     }
 
+    async function handleGoogleSignIn() {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      try {
+        const result = await auth.signInWithPopup(provider);
+        const user = result.user;
+        const cleanEmail = user.email.toLowerCase();
+
+        // Check if user document already exists in Firestore
+        const userRef = db.collection("milo_users").doc(cleanEmail);
+        const docSnap = await userRef.get();
+
+        if (!docSnap.exists) {
+          const baseName = user.displayName || generateRandomFestiveName();
+          const baseUsername = cleanEmail.split('@')[0].replace(/[^a-z0-9_]/g, '') + '_' + Math.floor(10 + Math.random() * 90);
+          const isAdmin = SUPER_ADMINS.includes(cleanEmail);
+
+          await userRef.set({
+            email: cleanEmail,
+            name: baseName,
+            username: baseUsername,
+            gender: "Other",
+            city: "Sinnar, Maharashtra",
+            studies: "Student",
+            garbaStyle: "Traditional Raas",
+            hobbies: ["Garba", "Music"],
+            bio: "Ready for Navratri Garba nights 🪔",
+            photoUrl: user.photoURL || "",
+            socialHandle: "",
+            isVerified: isAdmin,
+            role: isAdmin ? "admin" : "member",
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            lastSeen: firebase.firestore.FieldValue.serverTimestamp()
+          });
+        }
+        alert("Google Sign-In Successful! ✨");
+      } catch (err) {
+        showAuthError("Google Sign-In Error: " + err.message);
+      }
+    }
+
     auth.onAuthStateChanged(async user => {
       if (user) {
         currentUser = user;
@@ -1416,8 +1477,8 @@
         userRef.get().then(docSnap => {
           if (!docSnap.exists) {
             document.getElementById('screen-onboarding').classList.remove('hidden');
-            document.getElementById('onboard-name').value = document.getElementById('auth-name').value || generateRandomFestiveName();
-            document.getElementById('onboard-username').value = document.getElementById('auth-username').value || generateRandomUsername();
+            document.getElementById('onboard-name').value = user.displayName || generateRandomFestiveName();
+            document.getElementById('onboard-username').value = cleanEmail.split('@')[0].replace(/[^a-z0-9_]/g, '') + '_' + Math.floor(10 + Math.random() * 90);
           } else {
             document.getElementById('screen-onboarding').classList.add('hidden');
             document.getElementById('top-user-pill').classList.remove('hidden');
@@ -1489,7 +1550,6 @@
       const cleanEmail = currentUser.email.toLowerCase();
       const isAdmin = SUPER_ADMINS.includes(cleanEmail);
 
-      // Check if username is already taken by someone else
       const taken = await isUsernameTaken(username, cleanEmail);
       if (taken) {
         alert(`❌ Username '@${username}' pehle se kisi aur ne liya hua hai! Kripya kuch underscore (_) ya numbers lagakar alag username daalein.`);
@@ -1507,7 +1567,7 @@
           garbaStyle: garbaStyle,
           hobbies: hobbies.length ? hobbies : ["Garba", "Music"],
           bio: bio || "Ready for Navratri Garba nights 🪔",
-          photoUrl: "",
+          photoUrl: currentUser.photoURL || "",
           socialHandle: "",
           isVerified: isAdmin,
           role: isAdmin ? "admin" : "member",
