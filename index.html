@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Milo - Navratri Exclusive</title>
+  <title>Milo - Traditional Navratri Nights</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
@@ -11,37 +11,41 @@
     *, *::before, *::after { box-sizing: border-box; }
     html, body {
       width: 100%; max-width: 100vw; overflow-x: hidden; margin: 0; padding: 0;
-      background: #09090b;
-      color: #f4f4f5;
+      background: #11051c;
+      background-image: 
+        radial-gradient(at 20% 20%, rgba(225, 29, 72, 0.25) 0px, transparent 55%),
+        radial-gradient(at 80% 80%, rgba(245, 158, 11, 0.22) 0px, transparent 55%);
+      color: #fef3c7;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       user-select: none; -webkit-tap-highlight-color: transparent; scroll-behavior: smooth;
     }
 
-    @keyframes subtlePulse {
-      0% { transform: scale(1); opacity: 0.95; }
-      50% { transform: scale(1.01); opacity: 1; }
-      100% { transform: scale(1); opacity: 0.95; }
+    @keyframes festiveGlow {
+      0% { transform: scale(1); box-shadow: 0 0 15px rgba(245, 158, 11, 0.15); }
+      50% { transform: scale(1.008); box-shadow: 0 0 25px rgba(225, 29, 72, 0.3); }
+      100% { transform: scale(1); box-shadow: 0 0 15px rgba(245, 158, 11, 0.15); }
     }
 
-    .clean-glass-card {
-      background: rgba(24, 24, 27, 0.75);
-      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
-      animation: subtlePulse 6s ease-in-out infinite;
+    .navratri-glass-card {
+      background: rgba(26, 11, 46, 0.88);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(251, 191, 36, 0.3);
+      box-shadow: 0 12px 35px -5px rgba(0, 0, 0, 0.7);
+      animation: festiveGlow 5s ease-in-out infinite;
     }
 
-    .tinder-btn {
-      background: linear-gradient(135deg, #f43f5e 0%, #fb7185 100%);
-      color: #ffffff; font-weight: 700;
-      box-shadow: 0 4px 20px rgba(244, 63, 94, 0.35);
+    .navratri-btn {
+      background: linear-gradient(135deg, #e11d48 0%, #ea580c 50%, #f59e0b 100%);
+      color: #ffffff; font-weight: 800;
+      box-shadow: 0 6px 20px rgba(225, 29, 72, 0.4);
       transition: transform 0.15s ease;
     }
-    .tinder-btn:active { transform: scale(0.97); }
+    .navratri-btn:active { transform: scale(0.97); }
 
     .bottom-nav-active {
-      color: #fb7185 !important;
-      background: rgba(244, 63, 94, 0.12);
+      color: #fbbf24 !important;
+      background: rgba(245, 158, 11, 0.18);
+      border: 1px solid rgba(251, 191, 36, 0.4);
       border-radius: 9999px;
     }
 
@@ -51,9 +55,9 @@
     }
     .banner-carousel-track::-webkit-scrollbar { display: none; }
 
-    .clean-banner-card {
-      flex: 0 0 90%; max-width: 320px; scroll-snap-align: center; border-radius: 20px; overflow: hidden; position: relative;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+    .navratri-banner-card {
+      flex: 0 0 90%; max-width: 320px; scroll-snap-align: center; border-radius: 24px; overflow: hidden; position: relative;
+      border: 1.5px solid rgba(251, 191, 36, 0.4);
     }
 
     .buddies-grid {
@@ -61,137 +65,143 @@
     }
 
     .buddy-card-item {
-      background: rgba(24, 24, 27, 0.6); border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 20px; padding: 12px; display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer;
+      background: rgba(26, 11, 46, 0.75); border: 1px solid rgba(251, 191, 36, 0.2);
+      border-radius: 24px; padding: 14px; display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer;
       transition: transform 0.2s ease;
     }
     .buddy-card-item:active { transform: scale(0.96); }
 
-    .simple-footer {
-      width: 100%; background: #050507; border-top: 1px solid rgba(255, 255, 255, 0.05);
-      color: #71717a; padding: 20px 16px 80px 16px; text-align: center; font-size: 11px; line-height: 1.5;
+    .festive-footer {
+      width: 100%; background: #0b0213; border-top: 1px solid rgba(251, 191, 36, 0.2);
+      color: #d1d5db; padding: 20px 16px 80px 16px; text-align: center; font-size: 11px; line-height: 1.5;
     }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between relative pb-16">
 
   <!-- TOP HEADER -->
-  <header id="main-app-header" class="fixed top-0 left-0 right-0 z-50 w-full px-4 py-3 flex items-center justify-between clean-glass-card border-b border-white/10 shadow-md">
+  <header id="main-app-header" class="fixed top-0 left-0 right-0 z-50 w-full px-4 py-3 flex items-center justify-between navratri-glass-card border-b border-amber-500/30 shadow-xl">
     <div class="flex items-center gap-2.5 shrink-0 cursor-pointer" onclick="handleSecretLogoTaps()">
-      <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-rose-600 to-pink-500 flex items-center justify-center font-black text-white text-xs shadow-md">M</div>
+      <div class="w-9 h-9 rounded-2xl bg-gradient-to-tr from-rose-600 via-orange-500 to-amber-400 p-[2px] shadow-lg shadow-rose-600/40">
+        <div class="w-full h-full bg-[#120822] rounded-[14px] flex items-center justify-center font-black text-amber-400 text-sm">🪔</div>
+      </div>
       <div>
-        <span class="text-base font-black tracking-wider text-white">MILO</span>
-        <span class="block text-[8px] tracking-widest text-rose-400 font-bold uppercase">Navratri Edition</span>
+        <div class="flex items-center gap-1.5">
+          <span class="text-lg font-black tracking-widest bg-gradient-to-r from-amber-400 via-rose-400 to-orange-400 bg-clip-text text-transparent">MILO</span>
+          <span class="text-[8px] bg-rose-950 text-amber-300 border border-amber-500/40 px-1.5 py-0.2 rounded-full font-bold">Garba</span>
+        </div>
+        <span class="block text-[8px] tracking-widest text-amber-400/80 font-bold uppercase">Traditional Nights</span>
       </div>
     </div>
     
     <div id="top-user-pill" class="hidden flex items-center gap-2">
-      <button onclick="openRequestsModal()" class="relative w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center text-rose-400 border border-white/10 active:scale-90">
+      <button onclick="openRequestsModal()" class="relative w-8 h-8 rounded-full bg-rose-950/80 flex items-center justify-center text-amber-400 border border-amber-500/40 active:scale-90">
         <i class="fa-solid fa-bell text-xs"></i>
-        <span id="requests-badge-count" class="hidden absolute -top-1 -right-1 bg-rose-600 text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center border-2 border-zinc-900">0</span>
+        <span id="requests-badge-count" class="hidden absolute -top-1 -right-1 bg-rose-600 text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center border-2 border-[#120822]">0</span>
       </button>
 
-      <button onclick="switchTab('profile')" class="flex items-center gap-2 bg-zinc-800/80 px-3 py-1 rounded-full border border-white/10 text-xs active:scale-95">
-        <div class="w-6 h-6 rounded-full overflow-hidden bg-rose-600 flex items-center justify-center font-bold text-[10px] text-white" id="header-avatar-box">
+      <button onclick="switchTab('profile')" class="flex items-center gap-2 bg-purple-950/70 px-3 py-1 rounded-full border border-amber-500/30 text-xs active:scale-95">
+        <div class="w-6 h-6 rounded-full overflow-hidden bg-gradient-to-tr from-rose-500 to-amber-500 flex items-center justify-center font-bold text-[10px] text-white" id="header-avatar-box">
           <span id="header-avatar-letter">U</span>
         </div>
         <div class="text-left">
-          <span id="header-user-email" class="font-bold text-zinc-200 max-w-[70px] truncate text-[11px] block leading-tight">User</span>
+          <span id="header-user-email" class="font-bold text-amber-100 max-w-[70px] truncate text-[11px] block leading-tight">User</span>
         </div>
       </button>
     </div>
   </header>
 
   <!-- FLOATING BACK TO TOP -->
-  <button id="btn-back-to-top" onclick="window.scrollTo({top:0, behavior:'smooth'})" class="hidden fixed bottom-20 right-4 z-40 w-9 h-9 rounded-full bg-zinc-800 text-rose-400 border border-white/10 shadow-xl flex items-center justify-center text-xs active:scale-90 transition">
+  <button id="btn-back-to-top" onclick="window.scrollTo({top:0, behavior:'smooth'})" class="hidden fixed bottom-20 right-4 z-40 w-9 h-9 rounded-full bg-rose-600 text-amber-300 border border-amber-400/50 shadow-2xl flex items-center justify-center text-xs active:scale-90 transition">
     <i class="fa-solid fa-arrow-up"></i>
   </button>
 
   <!-- SCREEN 1: LOGIN / SIGNUP -->
   <section id="screen-auth" class="relative z-20 flex-1 flex items-center justify-center p-4 w-full max-w-sm mx-auto my-auto pt-16">
-    <div class="clean-glass-card w-full rounded-3xl p-6 shadow-2xl">
+    <div class="navratri-glass-card w-full rounded-3xl p-6 shadow-2xl border border-amber-500/40">
       <div class="text-center mb-5">
-        <span class="text-[9px] font-bold tracking-widest text-rose-400 bg-rose-950/60 px-3 py-1 rounded-full border border-rose-500/20 uppercase">
-          Exclusive Dating & Meetups
+        <span class="text-[9px] font-bold tracking-widest text-amber-300 bg-rose-950/80 px-3 py-1 rounded-full border border-amber-500/40 uppercase">
+          🪔 Navratri Romantic Nights
         </span>
-        <h2 class="text-2xl font-black text-white mt-2.5">Welcome to Milo</h2>
-        <p class="text-xs text-zinc-400 mt-1">Find your special Navratri companion</p>
+        <h2 class="text-2xl font-black text-amber-100 mt-2.5">Welcome to Milo</h2>
+        <p class="text-xs text-zinc-400 mt-1">Dandiya, garba raas & traditional partners</p>
       </div>
 
       <div class="space-y-3 text-xs">
+        <div>
+          <label class="block text-amber-200/90 mb-1 font-semibold">Display Name</label>
+          <input type="text" id="auth-name" placeholder="E.g. Garba King" class="w-full bg-[#120822] border border-purple-800 rounded-xl p-2.5 text-zinc-100 outline-none focus:border-amber-400 text-xs shadow-inner" />
+        </div>
+        <div>
+          <label class="block text-amber-200/90 mb-1 font-semibold">Username (@username)</label>
+          <input type="text" id="auth-username" placeholder="E.g. garba_king_07" class="w-full bg-[#120822] border border-purple-800 rounded-xl p-2.5 text-zinc-100 outline-none focus:border-amber-400 text-xs shadow-inner" />
+        </div>
+        <div>
+          <label class="block text-amber-200/90 mb-1 font-semibold">Email ID</label>
+          <input type="email" id="auth-email" placeholder="name@email.com" class="w-full bg-[#120822] border border-purple-800 rounded-xl p-2.5 text-zinc-100 outline-none focus:border-amber-400 text-xs shadow-inner" />
+        </div>
+        <div>
+          <label class="block text-amber-200/90 mb-1 font-semibold">Password</label>
+          <input type="password" id="auth-password" placeholder="At least 6 characters" class="w-full bg-[#120822] border border-purple-800 rounded-xl p-2.5 text-zinc-100 outline-none focus:border-amber-400 text-xs shadow-inner" />
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 pt-1">
+          <button type="button" onclick="handleSignUp()" class="py-2.5 rounded-xl bg-purple-950 border border-purple-800 text-amber-200 font-bold hover:bg-purple-900 transition shadow-sm">
+            Sign Up
+          </button>
+          <button type="button" onclick="handleSignIn()" class="py-2.5 rounded-xl navratri-btn uppercase tracking-wider">
+            Sign In ➔
+          </button>
+        </div>
+
+        <div class="flex items-center my-3">
+          <div class="flex-1 border-t border-purple-900"></div>
+          <span class="px-3 text-[10px] text-amber-400/85 uppercase font-bold">Or connect with</span>
+          <div class="flex-1 border-t border-purple-900"></div>
+        </div>
+
+        <!-- GOOGLE SIGN IN BUTTON PLACED AT THE BOTTOM -->
         <button type="button" onclick="handleGoogleSignIn()" class="w-full py-3 rounded-2xl bg-white text-zinc-900 font-bold flex items-center justify-center gap-2.5 shadow-md active:scale-95">
           <i class="fa-brands fa-google text-rose-600 text-base"></i>
           <span>Sign in with Google</span>
         </button>
 
-        <div class="flex items-center my-3">
-          <div class="flex-1 border-t border-zinc-800"></div>
-          <span class="px-3 text-[10px] text-zinc-500 uppercase font-bold">Or with Email</span>
-          <div class="flex-1 border-t border-zinc-800"></div>
-        </div>
-
-        <div>
-          <label class="block text-zinc-300 mb-1 font-semibold">Display Name</label>
-          <input type="text" id="auth-name" placeholder="E.g. Aarav" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-2.5 text-zinc-100 outline-none focus:border-rose-500 text-xs" />
-        </div>
-        <div>
-          <label class="block text-zinc-300 mb-1 font-semibold">Username (@username)</label>
-          <input type="text" id="auth-username" placeholder="E.g. aarav_07" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-2.5 text-zinc-100 outline-none focus:border-rose-500 text-xs" />
-        </div>
-        <div>
-          <label class="block text-zinc-300 mb-1 font-semibold">Email ID</label>
-          <input type="email" id="auth-email" placeholder="name@email.com" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-2.5 text-zinc-100 outline-none focus:border-rose-500 text-xs" />
-        </div>
-        <div>
-          <label class="block text-zinc-300 mb-1 font-semibold">Password</label>
-          <input type="password" id="auth-password" placeholder="At least 6 characters" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-2.5 text-zinc-100 outline-none focus:border-rose-500 text-xs" />
-        </div>
-
-        <div class="grid grid-cols-2 gap-2 pt-1">
-          <button type="button" onclick="handleSignUp()" class="py-2.5 rounded-xl bg-zinc-800 border border-zinc-700 text-zinc-200 font-bold hover:bg-zinc-700 transition">
-            Sign Up
-          </button>
-          <button type="button" onclick="handleSignIn()" class="py-2.5 rounded-xl tinder-btn uppercase tracking-wider">
-            Sign In ➔
-          </button>
-        </div>
-
-        <div id="auth-error-box" class="hidden p-3 rounded-xl bg-rose-950/80 border border-rose-800 text-[11px] text-rose-300 font-medium"></div>
+        <div id="auth-error-box" class="hidden p-3 rounded-xl bg-rose-950/90 border border-rose-800 text-[11px] text-rose-300 font-medium"></div>
       </div>
     </div>
   </section>
 
   <!-- SCREEN 1.5: ONBOARDING -->
   <section id="screen-onboarding" class="hidden relative z-50 flex-1 flex items-center justify-center p-4 w-full max-w-sm mx-auto my-auto pt-16">
-    <div class="clean-glass-card w-full rounded-3xl p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+    <div class="navratri-glass-card w-full rounded-3xl p-6 shadow-2xl max-h-[90vh] overflow-y-auto border-2 border-amber-400">
       <div class="text-center mb-4">
-        <span class="text-[9px] font-bold tracking-widest text-rose-400 bg-rose-950/60 px-3 py-1 rounded-full border border-rose-500/20 uppercase">
-          Profile Setup
+        <span class="text-[9px] font-bold tracking-widest text-amber-300 bg-rose-950/80 px-3 py-1 rounded-full border border-amber-500/40 uppercase">
+          ✨ Complete Profile
         </span>
-        <h2 class="text-lg font-black text-white mt-2">Complete Your Profile</h2>
+        <h2 class="text-lg font-black text-amber-100 mt-2">Set Up Your Milo Card</h2>
       </div>
 
       <div class="space-y-3 text-xs">
         <div>
-          <label class="block text-zinc-300 mb-1 font-semibold">Display Name</label>
-          <input type="text" id="onboard-name" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-2.5 text-zinc-100 outline-none text-xs" />
+          <label class="block text-amber-200 mb-1 font-semibold">Display Name</label>
+          <input type="text" id="onboard-name" class="w-full bg-[#120822] border border-purple-800 rounded-xl p-2.5 text-zinc-100 outline-none text-xs" />
         </div>
         <div>
-          <label class="block text-zinc-300 mb-1 font-semibold">Username (@username)</label>
-          <input type="text" id="onboard-username" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-2.5 text-zinc-100 outline-none text-xs" />
+          <label class="block text-amber-200 mb-1 font-semibold">Username (@username)</label>
+          <input type="text" id="onboard-username" class="w-full bg-[#120822] border border-purple-800 rounded-xl p-2.5 text-zinc-100 outline-none text-xs" />
         </div>
         <div class="grid grid-cols-2 gap-2">
           <div>
-            <label class="block text-zinc-300 mb-1 font-semibold">My Gender</label>
-            <select id="onboard-gender" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-2.5 text-xs text-rose-400 font-bold outline-none">
+            <label class="block text-amber-200 mb-1 font-semibold">My Gender</label>
+            <select id="onboard-gender" class="w-full bg-[#1a0e2e] border border-purple-800 rounded-xl p-2.5 text-xs text-amber-300 font-bold outline-none">
               <option value="Male">Male ♂</option>
               <option value="Female">Female ♀</option>
               <option value="Other">Other ✨</option>
             </select>
           </div>
           <div>
-            <label class="block text-zinc-300 mb-1 font-semibold">Looking For</label>
-            <select id="onboard-seeking" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-2.5 text-xs text-rose-400 font-bold outline-none">
+            <label class="block text-amber-200 mb-1 font-semibold">Looking For</label>
+            <select id="onboard-seeking" class="w-full bg-[#1a0e2e] border border-purple-800 rounded-xl p-2.5 text-xs text-amber-300 font-bold outline-none">
               <option value="Female">Female ♀</option>
               <option value="Male">Male ♂</option>
               <option value="Both">Anyone 🌐</option>
@@ -199,16 +209,16 @@
           </div>
         </div>
         <div>
-          <label class="block text-zinc-300 mb-1 font-semibold">City</label>
-          <input type="text" id="onboard-city" value="Sinnar, Maharashtra" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-2.5 text-xs text-zinc-100 outline-none" />
+          <label class="block text-amber-200 mb-1 font-semibold">City</label>
+          <input type="text" id="onboard-city" value="Sinnar, Maharashtra" class="w-full bg-[#120822] border border-purple-800 rounded-xl p-2.5 text-xs text-zinc-100 outline-none" />
         </div>
         <div>
-          <label class="block text-zinc-300 mb-1 font-semibold">Studies / Profession</label>
-          <input type="text" id="onboard-studies" placeholder="E.g. Software Developer" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-2.5 text-xs text-zinc-100 outline-none" />
+          <label class="block text-amber-200 mb-1 font-semibold">Profession / Studies</label>
+          <input type="text" id="onboard-studies" placeholder="E.g. Computer Science Student" class="w-full bg-[#120822] border border-purple-800 rounded-xl p-2.5 text-xs text-zinc-100 outline-none" />
         </div>
         <div>
-          <label class="block text-zinc-300 mb-1 font-semibold">Vibe / Style</label>
-          <select id="onboard-garba-style" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-2.5 text-xs text-rose-400 font-bold outline-none">
+          <label class="block text-amber-200 mb-1 font-semibold">Garba Style</label>
+          <select id="onboard-garba-style" class="w-full bg-[#1a0e2e] border border-purple-800 rounded-xl p-2.5 text-xs text-amber-300 font-bold outline-none">
             <option value="Traditional Raas">Traditional Raas</option>
             <option value="High-Energy Dandiya">High-Energy Dandiya</option>
             <option value="Romantic Partner">Romantic Partner</option>
@@ -216,11 +226,11 @@
           </select>
         </div>
         <div>
-          <label class="block text-zinc-300 mb-1 font-semibold">Bio</label>
-          <input type="text" id="onboard-bio" placeholder="Looking for a great dance partner 🪔" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-2.5 text-xs text-zinc-100 outline-none" />
+          <label class="block text-amber-200 mb-1 font-semibold">Bio</label>
+          <input type="text" id="onboard-bio" placeholder="Ready for Navratri nights 🪔" class="w-full bg-[#120822] border border-purple-800 rounded-xl p-2.5 text-xs text-zinc-100 outline-none" />
         </div>
 
-        <button onclick="saveOnboardingProfile()" class="w-full mt-2 py-3 rounded-xl tinder-btn font-black text-xs uppercase tracking-wider shadow-md">
+        <button onclick="saveOnboardingProfile()" class="w-full mt-2 py-3 rounded-xl navratri-btn font-black text-xs uppercase tracking-wider shadow-md">
           Start Exploring 🚀
         </button>
       </div>
@@ -230,32 +240,32 @@
   <!-- SCREEN 2: CHATS -->
   <section id="screen-chats" class="hidden relative z-20 flex-1 max-w-xl mx-auto w-full px-4 py-3 pt-16">
     <div id="chats-contacts-view" class="space-y-3.5">
-      <div id="incoming-requests-bar" class="hidden clean-glass-card rounded-2xl p-3 shadow-md border border-rose-500/30 flex items-center justify-between cursor-pointer" onclick="openRequestsModal()">
+      <div id="incoming-requests-bar" class="hidden navratri-glass-card rounded-2xl p-3 shadow-md border border-amber-400/50 flex items-center justify-between cursor-pointer" onclick="openRequestsModal()">
         <div class="flex items-center gap-2">
-          <span class="w-8 h-8 rounded-full bg-rose-950 text-rose-400 flex items-center justify-center text-xs font-bold border border-rose-500/30">
+          <span class="w-8 h-8 rounded-full bg-rose-950 text-amber-300 flex items-center justify-center text-xs font-bold border border-amber-400/40">
             <i class="fa-solid fa-user-plus"></i>
           </span>
           <div>
-            <h4 class="font-bold text-xs text-white">Partner Requests</h4>
+            <h4 class="font-bold text-xs text-amber-100">Partner Requests</h4>
             <span id="requests-bar-subtitle" class="text-[10px] text-zinc-400">Tap to Review</span>
           </div>
         </div>
-        <span class="px-3 py-1 rounded-xl tinder-btn text-[10px] font-bold">Review ➔</span>
+        <span class="px-3 py-1 rounded-xl navratri-btn text-[10px] font-bold">Review ➔</span>
       </div>
 
       <!-- CHAT SUB-TABS (DIRECT / COMMUNITIES) -->
-      <div class="clean-glass-card rounded-3xl p-4 shadow-xl">
-        <div class="flex items-center gap-1.5 p-1 bg-zinc-900 rounded-xl border border-zinc-800 text-xs font-bold mb-3">
+      <div class="navratri-glass-card rounded-3xl p-4 shadow-xl border border-amber-500/20">
+        <div class="flex items-center gap-1.5 p-1 bg-[#120822] rounded-xl border border-amber-500/30 text-xs font-bold mb-3">
           <button onclick="switchChatSubTab('direct')" id="chattab-direct" class="flex-1 py-1.5 rounded-lg bg-rose-600 text-white transition">Direct Chats 💬</button>
           <button onclick="switchChatSubTab('communities')" id="chattab-communities" class="flex-1 py-1.5 rounded-lg text-zinc-400 hover:text-white transition">Communities 👥</button>
         </div>
 
-        <div class="flex items-center justify-between pb-3 border-b border-zinc-800 mb-3">
+        <div class="flex items-center justify-between pb-3 border-b border-purple-900/50 mb-3">
           <div>
-            <h3 id="chat-sec-title" class="font-bold text-sm text-white">Direct Messages</h3>
+            <h3 id="chat-sec-title" class="font-bold text-sm text-amber-100">Direct Messages</h3>
             <p id="chat-sec-subtitle" class="text-[11px] text-zinc-400">Private 1-on-1 conversations</p>
           </div>
-          <span id="active-contacts-count" class="px-2.5 py-1 rounded-full bg-zinc-800 text-rose-400 text-[11px] font-bold">0</span>
+          <span id="active-contacts-count" class="px-2.5 py-1 rounded-full bg-purple-950 text-amber-300 text-[11px] font-bold border border-amber-500/30">0</span>
         </div>
 
         <div id="contacts-list" class="space-y-2">
@@ -265,35 +275,35 @@
     </div>
 
     <!-- CHAT ROOM (Supports Both 1-on-1 & Groups) -->
-    <div id="chats-room-view" class="hidden clean-glass-card rounded-3xl overflow-hidden shadow-2xl flex flex-col h-[76vh] border border-zinc-800">
-      <div class="p-3 border-b border-zinc-800 flex items-center justify-between bg-zinc-900/80">
+    <div id="chats-room-view" class="hidden navratri-glass-card rounded-3xl overflow-hidden shadow-2xl flex flex-col h-[76vh] border border-amber-500/30">
+      <div class="p-3 border-b border-purple-900/50 flex items-center justify-between bg-[#120822]/80">
         <div class="flex items-center gap-2.5">
-          <button onclick="backToContactsList()" class="w-8 h-8 rounded-full bg-zinc-800 hover:bg-zinc-700 flex items-center justify-center text-rose-400 text-xs transition">
+          <button onclick="backToContactsList()" class="w-8 h-8 rounded-full bg-purple-950 hover:bg-purple-900 flex items-center justify-center text-amber-300 text-xs transition border border-amber-500/30">
             <i class="fa-solid fa-arrow-left"></i>
           </button>
-          <div class="w-9 h-9 rounded-full overflow-hidden bg-rose-600 flex items-center justify-center font-bold text-xs text-white shadow-sm cursor-pointer relative" onclick="openPartnerDetailsModal()" id="room-partner-avatar-box">
+          <div class="w-9 h-9 rounded-full overflow-hidden bg-gradient-to-tr from-rose-500 to-amber-500 flex items-center justify-center font-bold text-xs text-white shadow-sm cursor-pointer relative" onclick="openPartnerDetailsModal()" id="room-partner-avatar-box">
             <span id="room-partner-avatar">P</span>
           </div>
           <div class="cursor-pointer" onclick="openPartnerDetailsModal()">
             <div class="flex items-center gap-1.5">
-              <h4 id="room-partner-name" class="font-bold text-xs text-white"></h4>
-              <span id="room-partner-badge" class="hidden text-sky-400 text-xs"><i class="fa-solid fa-circle-check"></i></span>
+              <h4 id="room-partner-name" class="font-bold text-xs text-amber-100"></h4>
+              <span id="room-partner-badge" class="hidden text-amber-400 text-xs"><i class="fa-solid fa-circle-check"></i></span>
             </div>
             <div class="flex items-center gap-1.5">
               <span id="room-partner-status-text" class="text-[9px] text-emerald-400 font-semibold">● Online</span>
-              <span id="room-partner-city-tag" class="text-[9px] text-zinc-400 font-medium"></span>
+              <span id="room-partner-city-tag" class="text-[9px] text-amber-400 font-medium"></span>
             </div>
           </div>
         </div>
-        <span class="text-[9px] text-zinc-400 bg-zinc-800 px-2 py-0.5 rounded-full font-bold">Encrypted</span>
+        <span class="text-[9px] text-amber-300 bg-rose-950 px-2 py-0.5 rounded-full font-bold border border-amber-500/30">🔒 Secure</span>
       </div>
 
-      <div id="private-messages-stream" class="flex-1 p-3 overflow-y-auto space-y-2.5 text-xs relative bg-zinc-950/40"></div>
+      <div id="private-messages-stream" class="flex-1 p-3 overflow-y-auto space-y-2.5 text-xs relative bg-[#0e071c]/50"></div>
 
-      <div class="p-2.5 border-t border-zinc-800 flex flex-col gap-1.5 bg-zinc-900/90">
+      <div class="p-2.5 border-t border-purple-900/50 flex flex-col gap-1.5 bg-[#120822]/90">
         <div class="flex items-center gap-2">
-          <input id="personal-chat-input" type="text" oninput="handleTypingInput()" onkeydown="if(event.key==='Enter') sendPersonalMessage()" placeholder="Type a message..." class="flex-1 bg-zinc-950 border border-zinc-800 rounded-xl px-3.5 py-2.5 text-xs outline-none focus:border-rose-500 text-zinc-100 placeholder:text-zinc-600" />
-          <button onclick="sendPersonalMessage()" id="personal-send-btn" class="w-9 h-9 rounded-xl tinder-btn flex items-center justify-center text-white font-black">
+          <input id="personal-chat-input" type="text" oninput="handleTypingInput()" onkeydown="if(event.key==='Enter') sendPersonalMessage()" placeholder="Type a message..." class="flex-1 bg-[#1a0e2e] border border-purple-800 rounded-xl px-3.5 py-2.5 text-xs outline-none focus:border-amber-400 text-zinc-100 placeholder:text-zinc-500 shadow-inner" />
+          <button onclick="sendPersonalMessage()" id="personal-send-btn" class="w-9 h-9 rounded-xl navratri-btn flex items-center justify-center text-white font-black">
             <i class="fa-solid fa-paper-plane text-xs"></i>
           </button>
         </div>
@@ -306,10 +316,10 @@
     <div class="mb-3">
       <div class="flex items-center justify-between mb-2 px-1">
         <div class="flex items-center gap-1.5">
-          <span class="text-rose-400 text-xs"><i class="fa-solid fa-bolt"></i></span>
-          <h4 class="font-bold text-xs text-zinc-200 uppercase tracking-wider">Featured Highlights</h4>
+          <span class="text-amber-400 text-xs animate-bounce"><i class="fa-solid fa-wand-magic-sparkles"></i></span>
+          <h4 class="font-bold text-xs text-amber-200 uppercase tracking-wider">Garba Highlights</h4>
         </div>
-        <button onclick="switchTab('events')" class="text-[10px] font-bold text-rose-400 hover:underline">Events Arena ➔</button>
+        <button onclick="switchTab('events')" class="text-[10px] font-bold text-amber-400 hover:underline">Events Arena ➔</button>
       </div>
 
       <div id="buddies-banners-slider" class="banner-carousel-track">
@@ -318,15 +328,15 @@
     </div>
 
     <!-- GROUPS & PARTNERS SWITCH & FILTERS -->
-    <div class="mb-3 p-3 rounded-2xl clean-glass-card space-y-2.5">
-      <div class="flex items-center gap-1.5 p-1 bg-zinc-900 rounded-xl border border-zinc-800 text-xs font-bold">
+    <div class="mb-3 p-3 rounded-2xl navratri-glass-card space-y-2.5 border border-amber-500/25">
+      <div class="flex items-center gap-1.5 p-1 bg-[#120822] rounded-xl border border-amber-500/30 text-xs font-bold">
         <button onclick="switchExploreTab('partners')" id="ex-tab-partners" class="flex-1 py-1.5 rounded-lg bg-rose-600 text-white transition">Partners</button>
         <button onclick="switchExploreTab('groups')" id="ex-tab-groups" class="flex-1 py-1.5 rounded-lg text-zinc-400 hover:text-white transition">Communities 👥</button>
       </div>
 
       <!-- PARTNERS FILTERS -->
       <div id="explore-sec-partners" class="space-y-2">
-        <div class="flex items-center gap-1.5 p-1 bg-zinc-950 rounded-xl border border-zinc-800 text-xs font-bold">
+        <div class="flex items-center gap-1.5 p-1 bg-[#120822] rounded-xl border border-amber-500/30 text-xs font-bold">
           <button onclick="setGenderFilter('ALL')" id="gfilter-ALL" class="flex-1 py-1 rounded-lg bg-rose-600 text-white transition">All</button>
           <button onclick="setGenderFilter('Male')" id="gfilter-Male" class="flex-1 py-1 rounded-lg text-zinc-400 hover:text-white transition">Boys ♂</button>
           <button onclick="setGenderFilter('Female')" id="gfilter-Female" class="flex-1 py-1 rounded-lg text-zinc-400 hover:text-white transition">Girls ♀</button>
@@ -335,10 +345,10 @@
         <div class="flex items-center gap-2">
           <div class="flex-1 relative">
             <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-xs text-zinc-500"></i>
-            <input type="text" id="partner-search-input" oninput="applyPartnerFilters()" placeholder="Search partner..." class="w-full bg-zinc-900 border border-zinc-800 rounded-xl pl-8 pr-3 py-2 text-xs text-zinc-100 outline-none focus:border-rose-500" />
+            <input type="text" id="partner-search-input" oninput="applyPartnerFilters()" placeholder="Search partner..." class="w-full bg-[#120822] border border-purple-900 rounded-xl pl-8 pr-3 py-2 text-xs text-zinc-100 outline-none focus:border-amber-400" />
           </div>
           <div class="shrink-0 relative">
-            <select id="partner-city-filter" onchange="applyPartnerFilters()" class="bg-zinc-900 border border-zinc-800 rounded-xl px-2.5 py-2 text-xs text-rose-400 font-bold outline-none">
+            <select id="partner-city-filter" onchange="applyPartnerFilters()" class="bg-[#120822] border border-purple-900 rounded-xl px-2.5 py-2 text-xs text-amber-300 font-bold outline-none">
               <option value="ALL">🌐 All Cities</option>
               <option value="Sinnar">📍 Sinnar</option>
               <option value="Nashik">📍 Nashik</option>
@@ -347,16 +357,16 @@
         </div>
       </div>
 
-      <!-- GROUPS ACTIONS (Request to Admin or Admin Create) -->
+      <!-- GROUPS ACTIONS -->
       <div id="explore-sec-groups" class="hidden space-y-2">
-        <button onclick="requestGroupCreation()" class="w-full py-2.5 rounded-xl tinder-btn text-xs font-bold flex items-center justify-center gap-2">
+        <button onclick="requestGroupCreation()" class="w-full py-2.5 rounded-xl navratri-btn text-xs font-bold flex items-center justify-center gap-2 shadow-md">
           <i class="fa-solid fa-paper-plane"></i> Request Group Creation to Admin 👥
         </button>
       </div>
 
-      <div class="flex items-center justify-between px-1 text-[10px] text-zinc-500">
+      <div class="flex items-center justify-between px-1 text-[10px] text-zinc-400">
         <span id="filtered-subtitle">Find & connect with matches</span>
-        <span id="filtered-partners-count" class="text-rose-400 font-bold">0 Results</span>
+        <span id="filtered-partners-count" class="text-amber-400 font-bold">0 Results</span>
       </div>
     </div>
 
@@ -367,15 +377,15 @@
 
   <!-- SCREEN 4: EVENTS -->
   <section id="screen-events" class="hidden relative z-20 flex-1 max-w-md mx-auto w-full px-4 py-3 pt-16">
-    <div class="clean-glass-card rounded-3xl p-4 shadow-xl mb-4">
-      <div class="flex items-center justify-between pb-3 border-b border-zinc-800 mb-3">
+    <div class="navratri-glass-card rounded-3xl p-4 shadow-xl mb-4 border border-amber-500/30">
+      <div class="flex items-center justify-between pb-3 border-b border-purple-900/60 mb-3">
         <div class="flex items-center gap-2">
-          <span class="w-8 h-8 rounded-xl bg-rose-950 text-rose-400 flex items-center justify-center font-bold text-xs">
+          <span class="w-8 h-8 rounded-xl bg-rose-950 text-amber-400 flex items-center justify-center font-bold text-xs border border-amber-500/30">
             <i class="fa-solid fa-ticket"></i>
           </span>
           <div>
-            <h3 class="font-bold text-sm text-white">Events Arena</h3>
-            <p class="text-[11px] text-zinc-400">Scheduled meetups & celebrations</p>
+            <h3 class="font-bold text-sm text-amber-100">Events Arena 🪔</h3>
+            <p class="text-[11px] text-zinc-400">Scheduled Navratri celebrations</p>
           </div>
         </div>
       </div>
@@ -388,43 +398,43 @@
 
   <!-- SCREEN 5: PROFILE -->
   <section id="screen-profile" class="hidden relative z-20 flex-1 max-w-md mx-auto w-full px-4 py-4 pt-16">
-    <div class="clean-glass-card rounded-3xl p-5 shadow-2xl text-center max-h-[85vh] overflow-y-auto">
+    <div class="navratri-glass-card rounded-3xl p-5 shadow-2xl text-center max-h-[85vh] overflow-y-auto border border-amber-500/30">
       
       <div class="relative w-24 h-24 mx-auto mb-2">
-        <div class="w-24 h-24 rounded-full overflow-hidden bg-gradient-to-tr from-rose-600 to-pink-500 p-[2px] shadow-lg">
-          <div class="w-full h-full bg-zinc-900 rounded-full overflow-hidden flex items-center justify-center relative" id="profile-pic-container">
-            <span id="profile-big-avatar" class="font-black text-2xl text-rose-400">U</span>
+        <div class="w-24 h-24 rounded-full overflow-hidden bg-gradient-to-tr from-rose-600 via-orange-500 to-amber-400 p-[3px] shadow-lg shadow-rose-600/40">
+          <div class="w-full h-full bg-[#120822] rounded-full overflow-hidden flex items-center justify-center relative" id="profile-pic-container">
+            <span id="profile-big-avatar" class="font-black text-2xl text-amber-400">U</span>
             <img id="profile-img-preview" class="hidden w-full h-full object-cover" alt="Profile" />
           </div>
         </div>
 
-        <label for="gallery-input" class="absolute bottom-0 right-0 w-7 h-7 rounded-full bg-rose-600 text-white flex items-center justify-center text-xs shadow-md border-2 border-zinc-900 cursor-pointer active:scale-95">
+        <label for="gallery-input" class="absolute bottom-0 right-0 w-7 h-7 rounded-full bg-rose-600 text-white flex items-center justify-center text-xs shadow-md border-2 border-[#120822] cursor-pointer active:scale-95">
           <i class="fa-solid fa-camera"></i>
         </label>
         <input type="file" id="gallery-input" accept="image/*" class="hidden" onchange="uploadPhotoFromGallery(event)" />
 
-        <span id="profile-verified-badge" class="hidden absolute top-0 right-0 w-5 h-5 bg-sky-500 text-white rounded-full flex items-center justify-center text-[10px] border-2 border-zinc-900">
+        <span id="profile-verified-badge" class="hidden absolute top-0 right-0 w-5 h-5 bg-sky-500 text-white rounded-full flex items-center justify-center text-[10px] border-2 border-[#120822]">
           <i class="fa-solid fa-check"></i>
         </span>
       </div>
 
-      <h3 id="profile-user-name" class="text-base font-black text-white"></h3>
-      <p id="profile-username-tag" class="text-xs text-rose-400 font-bold"></p>
+      <h3 id="profile-user-name" class="text-base font-black text-amber-100"></h3>
+      <p id="profile-username-tag" class="text-xs text-amber-400 font-bold"></p>
       
-      <div class="mt-2 inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-zinc-800 border border-white/5 text-[11px] font-bold text-zinc-300">
+      <div class="mt-2 inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-rose-950/70 border border-amber-500/30 text-[11px] font-bold text-amber-300">
         <i class="fa-solid fa-location-dot text-rose-400"></i>
         <span id="profile-display-city">Sinnar</span>
       </div>
 
       <div class="mt-3">
-        <button onclick="requestNotificationPermission()" class="w-full py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 border border-white/5 text-zinc-200 font-bold text-xs flex items-center justify-center gap-2">
-          <i class="fa-solid fa-bell text-rose-400"></i>
+        <button onclick="requestNotificationPermission()" class="w-full py-2.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 font-bold text-xs flex items-center justify-center gap-2">
+          <i class="fa-solid fa-bell"></i>
           <span>Enable Notifications 🔔</span>
         </button>
       </div>
 
       <div id="admin-launcher-box" class="hidden mt-3">
-        <button onclick="promptAdminPasscode()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-rose-700 to-pink-600 text-white font-black text-xs flex items-center justify-center gap-2 shadow-md">
+        <button onclick="promptAdminPasscode()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-rose-700 via-orange-600 to-amber-600 text-white font-black text-xs flex items-center justify-center gap-2 shadow-lg shadow-rose-700/30">
           <i class="fa-solid fa-shield-halved"></i>
           <span>Admin Console 🛡️</span>
         </button>
@@ -432,38 +442,38 @@
 
       <div class="mt-4 space-y-2.5 text-left text-xs">
         <div class="grid grid-cols-2 gap-2">
-          <div class="p-3 bg-zinc-900 rounded-xl border border-zinc-800">
-            <label class="text-[10px] text-zinc-500 font-bold block mb-1">DISPLAY NAME</label>
-            <input type="text" id="profile-name-input" class="w-full bg-transparent font-bold text-white outline-none text-xs" />
+          <div class="p-3 bg-[#120822] rounded-2xl border border-purple-900/60">
+            <label class="text-[10px] text-zinc-400 font-bold block mb-1">DISPLAY NAME</label>
+            <input type="text" id="profile-name-input" class="w-full bg-[#1a0e2e] border border-purple-900 rounded-xl px-2.5 py-1.5 font-bold text-zinc-100 outline-none text-xs" />
           </div>
-          <div class="p-3 bg-zinc-900 rounded-xl border border-zinc-800">
-            <label class="text-[10px] text-rose-400 font-bold block mb-1">USERNAME</label>
-            <input type="text" id="profile-username-input" class="w-full bg-transparent font-bold text-rose-300 outline-none text-xs" />
+          <div class="p-3 bg-[#120822] rounded-2xl border border-purple-900/60">
+            <label class="text-[10px] text-amber-400 font-bold block mb-1">USERNAME</label>
+            <input type="text" id="profile-username-input" class="w-full bg-[#1a0e2e] border border-amber-500/40 rounded-xl px-2.5 py-1.5 font-bold text-amber-300 outline-none text-xs" />
           </div>
         </div>
 
-        <div class="p-3 bg-zinc-900 rounded-xl border border-zinc-800 flex items-center justify-between">
+        <div class="p-3 bg-[#120822] rounded-2xl border border-purple-900/60 flex items-center justify-between">
           <div>
-            <span class="text-[10px] text-zinc-500 font-bold block">CITY</span>
+            <span class="text-[10px] text-zinc-400 font-bold block">CITY</span>
             <input type="text" id="profile-city-input" class="bg-transparent font-bold text-zinc-200 outline-none text-xs w-40" />
           </div>
-          <button onclick="detectUserCity()" id="btn-detect-city" class="px-2.5 py-1.5 rounded-lg bg-zinc-800 text-rose-400 font-bold text-[10px]">
+          <button onclick="detectUserCity()" id="btn-detect-city" class="px-2.5 py-1.5 rounded-xl bg-purple-950 text-amber-300 font-bold text-[10px] border border-amber-500/30">
             Detect 📍
           </button>
         </div>
 
         <div class="grid grid-cols-2 gap-2">
-          <div class="p-3 bg-zinc-900 rounded-xl border border-zinc-800">
-            <label class="text-[10px] text-zinc-500 font-bold block mb-1">GENDER</label>
-            <select id="profile-gender-input" class="w-full bg-transparent text-rose-400 font-bold outline-none text-xs">
+          <div class="p-3 bg-[#120822] rounded-2xl border border-purple-900/60">
+            <label class="text-[10px] text-zinc-400 font-bold block mb-1">GENDER</label>
+            <select id="profile-gender-input" class="w-full bg-[#1a0e2e] border border-purple-900 rounded-xl p-1.5 text-amber-300 font-bold outline-none text-xs">
               <option value="Male">Male ♂</option>
               <option value="Female">Female ♀</option>
               <option value="Other">Other ✨</option>
             </select>
           </div>
-          <div class="p-3 bg-zinc-900 rounded-xl border border-zinc-800">
-            <label class="text-[10px] text-zinc-500 font-bold block mb-1">LOOKING FOR</label>
-            <select id="profile-seeking-input" class="w-full bg-transparent text-rose-400 font-bold outline-none text-xs">
+          <div class="p-3 bg-[#120822] rounded-2xl border border-purple-900/60">
+            <label class="text-[10px] text-zinc-400 font-bold block mb-1">LOOKING FOR</label>
+            <select id="profile-seeking-input" class="w-full bg-[#1a0e2e] border border-purple-900 rounded-xl p-1.5 text-amber-300 font-bold outline-none text-xs">
               <option value="Female">Female ♀</option>
               <option value="Male">Male ♂</option>
               <option value="Both">Anyone 🌐</option>
@@ -472,53 +482,53 @@
         </div>
 
         <div class="grid grid-cols-2 gap-2">
-          <div class="p-3 bg-zinc-900 rounded-xl border border-zinc-800">
-            <label class="text-[10px] text-zinc-500 font-bold block mb-1">VIBE</label>
-            <select id="profile-garba-style" class="w-full bg-transparent text-rose-400 font-bold outline-none text-xs">
+          <div class="p-3 bg-[#120822] rounded-2xl border border-purple-900/60">
+            <label class="text-[10px] text-zinc-400 font-bold block mb-1">VIBE</label>
+            <select id="profile-garba-style" class="w-full bg-[#1a0e2e] border border-purple-900 rounded-xl p-1.5 text-amber-300 font-bold outline-none text-xs">
               <option value="Traditional Raas">Traditional Raas</option>
               <option value="High-Energy Dandiya">High-Energy Dandiya</option>
               <option value="Romantic Partner">Romantic Partner</option>
               <option value="Fusion Garba">Fusion Garba</option>
             </select>
           </div>
-          <div class="p-3 bg-zinc-900 rounded-xl border border-zinc-800">
-            <label class="text-[10px] text-zinc-500 font-bold block mb-1">PROFESSION</label>
-            <input type="text" id="profile-studies-input" class="w-full bg-transparent text-zinc-200 outline-none text-xs" />
+          <div class="p-3 bg-[#120822] rounded-2xl border border-purple-900/60">
+            <label class="text-[10px] text-zinc-400 font-bold block mb-1">PROFESSION</label>
+            <input type="text" id="profile-studies-input" class="w-full bg-[#1a0e2e] border border-purple-900 rounded-xl px-2.5 py-1.5 text-zinc-200 outline-none text-xs" />
           </div>
         </div>
 
-        <div class="p-3 bg-zinc-900 rounded-xl border border-zinc-800">
-          <label class="text-[10px] text-zinc-500 font-bold block mb-1">BIO</label>
-          <input type="text" id="profile-bio-input" class="w-full bg-transparent text-zinc-200 outline-none text-xs" />
+        <div class="p-3 bg-[#120822] rounded-2xl border border-purple-900/60">
+          <label class="text-[10px] text-zinc-400 font-bold block mb-1">BIO</label>
+          <input type="text" id="profile-bio-input" class="w-full bg-[#1a0e2e] border border-purple-900 rounded-xl px-2.5 py-1.5 text-zinc-200 outline-none text-xs" />
         </div>
 
-        <div class="p-3 bg-zinc-900 rounded-xl border border-zinc-800">
-          <label class="text-[10px] text-zinc-500 font-bold block mb-1">INSTAGRAM</label>
-          <input type="text" id="profile-insta-input" placeholder="username" class="w-full bg-transparent text-zinc-200 outline-none text-xs" />
+        <div class="p-3 bg-[#120822] rounded-2xl border border-purple-900/60">
+          <label class="text-[10px] text-zinc-400 font-bold block mb-1">INSTAGRAM</label>
+          <input type="text" id="profile-insta-input" placeholder="username" class="w-full bg-[#1a0e2e] border border-purple-900 rounded-xl px-2.5 py-1.5 text-zinc-200 outline-none text-xs" />
         </div>
 
-        <button onclick="saveCompleteUserProfile()" class="w-full py-2.5 rounded-xl tinder-btn text-xs font-black uppercase tracking-wider shadow-md">
+        <button onclick="saveCompleteUserProfile()" class="w-full py-2.5 rounded-xl navratri-btn text-xs font-black uppercase tracking-wider shadow-md">
           Save Changes ✨
         </button>
       </div>
 
-      <div class="mt-4 pt-3 border-t border-zinc-800">
-        <button type="button" onclick="handleSignOut()" class="w-full py-2.5 rounded-xl bg-zinc-900 text-rose-400 font-bold text-xs flex items-center justify-center gap-2 border border-rose-900/40">
+      <div class="mt-4 pt-3 border-t border-purple-900/50">
+        <button type="button" onclick="handleSignOut()" class="w-full py-2.5 rounded-xl bg-rose-950 text-rose-300 font-bold text-xs flex items-center justify-center gap-2 border border-rose-800">
           <i class="fa-solid fa-right-from-bracket"></i> Logout
         </button>
       </div>
     </div>
   </section>
 
-  <!-- SCREEN 6: ADMIN CONSOLE (Includes Community Group Creator & Requests) -->
+  <!-- SCREEN 6: ADMIN CONSOLE -->
   <section id="screen-admin-page" class="hidden relative z-40 flex-1 max-w-xl mx-auto w-full px-4 py-4 min-h-screen pb-28 pt-16">
-    <div class="clean-glass-card rounded-3xl p-5 shadow-2xl space-y-4">
-      <div class="flex items-center justify-between pb-3 border-b border-zinc-800">
-        <h2 class="text-base font-black text-white">Admin Console 🛡️</h2>
-        <button onclick="exitAdminPage()" class="px-3 py-1 rounded-xl bg-zinc-800 text-rose-400 text-xs font-bold">Exit ➔</button>
+    <div class="navratri-glass-card rounded-3xl p-5 shadow-2xl space-y-4 border-2 border-amber-400/50">
+      <div class="flex items-center justify-between pb-3 border-b border-purple-900/60">
+        <h2 class="text-base font-black text-amber-100">Admin Console 🛡️</h2>
+        <button onclick="exitAdminPage()" class="px-3 py-1.5 rounded-xl bg-purple-950 text-amber-300 text-xs font-bold border border-amber-500/30">Exit ➔</button>
       </div>
 
-      <div class="grid grid-cols-4 gap-1 p-1 rounded-xl bg-zinc-900 border border-zinc-800 text-[10px] font-bold">
+      <div class="grid grid-cols-4 gap-1 p-1 rounded-xl bg-[#120822] border border-amber-500/30 text-[10px] font-bold">
         <button onclick="switchAdminSubTab('banners')" id="adtab-btn-banners" class="py-2 rounded-lg bg-rose-600 text-white">Banners</button>
         <button onclick="switchAdminSubTab('groups')" id="adtab-btn-groups" class="py-2 rounded-lg text-zinc-400">Groups 👥</button>
         <button onclick="switchAdminSubTab('events')" id="adtab-btn-events" class="py-2 rounded-lg text-zinc-400">Events</button>
@@ -527,75 +537,75 @@
 
       <!-- ADMIN SUB-TAB 1: BANNERS -->
       <div id="admin-sec-banners" class="space-y-3">
-        <div class="p-3 bg-zinc-900 rounded-2xl border border-zinc-800 text-xs space-y-2">
-          <h4 class="font-bold text-white">Publish Banner</h4>
-          <select id="admin-banner-status" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-2 text-xs text-rose-400 font-bold outline-none">
+        <div class="p-3 bg-[#120822] rounded-2xl border border-amber-500/30 text-xs space-y-2">
+          <h4 class="font-bold text-amber-200">Publish Banner</h4>
+          <select id="admin-banner-status" class="w-full bg-[#1a0e2e] border border-purple-800 rounded-xl p-2 text-xs text-amber-300 font-bold outline-none">
             <option value="LIVE NOW">🔴 LIVE NOW</option>
             <option value="COMING SOON">⏳ COMING SOON</option>
           </select>
-          <input type="text" id="admin-banner-title" placeholder="Title" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-2 text-xs text-zinc-100 outline-none" />
-          <input type="text" id="admin-banner-subtitle" placeholder="Subtitle" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-2 text-xs text-zinc-100 outline-none" />
-          <input type="file" id="admin-banner-photo" accept="image/*" class="text-xs text-zinc-400 w-full" />
-          <button onclick="adminPublishBanner()" id="btn-publish-banner" class="w-full py-2.5 rounded-xl tinder-btn font-bold text-xs uppercase">Publish</button>
+          <input type="text" id="admin-banner-title" placeholder="Title" class="w-full bg-[#1a0e2e] border border-purple-800 rounded-xl p-2 text-xs text-zinc-100 outline-none" />
+          <input type="text" id="admin-banner-subtitle" placeholder="Subtitle" class="w-full bg-[#1a0e2e] border border-purple-800 rounded-xl p-2 text-xs text-zinc-100 outline-none" />
+          <input type="file" id="admin-banner-photo" accept="image/*" class="text-xs text-zinc-300 w-full" />
+          <button onclick="adminPublishBanner()" id="btn-publish-banner" class="w-full py-2.5 rounded-xl navratri-btn font-bold text-xs uppercase">Publish</button>
         </div>
         <div id="admin-banners-list" class="space-y-2"></div>
       </div>
 
       <!-- ADMIN SUB-TAB 2: GROUPS MANAGEMENT -->
       <div id="admin-sec-groups" class="hidden space-y-3">
-        <div class="p-3 bg-zinc-900 rounded-2xl border border-zinc-800 text-xs space-y-3">
-          <h4 class="font-bold text-white flex items-center gap-1.5"><i class="fa-solid fa-users-rectangle text-rose-400"></i> Create Community Group (Admin)</h4>
-          <input type="text" id="admin-group-name" placeholder="Group Name (e.g. Sinnar Dandiya Squad)" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-2.5 text-xs text-white outline-none" />
+        <div class="p-3 bg-[#120822] rounded-2xl border border-amber-500/30 text-xs space-y-3">
+          <h4 class="font-bold text-amber-200 flex items-center gap-1.5"><i class="fa-solid fa-users-rectangle text-rose-400"></i> Create Community Group (Admin)</h4>
+          <input type="text" id="admin-group-name" placeholder="Group Name (e.g. Sinnar Dandiya Squad)" class="w-full bg-[#1a0e2e] border border-purple-800 rounded-xl p-2.5 text-xs text-white outline-none" />
           
           <div class="grid grid-cols-2 gap-2">
             <div>
-              <label class="block text-[10px] text-zinc-400 mb-1">Group Audience Type</label>
-              <select id="admin-group-type" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-2 text-xs text-rose-400 font-bold outline-none">
+              <label class="block text-[10px] text-amber-300 mb-1">Group Audience Type</label>
+              <select id="admin-group-type" class="w-full bg-[#1a0e2e] border border-purple-800 rounded-xl p-2 text-xs text-amber-300 font-bold outline-none">
                 <option value="Mixed">✨ Mixed (Boys & Girls)</option>
                 <option value="Boys Only">♂ Boys Only</option>
                 <option value="Girls Only">♀ Girls Only</option>
               </select>
             </div>
             <div>
-              <label class="block text-[10px] text-zinc-400 mb-1">Boys / Girls Limits</label>
+              <label class="block text-[10px] text-amber-300 mb-1">Boys / Girls Limits</label>
               <div class="grid grid-cols-2 gap-1">
-                <input type="number" id="admin-group-boys" placeholder="Boys" class="bg-zinc-950 border border-zinc-800 rounded-xl p-2 text-xs text-center text-white" />
-                <input type="number" id="admin-group-girls" placeholder="Girls" class="bg-zinc-950 border border-zinc-800 rounded-xl p-2 text-xs text-center text-white" />
+                <input type="number" id="admin-group-boys" placeholder="Boys" class="bg-[#1a0e2e] border border-purple-800 rounded-xl p-2 text-xs text-center text-white" />
+                <input type="number" id="admin-group-girls" placeholder="Girls" class="bg-[#1a0e2e] border border-purple-800 rounded-xl p-2 text-xs text-center text-white" />
               </div>
             </div>
           </div>
 
-          <input type="text" id="admin-group-desc" placeholder="Description / Vibe" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-2 text-xs text-white outline-none" />
-          <button onclick="adminCreateGroup()" class="w-full py-2.5 rounded-xl tinder-btn font-bold text-xs uppercase">Create Group Live 👥</button>
+          <input type="text" id="admin-group-desc" placeholder="Description / Vibe" class="w-full bg-[#1a0e2e] border border-purple-800 rounded-xl p-2 text-xs text-white outline-none" />
+          <button onclick="adminCreateGroup()" class="w-full py-2.5 rounded-xl navratri-btn font-bold text-xs uppercase">Create Group Live 👥</button>
         </div>
 
         <div>
-          <h5 class="text-xs font-bold text-zinc-400 uppercase mb-2">Pending Group Requests</h5>
+          <h5 class="text-xs font-bold text-amber-300 uppercase mb-2">Pending Group Requests</h5>
           <div id="admin-group-requests-list" class="space-y-2">
             <div class="text-center py-4 text-xs text-zinc-500">No pending group requests.</div>
           </div>
         </div>
 
         <div>
-          <h5 class="text-xs font-bold text-zinc-400 uppercase mb-2">Active Community Groups</h5>
+          <h5 class="text-xs font-bold text-amber-300 uppercase mb-2">Active Community Groups</h5>
           <div id="admin-groups-list" class="space-y-2"></div>
         </div>
       </div>
 
       <!-- ADMIN SUB-TAB 3: EVENTS -->
       <div id="admin-sec-events" class="hidden space-y-3">
-        <div class="p-3 bg-zinc-900 rounded-2xl border border-zinc-800 text-xs space-y-2">
-          <h4 class="font-bold text-white">Schedule Event</h4>
-          <input type="text" id="admin-event-title" placeholder="Event Name" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-2 text-xs text-zinc-100 outline-none" />
+        <div class="p-3 bg-[#120822] rounded-2xl border border-amber-500/30 text-xs space-y-2">
+          <h4 class="font-bold text-amber-200">Schedule Event</h4>
+          <input type="text" id="admin-event-title" placeholder="Event Name" class="w-full bg-[#1a0e2e] border border-purple-800 rounded-xl p-2 text-xs text-zinc-100 outline-none" />
           <div class="grid grid-cols-2 gap-2">
-            <input type="date" id="admin-event-date" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-2 text-xs text-zinc-100 outline-none" />
-            <input type="time" id="admin-event-time" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-2 text-xs text-zinc-100 outline-none" />
+            <input type="date" id="admin-event-date" class="w-full bg-[#1a0e2e] border border-purple-800 rounded-xl p-2 text-xs text-zinc-100 outline-none" />
+            <input type="time" id="admin-event-time" class="w-full bg-[#1a0e2e] border border-purple-800 rounded-xl p-2 text-xs text-zinc-100 outline-none" />
           </div>
-          <input type="text" id="admin-event-location" placeholder="Venue" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-2 text-xs text-zinc-100 outline-none" />
-          <input type="text" id="admin-event-pass" placeholder="Pass info" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-2 text-xs text-zinc-100 outline-none" />
-          <textarea id="admin-event-desc" rows="2" placeholder="Details..." class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-2 text-xs text-zinc-100 outline-none"></textarea>
-          <input type="file" id="admin-event-photo" accept="image/*" class="text-xs text-zinc-400 w-full" />
-          <button onclick="adminPublishEvent()" id="btn-publish-event" class="w-full py-2.5 rounded-xl tinder-btn font-bold text-xs uppercase">Schedule</button>
+          <input type="text" id="admin-event-location" placeholder="Venue" class="w-full bg-[#1a0e2e] border border-purple-800 rounded-xl p-2 text-xs text-zinc-100 outline-none" />
+          <input type="text" id="admin-event-pass" placeholder="Pass info" class="w-full bg-[#1a0e2e] border border-purple-800 rounded-xl p-2 text-xs text-zinc-100 outline-none" />
+          <textarea id="admin-event-desc" rows="2" placeholder="Details..." class="w-full bg-[#1a0e2e] border border-purple-800 rounded-xl p-2 text-xs text-zinc-100 outline-none"></textarea>
+          <input type="file" id="admin-event-photo" accept="image/*" class="text-xs text-zinc-300 w-full" />
+          <button onclick="adminPublishEvent()" id="btn-publish-event" class="w-full py-2.5 rounded-xl navratri-btn font-bold text-xs uppercase">Schedule</button>
         </div>
         <div id="admin-events-list" class="space-y-2"></div>
       </div>
@@ -609,37 +619,37 @@
 
   <!-- MODALS -->
   <div id="modal-requests" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="modal-sheet-anim clean-glass-card w-full max-w-sm rounded-3xl p-5 shadow-2xl max-h-[85vh] overflow-y-auto">
-      <div class="flex items-center justify-between pb-3 border-b border-zinc-800 mb-3">
-        <h3 class="font-bold text-sm text-white">Partner Requests</h3>
-        <button onclick="closeRequestsModal()" class="w-7 h-7 rounded-full bg-zinc-800 text-zinc-400">&times;</button>
+    <div class="modal-sheet-anim navratri-glass-card w-full max-w-sm rounded-3xl p-5 shadow-2xl max-h-[85vh] overflow-y-auto border border-amber-500/40">
+      <div class="flex items-center justify-between pb-3 border-b border-purple-900/60 mb-3">
+        <h3 class="font-bold text-sm text-amber-100">Partner Requests</h3>
+        <button onclick="closeRequestsModal()" class="w-7 h-7 rounded-full bg-purple-950 text-amber-300 flex items-center justify-center">&times;</button>
       </div>
       <div id="requests-list-container" class="space-y-2.5"></div>
     </div>
   </div>
 
   <div id="modal-buddy-profile" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
-    <div class="modal-sheet-anim clean-glass-card w-full max-w-sm rounded-t-[32px] sm:rounded-3xl p-5 shadow-2xl relative">
-      <button onclick="closeBuddyProfileModal()" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-zinc-800 text-zinc-400 flex items-center justify-center font-bold text-xs">&times;</button>
+    <div class="modal-sheet-anim navratri-glass-card w-full max-w-sm rounded-t-[32px] sm:rounded-3xl p-5 shadow-2xl relative border border-amber-500/40">
+      <button onclick="closeBuddyProfileModal()" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-purple-950 text-amber-300 flex items-center justify-center font-bold text-xs">&times;</button>
       <div class="text-center pt-2">
         <div class="relative w-28 h-28 mx-auto mb-3">
-          <div class="w-28 h-28 rounded-full overflow-hidden bg-gradient-to-tr from-rose-600 to-pink-500 p-[3px]">
-            <div id="detail-avatar-box" class="w-full h-full bg-zinc-900 rounded-full overflow-hidden flex items-center justify-center font-black text-3xl text-rose-400">U</div>
+          <div class="w-28 h-28 rounded-full overflow-hidden bg-gradient-to-tr from-rose-600 to-amber-500 p-[3px]">
+            <div id="detail-avatar-box" class="w-full h-full bg-[#120822] rounded-full overflow-hidden flex items-center justify-center font-black text-3xl text-amber-400">U</div>
           </div>
         </div>
-        <h3 id="detail-user-name" class="text-lg font-black text-white"></h3>
-        <p id="detail-username-tag" class="text-xs text-rose-400 font-bold"></p>
-        <div class="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-800 text-xs font-bold text-zinc-300">
+        <h3 id="detail-user-name" class="text-lg font-black text-amber-100"></h3>
+        <p id="detail-username-tag" class="text-xs text-amber-400 font-bold"></p>
+        <div class="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-950 text-xs font-bold text-amber-300 border border-amber-500/30">
           📍 <span id="detail-user-city"></span>
         </div>
-        <div class="mt-3 p-3 bg-zinc-900 rounded-xl text-left text-xs text-zinc-300 italic" id="detail-user-bio"></div>
-        <div class="mt-5 pt-3 border-t border-zinc-800" id="detail-action-container"></div>
+        <div class="mt-3 p-3 bg-[#120822] rounded-xl text-left text-xs text-zinc-300 italic border border-purple-900/60" id="detail-user-bio"></div>
+        <div class="mt-5 pt-3 border-t border-purple-900/60" id="detail-action-container"></div>
       </div>
     </div>
   </div>
 
   <!-- NAVIGATION BAR -->
-  <nav id="bottom-nav-bar" class="hidden fixed bottom-3 inset-x-0 mx-auto w-[92%] max-w-md z-40 clean-glass-card rounded-full p-1.5 shadow-2xl flex items-center justify-around text-xs">
+  <nav id="bottom-nav-bar" class="hidden fixed bottom-3 inset-x-0 mx-auto w-[92%] max-w-md z-40 navratri-glass-card rounded-full p-1.5 shadow-2xl flex items-center justify-around text-xs border border-amber-500/30">
     <button onclick="switchTab('chats')" id="bnav-btn-chats" class="flex-1 py-2 px-1 rounded-full flex flex-col items-center gap-0.5 transition text-zinc-400 font-bold">
       <i class="fa-solid fa-comments text-sm"></i>
       <span class="text-[9px]">Chats</span>
@@ -659,10 +669,10 @@
   </nav>
 
   <!-- FOOTER -->
-  <footer class="simple-footer relative z-30">
+  <footer class="festive-footer relative z-30">
     <div class="max-w-md mx-auto space-y-1">
-      <a id="footer-sponsor-email" href="mailto:kanhiyame0.7@gmail.com" class="text-zinc-400 hover:text-white font-bold text-xs">kanhiyame0.7@gmail.com</a>
-      <div id="footer-copyright-text" class="text-[10px] text-zinc-600">© 2026 MILO. All Rights Reserved.</div>
+      <a id="footer-sponsor-email" href="mailto:kanhiyame0.7@gmail.com" class="text-amber-300 hover:underline font-bold text-xs">kanhiyame0.7@gmail.com</a>
+      <div id="footer-copyright-text" class="text-[10px] text-zinc-500">© 2026 MILO Navratri Edition. All Rights Reserved.</div>
     </div>
   </footer>
 
@@ -753,7 +763,7 @@
         cBtn.className = "flex-1 py-1.5 rounded-lg bg-rose-600 text-white transition";
         dBtn.className = "flex-1 py-1.5 rounded-lg text-zinc-400 hover:text-white transition";
         title.innerText = "Community Groups";
-        subtitle.innerText = "Public & group chats";
+        subtitle.innerText = "Joined group chats";
       }
       renderChatsContactsList();
     }
@@ -781,7 +791,7 @@
     }
 
     async function requestGroupCreation() {
-      const gName = prompt("Enter Group Name you want to create (e.g. Sinnar Dandiya Squad):");
+      const gName = prompt("Enter Group Name you want to create (e.g. Sinnar Garba Squad):");
       if (!gName) return;
       const gType = prompt("Group Type? Enter: Mixed, Boys Only, or Girls Only", "Mixed");
       const boysLimit = prompt("How many Boys needed?", "5");
@@ -805,6 +815,14 @@
       if (unsubscribeGroups) unsubscribeGroups();
       unsubscribeGroups = db.collection("milo_groups").onSnapshot(snapshot => {
         globalGroups = [];
+        snapshot.docChanges().forEach(change => {
+          if (change.type === "added") {
+            const g = change.doc.data();
+            if (currentUser && g.createdBy !== currentUser.email.toLowerCase()) {
+              showSystemNotification("New Community Group ✨", `New group '${g.name}' has been created!`);
+            }
+          }
+        });
         snapshot.forEach(doc => globalGroups.push({ id: doc.id, ...doc.data() }));
         if (currentExploreTab === 'groups') renderGroupsList();
         renderChatsContactsList();
@@ -817,6 +835,46 @@
         snapshot.forEach(doc => globalGroupRequests.push({ id: doc.id, ...doc.data() }));
         renderAdminGroupRequestsList();
       });
+    }
+
+    async function joinGroup(groupId, groupName) {
+      if (!currentUser) return;
+      const myEmail = currentUser.email.toLowerCase();
+      const myGender = (currentUserProfile && currentUserProfile.gender) ? currentUserProfile.gender : 'Other';
+
+      const gRef = db.collection("milo_groups").doc(groupId);
+      const docSnap = await gRef.get();
+      if (!docSnap.exists) return alert("Group not found!");
+
+      const gData = docSnap.data();
+      const members = gData.members || [];
+      if (members.includes(myEmail)) {
+        openGroupChat(groupId, groupName);
+        return;
+      }
+
+      // Check capacity limits
+      const boysCount = gData.boysCount || 0;
+      const girlsCount = gData.girlsCount || 0;
+      const maxBoys = parseInt(gData.boysLimit || 5);
+      const maxGirls = parseInt(gData.girlsLimit || 5);
+
+      if (myGender === 'Male' && boysCount >= maxBoys) {
+        return alert("❌ Sorry! Boys slots are full in this group.");
+      }
+      if (myGender === 'Female' && girlsCount >= maxGirls) {
+        return alert("❌ Sorry! Girls slots are full in this group.");
+      }
+
+      try {
+        await gRef.update({
+          members: firebase.firestore.FieldValue.arrayUnion(myEmail),
+          ...(myGender === 'Male' ? { boysCount: boysCount + 1 } : {}),
+          ...(myGender === 'Female' ? { girlsCount: girlsCount + 1 } : {})
+        });
+        alert("Successfully Joined Group! 🪔");
+        openGroupChat(groupId, groupName);
+      } catch(e) { alert("Error joining group: " + e.message); }
     }
 
     async function adminCreateGroup() {
@@ -834,6 +892,9 @@
           groupType: gType,
           boysLimit: boys,
           girlsLimit: girls,
+          boysCount: 0,
+          girlsCount: 0,
+          members: [],
           desc: gDesc || `Group for ${gType} (Boys: ${boys}, Girls: ${girls})`,
           createdBy: currentUser.email.toLowerCase(),
           createdAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -856,6 +917,9 @@
           groupType: req.groupType,
           boysLimit: req.boysLimit || "5",
           girlsLimit: req.girlsLimit || "5",
+          boysCount: 0,
+          girlsCount: 0,
+          members: [],
           desc: `Approved community group (Boys: ${req.boysLimit}, Girls: ${req.girlsLimit})`,
           createdBy: req.requestedBy,
           createdAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -888,7 +952,7 @@
           <div class="p-2.5 bg-zinc-950 rounded-xl flex items-center justify-between text-xs">
             <div>
               <span class="font-bold text-white block">${sanitizeInput(g.name)}</span>
-              <span class="text-[10px] text-rose-400">[${sanitizeInput(g.groupType)}] • ♂ Boys: ${g.boysLimit || 5}, ♀ Girls: ${g.girlsLimit || 5}</span>
+              <span class="text-[10px] text-rose-400">[${sanitizeInput(g.groupType)}] • ♂ Boys: ${g.boysCount || 0}/${g.boysLimit || 5}, ♀ Girls: ${g.girlsCount || 0}/${g.girlsLimit || 5}</span>
             </div>
             <button onclick="adminDeleteGroup('${g.id}')" class="text-rose-400 p-1"><i class="fa-solid fa-trash"></i></button>
           </div>
@@ -907,7 +971,7 @@
 
       globalGroupRequests.forEach(r => {
         container.innerHTML += `
-          <div class="p-3 bg-zinc-950 rounded-xl border border-rose-500/30 flex items-center justify-between text-xs">
+          <div class="p-3 bg-zinc-950 rounded-xl border border-amber-500/30 flex items-center justify-between text-xs">
             <div>
               <span class="font-bold text-white block">📁 ${sanitizeInput(r.name)}</span>
               <span class="text-[10px] text-zinc-400">Type: ${sanitizeInput(r.groupType)} | Req by: ${sanitizeInput(r.requestedByName)}</span>
@@ -924,30 +988,47 @@
 
     function renderGroupsList() {
       const buddiesSlider = document.getElementById('buddies-slider');
-      if (!buddiesSlider) return;
+      if (!buddiesSlider || !currentUser) return;
       buddiesSlider.innerHTML = '';
-      document.getElementById('filtered-partners-count').innerText = `${globalGroups.length} Groups`;
+
+      const myEmail = currentUser.email.toLowerCase();
+      // Filter out groups where user is already member OR capacity is full
+      const availableGroups = globalGroups.filter(g => {
+        const members = g.members || [];
+        if (members.includes(myEmail)) return false; // Already joined, shows in chat tab
+
+        const boysCount = g.boysCount || 0;
+        const girlsCount = g.girlsCount || 0;
+        const maxBoys = parseInt(g.boysLimit || 5);
+        const maxGirls = parseInt(g.girlsLimit || 5);
+
+        // If both slots are full, hide from explore
+        if (boysCount >= maxBoys && girlsCount >= maxGirls) return false;
+        return true;
+      });
+
+      document.getElementById('filtered-partners-count').innerText = `${availableGroups.length} Groups`;
       document.getElementById('filtered-subtitle').innerText = 'Join community group chats';
 
-      if (globalGroups.length === 0) {
-        buddiesSlider.innerHTML = `<div class="col-span-2 text-center py-10 text-xs text-zinc-500">No community groups yet. Request one above!</div>`;
+      if (availableGroups.length === 0) {
+        buddiesSlider.innerHTML = `<div class="col-span-2 text-center py-10 text-xs text-zinc-500">No open groups right now (either full or joined). Request one above!</div>`;
         return;
       }
 
-      globalGroups.forEach(g => {
+      availableGroups.forEach(g => {
         const card = document.createElement('div');
         card.className = "buddy-card-item";
-        card.onclick = () => openGroupChat(g.id, g.name);
+        card.onclick = () => joinGroup(g.id, g.name);
         card.innerHTML = `
-          <div class="w-16 h-16 rounded-full overflow-hidden bg-gradient-to-tr from-rose-600 via-pink-600 to-amber-500 p-0.5 flex items-center justify-center mb-2 shadow-lg relative">
-            <div class="w-full h-full bg-zinc-950 rounded-full flex items-center justify-center text-rose-400 text-xl font-black">
+          <div class="w-16 h-16 rounded-full overflow-hidden bg-gradient-to-tr from-rose-600 via-orange-600 to-amber-500 p-0.5 flex items-center justify-center mb-2 shadow-lg relative">
+            <div class="w-full h-full bg-[#120822] rounded-full flex items-center justify-center text-amber-400 text-xl font-black">
               <i class="fa-solid fa-robot"></i>
             </div>
           </div>
-          <h4 class="font-bold text-xs text-white truncate w-full">${sanitizeInput(g.name)}</h4>
-          <span class="text-[9px] bg-rose-950 text-rose-300 px-2 py-0.5 rounded-full font-bold my-1 border border-rose-800">${sanitizeInput(g.groupType || 'Mixed')}</span>
-          <span class="text-[9px] text-amber-400 font-mono block">♂ ${g.boysLimit || 5} | ♀ ${g.girlsLimit || 5}</span>
-          <button class="mt-2 px-3 py-1 rounded-full tinder-btn text-[10px] font-bold">Join Group 💬</button>
+          <h4 class="font-bold text-xs text-amber-100 truncate w-full">${sanitizeInput(g.name)}</h4>
+          <span class="text-[9px] bg-rose-950 text-amber-300 px-2 py-0.5 rounded-full font-bold my-1 border border-amber-500/30">${sanitizeInput(g.groupType || 'Mixed')}</span>
+          <span class="text-[9px] text-amber-400 font-mono block">♂ ${g.boysCount || 0}/${g.boysLimit || 5} | ♀ ${g.girlsCount || 0}/${g.girlsLimit || 5}</span>
+          <button class="mt-2 px-3 py-1 rounded-full navratri-btn text-[10px] font-bold">Join Group 💬</button>
         `;
         buddiesSlider.appendChild(card);
       });
@@ -1090,17 +1171,17 @@
       }
       globalBanners.forEach(b => {
         const card = document.createElement('div');
-        card.className = "clean-banner-card cursor-pointer";
+        card.className = "navratri-banner-card cursor-pointer";
         card.onclick = () => switchTab('events');
-        const media = b.photoUrl ? `<img src="${b.photoUrl}" class="w-full h-36 object-cover" />` : `<div class="w-full h-36 bg-zinc-800 flex items-center justify-center text-rose-400 text-xl"><i class="fa-solid fa-sparkles"></i></div>`;
+        const media = b.photoUrl ? `<img src="${b.photoUrl}" class="w-full h-36 object-cover" />` : `<div class="w-full h-36 bg-gradient-to-tr from-rose-700 to-amber-500 flex items-center justify-center text-white text-xl"><i class="fa-solid fa-sparkles"></i></div>`;
         card.innerHTML = `
           <div class="relative w-full overflow-hidden">
             ${media}
             <div class="absolute inset-0 bg-gradient-to-t from-black/9 through-black/30 to-transparent"></div>
             <div class="absolute top-2 right-2"><span class="bg-rose-600 text-white text-[9px] font-black px-2 py-0.5 rounded-full">${b.status}</span></div>
             <div class="absolute bottom-2 left-3 right-3 text-white">
-              <h4 class="font-bold text-sm truncate text-white">${sanitizeInput(b.title)}</h4>
-              <p class="text-[10px] text-zinc-300 truncate">${sanitizeInput(b.subtitle)}</p>
+              <h4 class="font-bold text-sm truncate text-amber-100">${sanitizeInput(b.title)}</h4>
+              <p class="text-[10px] text-amber-300 truncate">${sanitizeInput(b.subtitle)}</p>
             </div>
           </div>
         `;
@@ -1161,17 +1242,17 @@
       if (!list) return; list.innerHTML = '';
       if (globalEvents.length === 0) { list.innerHTML = `<div class="text-center py-8 text-xs text-zinc-500">No scheduled events.</div>`; return; }
       globalEvents.forEach(evt => {
-        const media = evt.photoUrl ? `<img src="${evt.photoUrl}" class="w-full h-36 object-cover" />` : `<div class="w-full h-28 bg-zinc-800 flex items-center justify-center text-rose-400 text-2xl"><i class="fa-solid fa-ticket"></i></div>`;
+        const media = evt.photoUrl ? `<img src="${evt.photoUrl}" class="w-full h-36 object-cover" />` : `<div class="w-full h-28 bg-gradient-to-tr from-rose-700 to-amber-500 flex items-center justify-center text-white text-2xl"><i class="fa-solid fa-ticket"></i></div>`;
         list.innerHTML += `
-          <div class="rounded-2xl overflow-hidden clean-glass-card border border-zinc-800">
+          <div class="rounded-2xl overflow-hidden navratri-glass-card border border-amber-500/30">
             ${media}
-            <div class="p-3 bg-zinc-900 space-y-1.5">
-              <div class="flex items-center justify-between text-[10px] text-rose-400 font-bold">
+            <div class="p-3 bg-[#120822] space-y-1.5">
+              <div class="flex items-center justify-between text-[10px] text-amber-300 font-bold">
                 <span>${evt.displayDateTime}</span>
                 <span>📍 ${sanitizeInput(evt.location)}</span>
               </div>
-              <h4 class="font-bold text-sm text-white">${sanitizeInput(evt.title)}</h4>
-              <p class="text-[11px] text-zinc-400">${sanitizeInput(evt.desc)}</p>
+              <h4 class="font-bold text-sm text-amber-100">${sanitizeInput(evt.title)}</h4>
+              <p class="text-[11px] text-zinc-300">${sanitizeInput(evt.desc)}</p>
             </div>
           </div>
         `;
@@ -1316,7 +1397,7 @@
       } else {
         imgP.classList.add('hidden'); letter.classList.remove('hidden'); letter.innerText = initial;
         headBox.innerHTML = `<span class="text-[10px] text-white font-bold">${initial}</span>`;
-        bnavWrap.innerHTML = `<span class="text-[11px] text-rose-400 font-bold">${initial}</span>`;
+        bnavWrap.innerHTML = `<span class="text-[11px] text-amber-400 font-bold">${initial}</span>`;
       }
 
       if (profile.isVerified) document.getElementById('profile-verified-badge').classList.remove('hidden');
@@ -1439,19 +1520,19 @@
       incomingPendingRequests.forEach(req => {
         const sender = cachedUsersMap[req.from.toLowerCase()] || { name: req.fromName || 'User', photoUrl: '', city: 'Sinnar' };
         container.innerHTML += `
-          <div class="p-3 bg-zinc-900 rounded-2xl border border-zinc-800 flex items-center justify-between">
+          <div class="p-3 bg-[#120822] rounded-2xl border border-purple-900 flex items-center justify-between">
             <div class="flex items-center gap-2">
-              <div class="w-9 h-9 rounded-full bg-zinc-800 flex items-center justify-center font-bold text-rose-400 text-xs overflow-hidden">
+              <div class="w-9 h-9 rounded-full bg-rose-950 flex items-center justify-center font-bold text-amber-300 text-xs overflow-hidden border border-amber-500/30">
                 ${sender.photoUrl ? `<img src="${sender.photoUrl}" class="w-full h-full object-cover" />` : sender.name[0]}
               </div>
               <div>
-                <h4 class="font-bold text-xs text-white">${sanitizeInput(sender.name)}</h4>
+                <h4 class="font-bold text-xs text-amber-100">${sanitizeInput(sender.name)}</h4>
                 <span class="text-[9px] text-zinc-400">📍 ${sanitizeInput(sender.city)}</span>
               </div>
             </div>
             <div class="flex gap-1">
-              <button onclick="respondToRequest('${req.id}', 'accepted')" class="w-7 h-7 rounded-lg bg-emerald-600 text-white"><i class="fa-solid fa-check text-[10px]"></i></button>
-              <button onclick="respondToRequest('${req.id}', 'rejected')" class="w-7 h-7 rounded-lg bg-rose-950 text-rose-400 border border-rose-900"><i class="fa-solid fa-xmark text-[10px]"></i></button>
+              <button onclick="respondToRequest('${req.id}', 'accepted')" class="w-7 h-7 rounded-lg bg-emerald-600 text-white flex items-center justify-center"><i class="fa-solid fa-check text-[10px]"></i></button>
+              <button onclick="respondToRequest('${req.id}', 'rejected')" class="w-7 h-7 rounded-lg bg-rose-950 text-rose-400 border border-rose-900 flex items-center justify-center"><i class="fa-solid fa-xmark text-[10px]"></i></button>
             </div>
           </div>
         `;
@@ -1486,11 +1567,11 @@
       const actionContainer = document.getElementById('detail-action-container');
       const req = userRequestsMap[u.email.toLowerCase()];
       if (req && req.status === 'accepted') {
-        actionContainer.innerHTML = `<button onclick="closeBuddyProfileModal(); switchTab('chats'); open1on1Chat('${u.email}')" class="w-full py-2.5 rounded-xl tinder-btn text-xs font-bold">Open Chat 💬</button>`;
+        actionContainer.innerHTML = `<button onclick="closeBuddyProfileModal(); switchTab('chats'); open1on1Chat('${u.email}')" class="w-full py-2.5 rounded-xl navratri-btn text-xs font-bold">Open Chat 💬</button>`;
       } else if (req && req.status === 'pending') {
-        actionContainer.innerHTML = `<div class="text-xs text-rose-400 font-bold">Request Pending ⏳</div>`;
+        actionContainer.innerHTML = `<div class="text-xs text-amber-400 font-bold">Request Pending ⏳</div>`;
       } else {
-        actionContainer.innerHTML = `<button onclick="sendConnectionRequest('${u.email}'); closeBuddyProfileModal();" class="w-full py-2.5 rounded-xl tinder-btn text-xs font-bold">Send Request 💌</button>`;
+        actionContainer.innerHTML = `<button onclick="sendConnectionRequest('${u.email}'); closeBuddyProfileModal();" class="w-full py-2.5 rounded-xl navratri-btn text-xs font-bold">Send Request 💌</button>`;
       }
     }
 
@@ -1501,6 +1582,18 @@
       if (unsubscribeUsers) unsubscribeUsers();
       unsubscribeUsers = db.collection("milo_users").onSnapshot(snapshot => {
         cachedUsersMap = {}; globalAllUsers = [];
+        snapshot.docChanges().forEach(change => {
+          if (change.type === "added") {
+            const u = change.doc.data();
+            if (currentUser && u.email.toLowerCase() !== currentUser.email.toLowerCase()) {
+              if (currentUserProfile && currentUserProfile.seeking && currentUserProfile.seeking !== 'Both') {
+                if (u.gender && u.gender.toLowerCase() === currentUserProfile.seeking.toLowerCase()) {
+                  showSystemNotification("New Match Available ✨", `${u.name} joined Milo in ${u.city || 'Sinnar'}!`);
+                }
+              }
+            }
+          }
+        });
         snapshot.forEach(doc => { const u = doc.data(); globalAllUsers.push(u); cachedUsersMap[u.email.toLowerCase()] = u; });
         updateCityFilterDropdown(); applyPartnerFilters(); renderChatsContactsList(); renderAdminUsersList();
       });
@@ -1544,13 +1637,13 @@
         card.onclick = () => openBuddyProfileModal(u.email);
         const avatar = u.photoUrl ? `<img src="${u.photoUrl}" class="w-full h-full object-cover" />` : u.name[0];
         card.innerHTML = `
-          <div class="w-16 h-16 rounded-full overflow-hidden bg-zinc-800 flex items-center justify-center font-bold text-rose-400 text-lg mb-2 relative shadow-md">
+          <div class="w-16 h-16 rounded-full overflow-hidden bg-[#120822] flex items-center justify-center font-bold text-amber-400 text-lg mb-2 relative shadow-md border border-amber-500/30">
             ${avatar}
-            <span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-400 border-2 border-zinc-900 rounded-full"></span>
+            <span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-400 border-2 border-[#120822] rounded-full"></span>
           </div>
-          <h4 class="font-bold text-xs text-white truncate w-full">${sanitizeInput(u.name)}</h4>
-          <span class="text-[10px] text-rose-400 font-semibold truncate w-full">@${sanitizeInput(u.username || 'user')}</span>
-          <span class="text-[9px] text-zinc-500 mt-1">📍 ${sanitizeInput(u.city || 'Sinnar')}</span>
+          <h4 class="font-bold text-xs text-amber-100 truncate w-full">${sanitizeInput(u.name)}</h4>
+          <span class="text-[10px] text-amber-400 font-semibold truncate w-full">@${sanitizeInput(u.username || 'user')}</span>
+          <span class="text-[9px] text-zinc-400 mt-1">📍 ${sanitizeInput(u.city || 'Sinnar')}</span>
         `;
         buddiesSlider.appendChild(card);
       });
@@ -1564,25 +1657,31 @@
       const myEmail = currentUser.email.toLowerCase();
 
       if (currentChatSubTab === 'communities') {
-        document.getElementById('active-contacts-count').innerText = globalGroups.length;
-        if (globalGroups.length === 0) {
-          chatList.innerHTML = `<div class="text-center py-8 text-xs text-zinc-500">No community groups available. Admin will create them!</div>`;
+        // Show ONLY groups where user is a member
+        const joinedGroups = globalGroups.filter(g => {
+          const members = g.members || [];
+          return members.includes(myEmail);
+        });
+
+        document.getElementById('active-contacts-count').innerText = joinedGroups.length;
+        if (joinedGroups.length === 0) {
+          chatList.innerHTML = `<div class="text-center py-8 text-xs text-zinc-500">You haven't joined any community groups yet. Go to Explore -> Communities to join!</div>`;
           return;
         }
 
-        globalGroups.forEach(g => {
+        joinedGroups.forEach(g => {
           chatList.innerHTML += `
-            <div class="p-3 rounded-2xl bg-zinc-900/80 hover:bg-zinc-900 cursor-pointer border border-zinc-800 flex items-center justify-between" onclick="openGroupChat('${g.id}', '${sanitizeInput(g.name)}')">
+            <div class="p-3 rounded-2xl bg-[#120822]/80 hover:bg-[#120822] cursor-pointer border border-purple-900/60 flex items-center justify-between" onclick="openGroupChat('${g.id}', '${sanitizeInput(g.name)}')">
               <div class="flex items-center gap-3 overflow-hidden">
-                <div class="relative w-10 h-10 rounded-full overflow-hidden bg-gradient-to-tr from-rose-600 to-amber-500 flex items-center justify-center text-white font-bold border border-rose-500/30">
+                <div class="relative w-10 h-10 rounded-full overflow-hidden bg-gradient-to-tr from-rose-600 to-amber-500 flex items-center justify-center text-white font-bold border border-amber-500/30">
                   <i class="fa-solid fa-robot text-sm"></i>
                 </div>
                 <div class="overflow-hidden">
-                  <h4 class="font-bold text-xs text-white truncate">${sanitizeInput(g.name)} <span class="text-[9px] bg-rose-900/60 text-rose-300 px-1.5 py-0.2 rounded font-mono">${sanitizeInput(g.groupType || 'Mixed')}</span></h4>
-                  <span class="text-[10px] text-amber-400 font-mono block">♂ ${g.boysLimit || 5} | ♀ ${g.girlsLimit || 5}</span>
+                  <h4 class="font-bold text-xs text-amber-100 truncate">${sanitizeInput(g.name)} <span class="text-[9px] bg-rose-950 text-amber-300 px-1.5 py-0.2 rounded font-mono border border-amber-500/30">${sanitizeInput(g.groupType || 'Mixed')}</span></h4>
+                  <span class="text-[10px] text-amber-400 font-mono block">♂ ${g.boysCount || 0}/${g.boysLimit || 5} | ♀ ${g.girlsCount || 0}/${g.girlsLimit || 5}</span>
                 </div>
               </div>
-              <button class="px-3 py-1.5 rounded-xl tinder-btn text-[10px] font-bold">Open ➔</button>
+              <button class="px-3 py-1.5 rounded-xl navratri-btn text-[10px] font-bold">Open ➔</button>
             </div>
           `;
         });
@@ -1603,18 +1702,18 @@
         connectedUsers.forEach(u => {
           const avatar = u.photoUrl ? `<img src="${u.photoUrl}" class="w-full h-full object-cover" />` : u.name[0];
           chatList.innerHTML += `
-            <div class="p-3 rounded-2xl bg-zinc-900/80 hover:bg-zinc-900 cursor-pointer border border-zinc-800 flex items-center justify-between" onclick="open1on1Chat('${u.email}')">
+            <div class="p-3 rounded-2xl bg-[#120822]/80 hover:bg-[#120822] cursor-pointer border border-purple-900/60 flex items-center justify-between" onclick="open1on1Chat('${u.email}')">
               <div class="flex items-center gap-3 overflow-hidden">
-                <div class="relative w-10 h-10 rounded-full overflow-hidden bg-zinc-800 flex items-center justify-center text-rose-400 font-bold">
+                <div class="relative w-10 h-10 rounded-full overflow-hidden bg-[#1a0e2e] flex items-center justify-center text-amber-400 font-bold border border-amber-500/30">
                   ${avatar}
-                  <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-400 border border-zinc-900 rounded-full"></span>
+                  <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-400 border border-[#120822] rounded-full"></span>
                 </div>
                 <div class="overflow-hidden">
-                  <h4 class="font-bold text-xs text-white truncate">${sanitizeInput(u.name)}</h4>
-                  <span class="text-[10px] text-zinc-400 truncate">@${sanitizeInput(u.username || 'user')}</span>
+                  <h4 class="font-bold text-xs text-amber-100 truncate">${sanitizeInput(u.name)}</h4>
+                  <span class="text-[10px] text-amber-400 truncate">@${sanitizeInput(u.username || 'user')}</span>
                 </div>
               </div>
-              <button class="px-3 py-1.5 rounded-xl tinder-btn text-[10px] font-bold">Chat ➔</button>
+              <button class="px-3 py-1.5 rounded-xl navratri-btn text-[10px] font-bold">Chat ➔</button>
             </div>
           `;
         });
@@ -1697,7 +1796,7 @@
       unsubscribeTyping = db.collection("milo_typing").doc(activeRoomId).onSnapshot(doc => {
         const stat = document.getElementById('room-partner-status-text');
         if (!stat) return;
-        if (doc.exists && doc.data()[activePartnerEmail]) stat.innerHTML = `<span class="text-rose-400 font-bold animate-pulse">typing...</span>`;
+        if (doc.exists && doc.data()[activePartnerEmail]) stat.innerHTML = `<span class="text-amber-300 font-bold animate-pulse">typing...</span>`;
         else stat.innerHTML = `● Online`;
       });
     }
@@ -1724,8 +1823,8 @@
         msgs.forEach(m => {
           const isMe = m.senderEmail === currentUser.email.toLowerCase();
           const bubble = document.createElement('div');
-          bubble.className = `max-w-[80%] px-3.5 py-2 rounded-2xl text-xs ${isMe ? 'tinder-btn text-white ml-auto' : 'bg-zinc-900 text-zinc-100 mr-auto border border-zinc-800'}`;
-          bubble.innerHTML = `${isGroupChat && !isMe ? `<span class="text-[9px] text-rose-400 font-bold block mb-0.5">${sanitizeInput(m.senderName)}</span>` : ''}<p>${sanitizeInput(m.text)}</p>`;
+          bubble.className = `max-w-[80%] px-3.5 py-2 rounded-2xl text-xs ${isMe ? 'navratri-btn text-white ml-auto' : 'bg-[#1a0e2e] text-zinc-100 mr-auto border border-purple-800'}`;
+          bubble.innerHTML = `${isGroupChat && !isMe ? `<span class="text-[9px] text-amber-400 font-bold block mb-0.5">${sanitizeInput(m.senderName)}</span>` : ''}<p>${sanitizeInput(m.text)}</p>`;
           stream.appendChild(bubble);
         });
         stream.scrollTop = stream.scrollHeight;
