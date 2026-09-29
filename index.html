@@ -160,7 +160,6 @@
           <div class="flex-1 border-t border-purple-900"></div>
         </div>
 
-        <!-- GOOGLE SIGN IN BUTTON AT THE BOTTOM -->
         <button type="button" onclick="handleGoogleSignIn()" class="w-full py-3 rounded-2xl bg-white text-zinc-900 font-bold flex items-center justify-center gap-2.5 shadow-md active:scale-95">
           <i class="fa-brands fa-google text-rose-600 text-base"></i>
           <span>Sign in with Google</span>
@@ -436,7 +435,7 @@
       <div id="admin-launcher-box" class="hidden mt-3">
         <button onclick="promptAdminPasscode()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-rose-700 via-orange-600 to-amber-600 text-white font-black text-xs flex items-center justify-center gap-2 shadow-lg shadow-rose-700/30">
           <i class="fa-solid fa-shield-halved"></i>
-          <span>Admin Console 🛡️️</span>
+          <span>Admin Console 🛡️</span>
         </button>
       </div>
 
@@ -1302,7 +1301,7 @@
       filtered.forEach(u => {
         buddiesSlider.innerHTML += `
           <div class="buddy-card-item" onclick="openBuddyProfileModal('${u.email}')">
-            <div class="w-16 h-16 rounded-full overflow-hidden bg-[#120822] flex items-center justify-center font-bold text-amber-400 text-lg mb-2 shadow-md border border-amber-500/30">
+            <div class="w-16 h-16 rounded-full overflow-hidden bg-[#120822] flex items-center justify-center font-bold text-amber-400 text-lg mb-2 relative shadow-md border border-amber-500/30">
               ${u.photoUrl ? `<img src="${u.photoUrl}" class="w-full h-full object-cover" />` : u.name[0]}
             </div>
             <h4 class="font-bold text-xs text-amber-100 truncate w-full">${sanitizeInput(u.name)}</h4>
