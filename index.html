@@ -6,6 +6,8 @@
   <title>Milo - Navratri Dating & Social Club</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- RAZORPAY CHECKOUT SCRIPT -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
   <style>
     *, *::before, *::after { box-sizing: border-box; }
@@ -41,6 +43,12 @@
       transition: transform 0.15s ease;
     }
     .navratri-btn:active { transform: scale(0.97); }
+
+    .gold-badge-glow {
+      background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+      color: #11051c; font-weight: 900;
+      box-shadow: 0 0 15px rgba(251, 191, 36, 0.6);
+    }
 
     .bottom-nav-active {
       color: #fbbf24 !important;
@@ -81,6 +89,7 @@
       100% { transform: rotate(1440deg); }
     }
     .spinning { animation: spinWheel 1.5s cubic-bezier(0.15, 0.9, 0.2, 1) forwards; }
+    .blur-content { filter: blur(6px); user-select: none; pointer-events: none; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between relative pb-16">
@@ -94,13 +103,18 @@
       <div>
         <div class="flex items-center gap-1.5">
           <span class="text-lg font-black tracking-widest bg-gradient-to-r from-amber-400 via-rose-400 to-orange-400 bg-clip-text text-transparent">MILO</span>
-          <span class="text-[8px] bg-rose-950 text-amber-300 border border-amber-500/40 px-1.5 py-0.2 rounded-full font-bold">Dating</span>
+          <span id="header-tier-badge" class="text-[8px] bg-rose-950 text-amber-300 border border-amber-500/40 px-1.5 py-0.2 rounded-full font-bold">Gold Club</span>
         </div>
-        <span class="block text-[8px] tracking-widest text-amber-400/80 font-bold uppercase">Navratri Club</span>
+        <span class="block text-[8px] tracking-widest text-amber-400/80 font-bold uppercase">Navratri Dating</span>
       </div>
     </div>
     
     <div id="top-user-pill" class="hidden flex items-center gap-2">
+      <!-- UPGRADE TO GOLD BUTTON -->
+      <button onclick="openUpgradeModal()" class="px-2.5 py-1 rounded-full gold-badge-glow text-[10px] flex items-center gap-1 shadow-md active:scale-95">
+        <i class="fa-solid fa-crown text-[9px]"></i> <span>Gold</span>
+      </button>
+
       <!-- SPIN WHEEL BUTTON -->
       <button onclick="openSpinWheelModal()" class="relative w-8 h-8 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-300 border border-amber-500/40 active:scale-90" title="Spin the Wheel">
         <i class="fa-solid fa-dharmachakra text-xs"></i>
@@ -132,10 +146,10 @@
     <div class="navratri-glass-card w-full rounded-3xl p-6 shadow-2xl border border-amber-500/40">
       <div class="text-center mb-5">
         <span class="text-[9px] font-bold tracking-widest text-amber-300 bg-rose-950/80 px-3 py-1 rounded-full border border-amber-500/40 uppercase">
-          🪔 Navratri Romantic Dating Club
+          🪔 Navratri Dating & Romance
         </span>
         <h2 class="text-2xl font-black text-amber-100 mt-2.5">Welcome to Milo</h2>
-        <p class="text-xs text-zinc-400 mt-1">Find your Garba Raas partner & soulmate</p>
+        <p class="text-xs text-zinc-400 mt-1">Dandiya raas & romantic partner matching</p>
       </div>
 
       <div class="space-y-3 text-xs">
@@ -284,7 +298,7 @@
       </div>
     </div>
 
-    <!-- CHAT ROOM (Supports Both 1-on-1 & Groups with Icebreakers) -->
+    <!-- CHAT ROOM -->
     <div id="chats-room-view" class="hidden navratri-glass-card rounded-3xl overflow-hidden shadow-2xl flex flex-col h-[76vh] border border-amber-500/30">
       <div class="p-3 border-b border-purple-900/50 flex items-center justify-between bg-[#120822]/80">
         <div class="flex items-center gap-2.5">
@@ -320,7 +334,7 @@
 
       <div class="p-2.5 border-t border-purple-900/50 flex flex-col gap-1.5 bg-[#120822]/90">
         <div class="flex items-center gap-2">
-          <input id="personal-chat-input" type="text" oninput="handleTypingInput()" onkeydown="if(event.key==='Enter') sendPersonalMessage()" placeholder="Type a message..." class="flex-1 bg-[#1a0e2e] border border-purple-800 rounded-xl px-3.5 py-2.5 text-xs outline-none focus:border-amber-400 text-zinc-100 placeholder:text-zinc-500 shadow-inner" />
+          <input id="personal-chat-input" type="text" onkeydown="if(event.key==='Enter') sendPersonalMessage()" placeholder="Type a message..." class="flex-1 bg-[#1a0e2e] border border-purple-800 rounded-xl px-3.5 py-2.5 text-xs outline-none focus:border-amber-400 text-zinc-100 placeholder:text-zinc-500 shadow-inner" />
           <button onclick="sendPersonalMessage()" id="personal-send-btn" class="w-9 h-9 rounded-xl navratri-btn flex items-center justify-center text-white font-black">
             <i class="fa-solid fa-paper-plane text-xs"></i>
           </button>
@@ -395,7 +409,6 @@
 
   <!-- SCREEN 4: EVENTS -->
   <section id="screen-events" class="hidden relative z-20 flex-1 max-w-md mx-auto w-full px-4 py-3 pt-16">
-    <!-- ANONYMOUS CONFESSIONS WALL -->
     <div class="navratri-glass-card rounded-3xl p-4 shadow-xl mb-4 border border-amber-500/30">
       <div class="flex items-center justify-between pb-3 border-b border-purple-900/60 mb-3">
         <div class="flex items-center gap-2">
@@ -463,7 +476,12 @@
         <span id="profile-display-city">Sinnar</span>
       </div>
 
-      <div class="mt-3">
+      <div class="mt-3 space-y-2">
+        <button onclick="openUpgradeModal()" class="w-full py-3 rounded-2xl gold-badge-glow text-xs flex items-center justify-center gap-2 shadow-lg active:scale-95">
+          <i class="fa-solid fa-crown text-sm"></i>
+          <span>Upgrade to Milo Gold (₹199) 👑</span>
+        </button>
+
         <button onclick="requestNotificationPermission()" class="w-full py-2.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 font-bold text-xs flex items-center justify-center gap-2">
           <i class="fa-solid fa-bell"></i>
           <span>Enable Notifications 🔔</span>
@@ -665,12 +683,33 @@
     </div>
   </div>
 
+  <!-- UPGRADE TO GOLD MODAL -->
+  <div id="modal-upgrade" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="modal-sheet-anim navratri-glass-card w-full max-w-sm rounded-3xl p-6 shadow-2xl text-center border-2 border-amber-400 relative">
+      <button onclick="closeUpgradeModal()" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-purple-950 text-amber-300 flex items-center justify-center font-bold text-xs">&times;</button>
+      <div class="w-12 h-12 mx-auto rounded-2xl gold-badge-glow flex items-center justify-center text-xl mb-3 shadow-lg"><i class="fa-solid fa-crown"></i></div>
+      <h3 class="text-lg font-black text-amber-100 mb-1">Milo Gold Pass</h3>
+      <p class="text-xs text-amber-300/90 mb-4">Unlock unlimited wheel spins, direct messages, city teleport, & unblur all secret crushes!</p>
+      
+      <div class="p-3 bg-[#120822] rounded-2xl border border-amber-500/40 mb-4 text-left text-xs space-y-1.5 text-zinc-200">
+        <div>✨ Unlimited Garba Wheel Spins</div>
+        <div>✨ See Who Sent You Secret Crushes</div>
+        <div>✨ Unblur Incoming Romantic Messages</div>
+        <div>✨ Priority Profile Visibility</div>
+      </div>
+
+      <button onclick="startRazorpayPayment()" class="w-full py-3 rounded-xl gold-badge-glow text-xs font-black uppercase tracking-wider shadow-xl">
+        Upgrade Now for ₹199 👑
+      </button>
+    </div>
+  </div>
+
   <!-- SPIN WHEEL MODAL -->
   <div id="modal-spin-wheel" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="modal-sheet-anim navratri-glass-card w-full max-w-sm rounded-3xl p-6 shadow-2xl text-center border-2 border-amber-400 relative">
       <button onclick="closeSpinWheelModal()" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-purple-950 text-amber-300 flex items-center justify-center font-bold text-xs">&times;</button>
       <h3 class="text-lg font-black text-amber-100 mb-1">🎰 Spin the Garba Wheel</h3>
-      <p class="text-xs text-zinc-400 mb-5">Spin to instantly discover your lucky match!</p>
+      <p id="spin-counter-label" class="text-xs text-amber-400 mb-4">10 Daily Spins Remaining</p>
       
       <div class="w-32 h-32 mx-auto rounded-full bg-gradient-to-tr from-rose-600 via-orange-500 to-amber-400 p-1 flex items-center justify-center shadow-xl mb-6">
         <div id="wheel-inner-box" class="w-full h-full bg-[#120822] rounded-full flex items-center justify-center text-amber-300 font-black text-xs p-2 text-center">
@@ -709,17 +748,11 @@
         
         <div class="mt-2 flex items-center justify-center gap-2">
           <span class="px-3 py-0.5 rounded-full bg-rose-950 text-[11px] font-bold text-amber-300 border border-amber-500/30">📍 <span id="detail-user-city"></span></span>
-          <span id="detail-chemistry-pill" class="px-3 py-0.5 rounded-full bg-amber-500/20 text-[11px] font-bold text-amber-300 border border-amber-400/40">🔥 92% Duet Match</span>
+          <span class="px-3 py-0.5 rounded-full bg-amber-500/20 text-[11px] font-bold text-amber-300 border border-amber-400/40">🔥 Duet Match</span>
         </div>
 
         <div class="mt-2 text-[10px] text-zinc-400 italic" id="detail-user-status"></div>
         <div class="mt-3 p-3 bg-[#120822] rounded-xl text-left text-xs text-zinc-300 italic border border-purple-900/60" id="detail-user-bio"></div>
-        
-        <!-- COMPLIMENT / PANCHNAMA BADGES -->
-        <div class="mt-3 flex items-center justify-center gap-1.5 flex-wrap" id="detail-badges-box">
-          <span class="px-2 py-0.5 rounded-full bg-purple-950 text-[9px] text-amber-300 border border-purple-800">✨ Best Vibe</span>
-          <span class="px-2 py-0.5 rounded-full bg-purple-950 text-[9px] text-amber-300 border border-purple-800">🪔 Fast Garba Steps</span>
-        </div>
 
         <div class="mt-5 pt-3 border-t border-purple-900/60 grid grid-cols-2 gap-2" id="detail-action-container"></div>
       </div>
@@ -760,6 +793,8 @@
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
   <script>
+    const RAZORPAY_TEST_KEY = "rzp_test_Ti6Q03vayOMsO";
+
     function sanitizeInput(str) {
       if (!str) return '';
       const temp = document.createElement('div');
@@ -822,6 +857,26 @@
     let currentExploreTab = 'partners';
     let currentChatSubTab = 'direct';
     let isGroupChat = false;
+
+    // Daily Spins Management
+    function getRemainingSpins() {
+      const today = new Date().toDateString();
+      let spinData = JSON.parse(localStorage.getItem('milo_spin_data') || '{}');
+      if (spinData.date !== today) {
+        spinData = { date: today, count: 10 };
+        localStorage.setItem('milo_spin_data', JSON.stringify(spinData));
+      }
+      return spinData.count;
+    }
+
+    function useSpinCount() {
+      const today = new Date().toDateString();
+      let spinData = JSON.parse(localStorage.getItem('milo_spin_data') || '{}');
+      if (spinData.count > 0) {
+        spinData.count -= 1;
+        localStorage.setItem('milo_spin_data', JSON.stringify(spinData));
+      }
+    }
 
     function compressImageFile(file, maxWidth = 350, quality = 0.5) {
       return new Promise((resolve) => {
@@ -891,24 +946,101 @@
       }
     }
 
-    // SPIN WHEEL
-    function openSpinWheelModal() { document.getElementById('modal-spin-wheel').classList.remove('hidden'); }
+    // RAZORPAY PAYMENT GATEWAY
+    function openUpgradeModal() { document.getElementById('modal-upgrade').classList.remove('hidden'); }
+    function closeUpgradeModal() { document.getElementById('modal-upgrade').classList.add('hidden'); }
+
+    function startRazorpayPayment() {
+      if (!currentUser || !currentUserProfile) return;
+      var options = {
+        "key": RAZORPAY_TEST_KEY,
+        "amount": 19900, // ₹199 in paise
+        "currency": "INR",
+        "name": "Milo Gold Club",
+        "description": "Upgrade to Milo Gold Membership (Navratri Pass)",
+        "image": "https://cdn-icons-png.flaticon.com/512/9131/9131545.png",
+        "handler": async function (response){
+          try {
+            await db.collection("milo_users").doc(currentUser.email.toLowerCase()).update({
+              isPremium: true,
+              premiumPaymentId: response.razorpay_payment_id,
+              premiumActivatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            alert("🎉 Payment Successful! Milo Gold Pass Activated 👑");
+            closeUpgradeModal();
+            location.reload();
+          } catch(e) { alert("Error upgrading user: " + e.message); }
+        },
+        "prefill": {
+          "name": currentUserProfile.name,
+          "email": currentUser.email,
+          "contact": "9999999999"
+        },
+        "theme": {
+          "color": "#fbbf24"
+        }
+      };
+      var rzp1 = new Razorpay(options);
+      rzp1.open();
+    }
+
+    // SPIN WHEEL WITH PROBABILITY (Free vs Gold)
+    function openSpinWheelModal() {
+      document.getElementById('spin-counter-label').innerText = `${getRemainingSpins()} Daily Spins Remaining`;
+      document.getElementById('modal-spin-wheel').classList.remove('hidden');
+    }
     function closeSpinWheelModal() { document.getElementById('modal-spin-wheel').classList.add('hidden'); }
 
     function spinTheWheelAction() {
+      const isGold = currentUserProfile && currentUserProfile.isPremium;
+      const spinsLeft = getRemainingSpins();
+
+      if (!isGold && spinsLeft <= 0) {
+        alert("❌ Daily spin limit reached! Upgrade to Milo Gold for unlimited spins.");
+        openUpgradeModal();
+        return;
+      }
+
       const box = document.getElementById('wheel-inner-box');
       if (globalAllUsers.length <= 1) { alert("Not enough users to spin!"); return; }
+      
       box.classList.add('spinning');
       box.innerText = "Spinning... 🪔";
+      
+      if (!isGold) useSpinCount();
+
       setTimeout(() => {
         box.classList.remove('spinning');
+        const myGender = currentUserProfile?.gender || 'Male';
         const otherUsers = globalAllUsers.filter(u => u.email.toLowerCase() !== currentUser.email.toLowerCase());
-        const randomMatch = otherUsers[Math.floor(Math.random() * otherUsers.length)];
-        box.innerHTML = `<span class="text-amber-300 font-bold">Match Found!<br>${sanitizeInput(randomMatch.name)}</span>`;
-        setTimeout(() => {
-          closeSpinWheelModal();
-          openBuddyProfileModal(randomMatch.email);
-        }, 1200);
+        
+        let selectedMatch = null;
+        if (isGold) {
+          // Gold user gets matches easily
+          selectedMatch = otherUsers[Math.floor(Math.random() * otherUsers.length)];
+        } else {
+          // Free user probability: Boys get girls only 30-40% of time
+          const oppositeGender = myGender === 'Male' ? 'Female' : 'Male';
+          const oppositeUsers = otherUsers.filter(u => u.gender === oppositeGender);
+          
+          const hitGirl = Math.random() < 0.35; // 35% chance
+          if (hitGirl && oppositeUsers.length > 0) {
+            selectedMatch = oppositeUsers[Math.floor(Math.random() * oppositeUsers.length)];
+          } else {
+            // Empty or festive reward spin
+            box.innerHTML = `<span class="text-amber-400 font-bold text-[11px]">✨ Festive Vibe!<br>Try Again (No Match)</span>`;
+            document.getElementById('spin-counter-label').innerText = `${getRemainingSpins()} Daily Spins Remaining`;
+            return;
+          }
+        }
+
+        if (selectedMatch) {
+          box.innerHTML = `<span class="text-amber-300 font-bold">Match Found!<br>${sanitizeInput(selectedMatch.name)}</span>`;
+          setTimeout(() => {
+            closeSpinWheelModal();
+            openBuddyProfileModal(selectedMatch.email);
+          }, 1200);
+        }
       }, 1500);
     }
 
@@ -1348,7 +1480,7 @@
         const docSnap = await userRef.get();
         if (!docSnap.exists) {
           await userRef.set({
-            email: cleanEmail, name: sanitizeInput(user.displayName) || generateRandomFestiveName(), username: cleanEmail.split('@')[0] + '_07', gender: "Other", seeking: "Both", city: "Sinnar", tonightStatus: "Heading to Garba tonight 🪔", studies: "Student", garbaStyle: "Traditional Raas", bio: "Ready for Garba nights 🪔", photoUrl: user.photoURL || "", isVerified: true, role: SUPER_ADMINS.includes(cleanEmail) ? "admin" : "member", lastSeen: firebase.firestore.FieldValue.serverTimestamp()
+            email: cleanEmail, name: sanitizeInput(user.displayName) || generateRandomFestiveName(), username: cleanEmail.split('@')[0] + '_07', gender: "Other", seeking: "Both", city: "Sinnar", tonightStatus: "Heading to Garba tonight 🪔", isPremium: false, studies: "Student", garbaStyle: "Traditional Raas", bio: "Ready for Garba nights 🪔", photoUrl: user.photoURL || "", isVerified: true, role: SUPER_ADMINS.includes(cleanEmail) ? "admin" : "member", lastSeen: firebase.firestore.FieldValue.serverTimestamp()
           });
         }
       } catch (err) { showAuthError(err.message); }
@@ -1404,7 +1536,7 @@
       if (await isUsernameTaken(username, cleanEmail)) return alert("Username taken!");
 
       await db.collection("milo_users").doc(cleanEmail).set({
-        email: cleanEmail, name, username, gender, seeking, city: city || "Sinnar", tonightStatus: tonightStatus || "Heading to Garba tonight 🪔", bio: bio || "Ready for meetups", photoUrl: currentUser.photoURL || "", isVerified: true, role: SUPER_ADMINS.includes(cleanEmail) ? "admin" : "member", lastSeen: firebase.firestore.FieldValue.serverTimestamp()
+        email: cleanEmail, name, username, gender, seeking, city: city || "Sinnar", tonightStatus: tonightStatus || "Heading to Garba tonight 🪔", isPremium: false, bio: bio || "Ready for meetups", photoUrl: currentUser.photoURL || "", isVerified: true, role: SUPER_ADMINS.includes(cleanEmail) ? "admin" : "member", lastSeen: firebase.firestore.FieldValue.serverTimestamp()
       }, { merge: true });
 
       document.getElementById('screen-onboarding').classList.add('hidden');
@@ -1429,6 +1561,15 @@
       headBox.innerHTML = profile.photoUrl ? `<img src="${profile.photoUrl}" class="w-full h-full object-cover rounded-full" />` : initial;
       if (profile.isVerified) document.getElementById('profile-verified-badge').classList.remove('hidden');
       if (SUPER_ADMINS.includes(profile.email) || profile.role === 'admin') document.getElementById('admin-launcher-box').classList.remove('hidden');
+      
+      const tierBadge = document.getElementById('header-tier-badge');
+      if (profile.isPremium) {
+        tierBadge.innerText = "👑 Milo Gold";
+        tierBadge.className = "text-[8px] gold-badge-glow px-1.5 py-0.2 rounded-full font-black";
+      } else {
+        tierBadge.innerText = "Free Pass";
+        tierBadge.className = "text-[8px] bg-rose-950 text-amber-300 border border-amber-500/40 px-1.5 py-0.2 rounded-full font-bold";
+      }
     }
 
     async function uploadPhotoFromGallery(event) {
@@ -1508,17 +1649,26 @@
       const container = document.getElementById('requests-list-container');
       container.innerHTML = '';
       if (incomingPendingRequests.length === 0) { container.innerHTML = `<div class="text-center py-4 text-xs text-zinc-500">No requests or secret crushes.</div>`; return; }
+      
+      const isGold = currentUserProfile && currentUserProfile.isPremium;
+
       incomingPendingRequests.forEach(req => {
         const isCrush = req.status === 'secret_crush';
+        const senderName = isCrush && !isGold ? "🔒 Someone (Unlock Gold)" : sanitizeInput(req.fromName || req.from);
+
         container.innerHTML += `
           <div class="p-3 bg-[#120822] rounded-2xl border border-purple-900 flex items-center justify-between text-xs">
             <div>
-              <span class="font-bold text-amber-100 block">${sanitizeInput(req.fromName || req.from)}</span>
+              <span class="font-bold text-amber-100 block ${isCrush && !isGold ? 'blur-content' : ''}">${senderName}</span>
               <span class="text-[10px] text-amber-400">${isCrush ? '💖 Sent you a Secret Crush!' : '💌 Partner Request'}</span>
             </div>
             <div class="flex gap-1">
-              <button onclick="respondToRequest('${req.id}', 'accepted')" class="px-2.5 py-1 bg-emerald-600 text-white rounded font-bold">Accept</button>
-              <button onclick="respondToRequest('${req.id}', 'rejected')" class="px-2.5 py-1 bg-rose-950 text-rose-300 rounded font-bold">Reject</button>
+              ${isCrush && !isGold ? `
+                <button onclick="openUpgradeModal()" class="px-3 py-1 gold-badge-glow rounded text-[10px] font-bold">Reveal 👑</button>
+              ` : `
+                <button onclick="respondToRequest('${req.id}', 'accepted')" class="px-2.5 py-1 bg-emerald-600 text-white rounded font-bold">Accept</button>
+                <button onclick="respondToRequest('${req.id}', 'rejected')" class="px-2.5 py-1 bg-rose-950 text-rose-300 rounded font-bold">Reject</button>
+              `}
             </div>
           </div>
         `;
@@ -1534,11 +1684,9 @@
     async function sendSecretCrush(targetEmail, targetName) {
       if (!currentUser) return;
       const myEmail = currentUser.email.toLowerCase();
-      // Check if target also sent secret crush to me
       const snapshot = await db.collection("milo_requests").where("from", "==", targetEmail.toLowerCase()).where("to", "==", myEmail).where("status", "==", "secret_crush").get();
       
       if (!snapshot.empty) {
-        // Mutual Crush! Make accepted directly
         await db.collection("milo_requests").add({ from: myEmail, fromName: currentUserProfile?.name || 'User', to: targetEmail.toLowerCase(), status: "accepted", createdAt: firebase.firestore.FieldValue.serverTimestamp() });
         alert(`🎉 It's a Mutual Secret Crush Match with ${targetName}! Check your Direct Chats! 💖`);
       } else {
@@ -1597,7 +1745,6 @@
       if (filtered.length === 0) { buddiesSlider.innerHTML = `<div class="col-span-2 text-center py-10 text-xs text-zinc-500">No partners found.</div>`; return; }
 
       filtered.forEach(u => {
-        // Calculate random festive chemistry score based on names
         const chemistry = 75 + Math.abs((u.name.charCodeAt(0) * 3) % 23);
         buddiesSlider.innerHTML += `
           <div class="buddy-card-item" onclick="openBuddyProfileModal('${u.email}')">
