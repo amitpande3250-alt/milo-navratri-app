@@ -491,7 +491,7 @@
       <div id="admin-launcher-box" class="hidden mt-3">
         <button onclick="promptAdminPasscode()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-rose-700 via-orange-600 to-amber-600 text-white font-black text-xs flex items-center justify-center gap-2 shadow-lg shadow-rose-700/30">
           <i class="fa-solid fa-shield-halved"></i>
-          <span>Admin Console 🛡️️</span>
+          <span>Admin Console 🛡️</span>
         </button>
       </div>
 
@@ -946,22 +946,27 @@
       }
     }
 
-    // RAZORPAY PAYMENT GATEWAY (Safe & Robust)
+    // RAZORPAY PAYMENT GATEWAY
     function openUpgradeModal() { document.getElementById('modal-upgrade').classList.remove('hidden'); }
     function closeUpgradeModal() { document.getElementById('modal-upgrade').classList.add('hidden'); }
 
     function startRazorpayPayment() {
-      if (!currentUser || !currentUserProfile) return;
-      if (typeof Razorpay === 'undefined') {
-        alert("Razorpay SDK not loaded yet. Please check your internet connection and refresh.");
+      if (!currentUser || !currentUserProfile) {
+        alert("Please login first!");
         return;
       }
+      
+      if (typeof Razorpay === 'undefined') {
+        alert("Razorpay payment gateway script is still loading. Please wait a second and try again.");
+        return;
+      }
+
       var options = {
         "key": RAZORPAY_TEST_KEY,
         "amount": 19900, // ₹199 in paise
         "currency": "INR",
         "name": "Milo Gold Club",
-        "description": "Upgrade to Milo Gold Membership (Navratri Pass)",
+        "description": "Upgrade to Milo Gold Membership",
         "image": "https://cdn-icons-png.flaticon.com/512/9131/9131545.png",
         "handler": async function (response){
           try {
@@ -982,8 +987,14 @@
         },
         "theme": {
           "color": "#fbbf24"
+        },
+        "modal": {
+          "ondismiss": function(){
+            console.log("Payment modal closed");
+          }
         }
       };
+
       try {
         var rzp1 = new Razorpay(options);
         rzp1.on('payment.failed', function (response){
@@ -991,7 +1002,7 @@
         });
         rzp1.open();
       } catch(err) {
-        alert("Error opening payment gateway: " + err.message);
+        alert("Razorpay Error: " + err.message);
       }
     }
 
