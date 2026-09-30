@@ -491,7 +491,7 @@
       <div id="admin-launcher-box" class="hidden mt-3">
         <button onclick="promptAdminPasscode()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-rose-700 via-orange-600 to-amber-600 text-white font-black text-xs flex items-center justify-center gap-2 shadow-lg shadow-rose-700/30">
           <i class="fa-solid fa-shield-halved"></i>
-          <span>Admin Console 🛡️</span>
+          <span>Admin Console 🛡️️</span>
         </button>
       </div>
 
@@ -946,12 +946,16 @@
       }
     }
 
-    // RAZORPAY PAYMENT GATEWAY
+    // RAZORPAY PAYMENT GATEWAY (Safe & Robust)
     function openUpgradeModal() { document.getElementById('modal-upgrade').classList.remove('hidden'); }
     function closeUpgradeModal() { document.getElementById('modal-upgrade').classList.add('hidden'); }
 
     function startRazorpayPayment() {
       if (!currentUser || !currentUserProfile) return;
+      if (typeof Razorpay === 'undefined') {
+        alert("Razorpay SDK not loaded yet. Please check your internet connection and refresh.");
+        return;
+      }
       var options = {
         "key": RAZORPAY_TEST_KEY,
         "amount": 19900, // ₹199 in paise
@@ -972,7 +976,7 @@
           } catch(e) { alert("Error upgrading user: " + e.message); }
         },
         "prefill": {
-          "name": currentUserProfile.name,
+          "name": currentUserProfile.name || "User",
           "email": currentUser.email,
           "contact": "9999999999"
         },
@@ -980,8 +984,15 @@
           "color": "#fbbf24"
         }
       };
-      var rzp1 = new Razorpay(options);
-      rzp1.open();
+      try {
+        var rzp1 = new Razorpay(options);
+        rzp1.on('payment.failed', function (response){
+          alert("Payment Failed: " + response.error.description);
+        });
+        rzp1.open();
+      } catch(err) {
+        alert("Error opening payment gateway: " + err.message);
+      }
     }
 
     // SPIN WHEEL WITH PROBABILITY (Free vs Gold)
@@ -1016,18 +1027,15 @@
         
         let selectedMatch = null;
         if (isGold) {
-          // Gold user gets matches easily
           selectedMatch = otherUsers[Math.floor(Math.random() * otherUsers.length)];
         } else {
-          // Free user probability: Boys get girls only 30-40% of time
           const oppositeGender = myGender === 'Male' ? 'Female' : 'Male';
           const oppositeUsers = otherUsers.filter(u => u.gender === oppositeGender);
           
-          const hitGirl = Math.random() < 0.35; // 35% chance
+          const hitGirl = Math.random() < 0.35;
           if (hitGirl && oppositeUsers.length > 0) {
             selectedMatch = oppositeUsers[Math.floor(Math.random() * oppositeUsers.length)];
           } else {
-            // Empty or festive reward spin
             box.innerHTML = `<span class="text-amber-400 font-bold text-[11px]">✨ Festive Vibe!<br>Try Again (No Match)</span>`;
             document.getElementById('spin-counter-label').innerText = `${getRemainingSpins()} Daily Spins Remaining`;
             return;
