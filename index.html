@@ -435,7 +435,7 @@
       <div id="admin-launcher-box" class="hidden mt-3">
         <button onclick="promptAdminPasscode()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-rose-700 via-orange-600 to-amber-600 text-white font-black text-xs flex items-center justify-center gap-2 shadow-lg shadow-rose-700/30">
           <i class="fa-solid fa-shield-halved"></i>
-          <span>Admin Console 🛡️</span>
+          <span>Admin Console 🛡️️</span>
         </button>
       </div>
 
@@ -746,8 +746,8 @@
     let currentChatSubTab = 'direct';
     let isGroupChat = false;
 
-    // Compressed Image Reader to prevent 1MB Firestore limits
-    function compressImageFile(file, maxWidth = 500, quality = 0.7) {
+    // Fast Compressed Image Reader
+    function compressImageFile(file, maxWidth = 350, quality = 0.5) {
       return new Promise((resolve) => {
         const reader = new FileReader();
         reader.onload = function(event) {
@@ -1071,7 +1071,7 @@
 
       let photoBase64 = "";
       if (fileInput.files && fileInput.files[0]) {
-        try { photoBase64 = await compressImageFile(fileInput.files[0], 600, 0.65); } catch(e) {}
+        try { photoBase64 = await compressImageFile(fileInput.files[0], 350, 0.5); } catch(e) {}
       }
 
       try {
@@ -1149,7 +1149,7 @@
 
       let photoBase64 = "";
       if (fileInput.files && fileInput.files[0]) {
-        try { photoBase64 = await compressImageFile(fileInput.files[0], 600, 0.65); } catch(e) {}
+        try { photoBase64 = await compressImageFile(fileInput.files[0], 350, 0.5); } catch(e) {}
       }
 
       const formattedDate = new Date(`${date}T${time}`).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
@@ -1297,7 +1297,7 @@
       const file = event.target.files[0];
       if (!file || !currentUser) return;
       try {
-        const b64 = await compressImageFile(file, 400, 0.7);
+        const b64 = await compressImageFile(file, 350, 0.5);
         await db.collection("milo_users").doc(currentUser.email.toLowerCase()).update({ photoUrl: b64 });
         alert("Photo updated successfully!");
       } catch(e) { alert("Error uploading photo: " + e.message); }
