@@ -704,12 +704,12 @@
     </div>
   </div>
 
-  <!-- SPIN WHEEL MODAL -->
+  <!-- STARTUP & HOURLY SPIN WHEEL MODAL -->
   <div id="modal-spin-wheel" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="modal-sheet-anim navratri-glass-card w-full max-w-sm rounded-3xl p-6 shadow-2xl text-center border-2 border-amber-400 relative">
       <button onclick="closeSpinWheelModal()" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-purple-950 text-amber-300 flex items-center justify-center font-bold text-xs">&times;</button>
       <h3 class="text-lg font-black text-amber-100 mb-1">🎰 Spin the Garba Wheel</h3>
-      <p id="spin-counter-label" class="text-xs text-amber-400 mb-4">10 Daily Spins Remaining</p>
+      <p id="spin-counter-label" class="text-xs text-amber-400 mb-4">Hourly Spin Available</p>
       
       <div class="w-32 h-32 mx-auto rounded-full bg-gradient-to-tr from-rose-600 via-orange-500 to-amber-400 p-1 flex items-center justify-center shadow-xl mb-6">
         <div id="wheel-inner-box" class="w-full h-full bg-[#120822] rounded-full flex items-center justify-center text-amber-300 font-black text-xs p-2 text-center">
@@ -858,24 +858,31 @@
     let currentChatSubTab = 'direct';
     let isGroupChat = false;
 
-    // Daily Spins Management
-    function getRemainingSpins() {
-      const today = new Date().toDateString();
-      let spinData = JSON.parse(localStorage.getItem('milo_spin_data') || '{}');
-      if (spinData.date !== today) {
-        spinData = { date: today, count: 10 };
-        localStorage.setItem('milo_spin_data', JSON.stringify(spinData));
-      }
-      return spinData.count;
+    // Hourly Spin Cool-down Management (Free Users: 1 hour)
+    function canUserSpinNow() {
+      const isGold = (currentUser && SUPER_ADMINS.includes(currentUser.email.toLowerCase())) || (currentUserProfile && currentUserProfile.isPremium);
+      if (isGold) return true;
+
+      const lastSpinTime = localStorage.getItem('milo_last_spin_time');
+      if (!lastSpinTime) return true;
+
+      const elapsedMs = Date.now() - parseInt(lastSpinTime);
+      const oneHourMs = 60 * 60 * 1000;
+      return elapsedMs >= oneHourMs;
     }
 
-    function useSpinCount() {
-      const today = new Date().toDateString();
-      let spinData = JSON.parse(localStorage.getItem('milo_spin_data') || '{}');
-      if (spinData.count > 0) {
-        spinData.count -= 1;
-        localStorage.setItem('milo_spin_data', JSON.stringify(spinData));
-      }
+    function recordSpinTime() {
+      localStorage.setItem('milo_last_spin_time', Date.now().toString());
+    }
+
+    function getRemainingSpinCooldown() {
+      const lastSpinTime = localStorage.getItem('milo_last_spin_time');
+      if (!lastSpinTime) return 0;
+      const elapsedMs = Date.now() - parseInt(lastSpinTime);
+      const oneHourMs = 60 * 60 * 1000;
+      const remainingMs = oneHourMs - elapsedMs;
+      if (remainingMs <= 0) return 0;
+      return Math.ceil(remainingMs / (60 * 1000)); // Minutes remaining
     }
 
     function compressImageFile(file, maxWidth = 350, quality = 0.5) {
@@ -951,19 +958,12 @@
     function closeUpgradeModal() { document.getElementById('modal-upgrade').classList.add('hidden'); }
 
     function startRazorpayPayment() {
-      if (!currentUser || !currentUserProfile) {
-        alert("Please login first!");
-        return;
-      }
-      
-      if (typeof Razorpay === 'undefined') {
-        alert("Razorpay payment gateway script is still loading. Please wait a second and try again.");
-        return;
-      }
+      if (!currentUser || !currentUserProfile) { alert("Please login first!"); return; }
+      if (typeof Razorpay === 'undefined') { alert("Razorpay script loading... please try again."); return; }
 
       var options = {
         "key": RAZORPAY_TEST_KEY,
-        "amount": 19900, // ₹199 in paise
+        "amount": 19900,
         "currency": "INR",
         "name": "Milo Gold Club",
         "description": "Upgrade to Milo Gold Membership",
@@ -985,40 +985,35 @@
           "email": currentUser.email,
           "contact": "9999999999"
         },
-        "theme": {
-          "color": "#fbbf24"
-        },
-        "modal": {
-          "ondismiss": function(){
-            console.log("Payment modal closed");
-          }
-        }
+        "theme": { "color": "#fbbf24" }
       };
 
       try {
         var rzp1 = new Razorpay(options);
-        rzp1.on('payment.failed', function (response){
-          alert("Payment Failed: " + response.error.description);
-        });
         rzp1.open();
-      } catch(err) {
-        alert("Razorpay Error: " + err.message);
-      }
+      } catch(err) { alert("Error: " + err.message); }
     }
 
-    // SPIN WHEEL WITH PROBABILITY (Free vs Gold)
+    // SPIN WHEEL MODAL & PROBABILITY
     function openSpinWheelModal() {
-      document.getElementById('spin-counter-label').innerText = `${getRemainingSpins()} Daily Spins Remaining`;
+      const isGold = (currentUser && SUPER_ADMINS.includes(currentUser.email.toLowerCase())) || (currentUserProfile && currentUserProfile.isPremium);
+      const minutesLeft = getRemainingSpinCooldown();
+
+      if (!isGold && minutesLeft > 0) {
+        document.getElementById('spin-counter-label').innerText = `⏳ Next spin available in ${minutesLeft} mins (Or Upgrade for Unlimited)`;
+      } else {
+        document.getElementById('spin-counter-label').innerText = isGold ? "👑 Unlimited Gold Spins Active" : "🎁 Ready for your hourly spin!";
+      }
       document.getElementById('modal-spin-wheel').classList.remove('hidden');
     }
     function closeSpinWheelModal() { document.getElementById('modal-spin-wheel').classList.add('hidden'); }
 
     function spinTheWheelAction() {
-      const isGold = currentUserProfile && currentUserProfile.isPremium;
-      const spinsLeft = getRemainingSpins();
+      const isGold = (currentUser && SUPER_ADMINS.includes(currentUser.email.toLowerCase())) || (currentUserProfile && currentUserProfile.isPremium);
+      const minutesLeft = getRemainingSpinCooldown();
 
-      if (!isGold && spinsLeft <= 0) {
-        alert("❌ Daily spin limit reached! Upgrade to Milo Gold for unlimited spins.");
+      if (!isGold && minutesLeft > 0) {
+        alert(`❌ Please wait ${minutesLeft} more minutes for your next free hourly spin, or Upgrade to Milo Gold for unlimited spins!`);
         openUpgradeModal();
         return;
       }
@@ -1029,7 +1024,7 @@
       box.classList.add('spinning');
       box.innerText = "Spinning... 🪔";
       
-      if (!isGold) useSpinCount();
+      if (!isGold) recordSpinTime();
 
       setTimeout(() => {
         box.classList.remove('spinning');
@@ -1043,12 +1038,12 @@
           const oppositeGender = myGender === 'Male' ? 'Female' : 'Male';
           const oppositeUsers = otherUsers.filter(u => u.gender === oppositeGender);
           
-          const hitGirl = Math.random() < 0.35;
+          const hitGirl = Math.random() < 0.35; // 35% chance for free male users
           if (hitGirl && oppositeUsers.length > 0) {
             selectedMatch = oppositeUsers[Math.floor(Math.random() * oppositeUsers.length)];
           } else {
-            box.innerHTML = `<span class="text-amber-400 font-bold text-[11px]">✨ Festive Vibe!<br>Try Again (No Match)</span>`;
-            document.getElementById('spin-counter-label').innerText = `${getRemainingSpins()} Daily Spins Remaining`;
+            box.innerHTML = `<span class="text-amber-400 font-bold text-[11px]">✨ Festive Vibe!<br>Try again in 1 hour</span>`;
+            document.getElementById('spin-counter-label').innerText = `Next spin in 60 mins`;
             return;
           }
         }
@@ -1495,12 +1490,15 @@
         const result = await auth.signInWithPopup(provider);
         const user = result.user;
         const cleanEmail = user.email.toLowerCase();
+        const isAdmin = SUPER_ADMINS.includes(cleanEmail);
         const userRef = db.collection("milo_users").doc(cleanEmail);
         const docSnap = await userRef.get();
         if (!docSnap.exists) {
           await userRef.set({
-            email: cleanEmail, name: sanitizeInput(user.displayName) || generateRandomFestiveName(), username: cleanEmail.split('@')[0] + '_07', gender: "Other", seeking: "Both", city: "Sinnar", tonightStatus: "Heading to Garba tonight 🪔", isPremium: false, studies: "Student", garbaStyle: "Traditional Raas", bio: "Ready for Garba nights 🪔", photoUrl: user.photoURL || "", isVerified: true, role: SUPER_ADMINS.includes(cleanEmail) ? "admin" : "member", lastSeen: firebase.firestore.FieldValue.serverTimestamp()
+            email: cleanEmail, name: sanitizeInput(user.displayName) || generateRandomFestiveName(), username: cleanEmail.split('@')[0] + '_07', gender: "Other", seeking: "Both", city: "Sinnar", tonightStatus: "Heading to Garba tonight 🪔", isPremium: isAdmin ? true : false, studies: "Student", garbaStyle: "Traditional Raas", bio: "Ready for Garba nights 🪔", photoUrl: user.photoURL || "", isVerified: true, role: isAdmin ? "admin" : "member", lastSeen: firebase.firestore.FieldValue.serverTimestamp()
           });
+        } else if (isAdmin && !docSnap.data().isPremium) {
+          await userRef.update({ isPremium: true, role: "admin" });
         }
       } catch (err) { showAuthError(err.message); }
     }
@@ -1509,19 +1507,28 @@
       if (user) {
         currentUser = user;
         const cleanEmail = user.email.toLowerCase();
+        const isAdmin = SUPER_ADMINS.includes(cleanEmail);
         document.getElementById('screen-auth').classList.add('hidden');
         const userRef = db.collection("milo_users").doc(cleanEmail);
-        userRef.get().then(docSnap => {
+        
+        userRef.get().then(async docSnap => {
           if (!docSnap.exists) {
             document.getElementById('screen-onboarding').classList.remove('hidden');
           } else {
+            if (isAdmin && !docSnap.data().isPremium) {
+              await userRef.update({ isPremium: true, role: "admin" });
+            }
             document.getElementById('screen-onboarding').classList.add('hidden');
             document.getElementById('top-user-pill').classList.remove('hidden');
             document.getElementById('bottom-nav-bar').classList.remove('hidden');
             switchTab('buddies');
             userRef.update({ lastSeen: firebase.firestore.FieldValue.serverTimestamp() });
+            
+            // Trigger startup spin wheel popup for non-admin or first visit
+            setTimeout(() => { openSpinWheelModal(); }, 600);
           }
         });
+
         userRef.onSnapshot(doc => { if (doc.exists) { currentUserProfile = doc.data(); updateUIWithProfile(currentUserProfile); } });
         listenToRequests(); listenToRegisteredUsers(); listenToBanners(); listenToEvents(); listenToGroupsAndRequests(); listenToConfessions();
       } else {
@@ -1551,17 +1558,19 @@
       const tonightStatus = sanitizeInput(document.getElementById('onboard-status').value.trim());
       const bio = sanitizeInput(document.getElementById('onboard-bio').value.trim());
       const cleanEmail = currentUser.email.toLowerCase();
+      const isAdmin = SUPER_ADMINS.includes(cleanEmail);
 
       if (await isUsernameTaken(username, cleanEmail)) return alert("Username taken!");
 
       await db.collection("milo_users").doc(cleanEmail).set({
-        email: cleanEmail, name, username, gender, seeking, city: city || "Sinnar", tonightStatus: tonightStatus || "Heading to Garba tonight 🪔", isPremium: false, bio: bio || "Ready for meetups", photoUrl: currentUser.photoURL || "", isVerified: true, role: SUPER_ADMINS.includes(cleanEmail) ? "admin" : "member", lastSeen: firebase.firestore.FieldValue.serverTimestamp()
+        email: cleanEmail, name, username, gender, seeking, city: city || "Sinnar", tonightStatus: tonightStatus || "Heading to Garba tonight 🪔", isPremium: isAdmin ? true : false, bio: bio || "Ready for meetups", photoUrl: currentUser.photoURL || "", isVerified: true, role: isAdmin ? "admin" : "member", lastSeen: firebase.firestore.FieldValue.serverTimestamp()
       }, { merge: true });
 
       document.getElementById('screen-onboarding').classList.add('hidden');
       document.getElementById('top-user-pill').classList.remove('hidden');
       document.getElementById('bottom-nav-bar').classList.remove('hidden');
       switchTab('buddies');
+      openSpinWheelModal();
     }
 
     function updateUIWithProfile(profile) {
@@ -1582,7 +1591,7 @@
       if (SUPER_ADMINS.includes(profile.email) || profile.role === 'admin') document.getElementById('admin-launcher-box').classList.remove('hidden');
       
       const tierBadge = document.getElementById('header-tier-badge');
-      if (profile.isPremium) {
+      if (profile.isPremium || SUPER_ADMINS.includes(profile.email.toLowerCase())) {
         tierBadge.innerText = "👑 Milo Gold";
         tierBadge.className = "text-[8px] gold-badge-glow px-1.5 py-0.2 rounded-full font-black";
       } else {
@@ -1669,7 +1678,7 @@
       container.innerHTML = '';
       if (incomingPendingRequests.length === 0) { container.innerHTML = `<div class="text-center py-4 text-xs text-zinc-500">No requests or secret crushes.</div>`; return; }
       
-      const isGold = currentUserProfile && currentUserProfile.isPremium;
+      const isGold = (currentUser && SUPER_ADMINS.includes(currentUser.email.toLowerCase())) || (currentUserProfile && currentUserProfile.isPremium);
 
       incomingPendingRequests.forEach(req => {
         const isCrush = req.status === 'secret_crush';
