@@ -545,7 +545,7 @@
           <input type="text" id="admin-banner-title" placeholder="Title" class="w-full bg-[#1a0e2e] border border-purple-800 rounded-xl p-2 text-xs text-zinc-100 outline-none" />
           <input type="text" id="admin-banner-subtitle" placeholder="Subtitle" class="w-full bg-[#1a0e2e] border border-purple-800 rounded-xl p-2 text-xs text-zinc-100 outline-none" />
           <input type="file" id="admin-banner-photo" accept="image/*" class="text-xs text-zinc-300 w-full" />
-          <button onclick="adminPublishBanner()" id="btn-publish-banner" class="w-full py-2.5 rounded-xl navratri-btn font-bold text-xs uppercase">Publish</button>
+          <button onclick="adminPublishBanner()" id="btn-publish-banner" class="w-full py-2.5 rounded-xl navratri-btn font-bold text-xs uppercase">Publish Banner</button>
         </div>
         <div id="admin-banners-list" class="space-y-2"></div>
       </div>
@@ -604,7 +604,7 @@
           <input type="text" id="admin-event-pass" placeholder="Pass info" class="w-full bg-[#1a0e2e] border border-purple-800 rounded-xl p-2 text-xs text-zinc-100 outline-none" />
           <textarea id="admin-event-desc" rows="2" placeholder="Details..." class="w-full bg-[#1a0e2e] border border-purple-800 rounded-xl p-2 text-xs text-zinc-100 outline-none"></textarea>
           <input type="file" id="admin-event-photo" accept="image/*" class="text-xs text-zinc-300 w-full" />
-          <button onclick="adminPublishEvent()" id="btn-publish-event" class="w-full py-2.5 rounded-xl navratri-btn font-bold text-xs uppercase">Schedule</button>
+          <button onclick="adminPublishEvent()" id="btn-publish-event" class="w-full py-2.5 rounded-xl navratri-btn font-bold text-xs uppercase">Schedule Event</button>
         </div>
         <div id="admin-events-list" class="space-y-2"></div>
       </div>
@@ -746,6 +746,16 @@
     let currentChatSubTab = 'direct';
     let isGroupChat = false;
 
+    // Helper to read image file as base64 safely
+    function readFileAsBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+        reader.readAsDataURL(file);
+      });
+    }
+
     function switchChatSubTab(tab) {
       currentChatSubTab = tab;
       const dBtn = document.getElementById('chattab-direct');
@@ -886,6 +896,10 @@
           createdAt: firebase.firestore.FieldValue.serverTimestamp()
         });
         alert("Community Group Created Live! 👥");
+        document.getElementById('admin-group-name').value = '';
+        document.getElementById('admin-group-boys').value = '';
+        document.getElementById('admin-group-girls').value = '';
+        document.getElementById('admin-group-desc').value = '';
       } catch(e) { alert("Error: " + e.message); }
     }
 
@@ -1025,18 +1039,56 @@
         globalBanners = [];
         snapshot.forEach(doc => globalBanners.push({ id: doc.id, ...doc.data() }));
         renderHeroMotionBanners();
-      });
+        renderAdminBannersList();
+      }, err => { console.error("Banner listen error: ", err); });
+    }
+
+    async function adminPublishBanner() {
+      const status = document.getElementById('admin-banner-status').value;
+      const title = sanitizeInput(document.getElementById('admin-banner-title').value.trim());
+      const subtitle = sanitizeInput(document.getElementById('admin-banner-subtitle').value.trim());
+      const fileInput = document.getElementById('admin-banner-photo');
+      const btn = document.getElementById('btn-publish-banner');
+
+      if (!title) return alert("Title required!");
+      btn.innerText = "Publishing..."; btn.disabled = true;
+
+      let photoBase64 = "";
+      if (fileInput.files && fileInput.files[0]) {
+        try { photoBase64 = await readFileAsBase64(fileInput.files[0]); } catch(e) {}
+      }
+
+      try {
+        await db.collection("milo_banners").add({
+          title, subtitle: subtitle || "Featured Highlight ✨", status, photoUrl: photoBase64, createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        alert("Banner Published Successfully! 🚀");
+        document.getElementById('admin-banner-title').value = '';
+        document.getElementById('admin-banner-subtitle').value = '';
+        fileInput.value = '';
+      } catch(err) { alert("Error publishing banner: " + err.message); } finally { btn.innerText = "Publish Banner"; btn.disabled = false; }
+    }
+
+    async function adminDeleteBanner(id) {
+      if (confirm("Delete banner?")) {
+        try { await db.collection("milo_banners").doc(id).delete(); alert("Banner deleted!"); } catch(e) { alert(e.message); }
+      }
     }
 
     function renderHeroMotionBanners() {
       const slider = document.getElementById('buddies-banners-slider');
       if (!slider) return; slider.innerHTML = '';
+      if (globalBanners.length === 0) {
+        slider.innerHTML = `<div class="w-full text-center py-4 text-xs text-zinc-500">No active highlights. Publish one from Admin Console!</div>`;
+        return;
+      }
       globalBanners.forEach(b => {
         slider.innerHTML += `
           <div class="navratri-banner-card cursor-pointer" onclick="switchTab('events')">
             <div class="relative w-full overflow-hidden">
               <img src="${b.photoUrl || 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819'}" class="w-full h-36 object-cover" />
               <div class="absolute inset-0 bg-gradient-to-t from-black/9 to-transparent"></div>
+              <div class="absolute top-2 right-2"><span class="bg-rose-600 text-white text-[9px] font-black px-2 py-0.5 rounded-full">${b.status}</span></div>
               <div class="absolute bottom-2 left-3 right-3 text-white">
                 <h4 class="font-bold text-sm text-amber-100">${sanitizeInput(b.title)}</h4>
                 <p class="text-[10px] text-amber-300">${sanitizeInput(b.subtitle)}</p>
@@ -1047,18 +1099,66 @@
       });
     }
 
+    function renderAdminBannersList() {
+      const c = document.getElementById('admin-banners-list');
+      if (!c) return; c.innerHTML = '';
+      globalBanners.forEach(b => {
+        c.innerHTML += `<div class="p-2 bg-zinc-950 rounded-xl flex items-center justify-between text-xs"><span>${sanitizeInput(b.title)}</span><button onclick="adminDeleteBanner('${b.id}')" class="text-rose-400"><i class="fa-solid fa-trash"></i></button></div>`;
+      });
+    }
+
     function listenToEvents() {
       if (unsubscribeEvents) unsubscribeEvents();
       unsubscribeEvents = db.collection("milo_events").onSnapshot(snapshot => {
         globalEvents = [];
         snapshot.forEach(doc => globalEvents.push({ id: doc.id, ...doc.data() }));
         renderUpcomingEventsArena();
-      });
+        renderAdminEventsList();
+      }, err => { console.error("Event listen error: ", err); });
+    }
+
+    async function adminPublishEvent() {
+      const title = sanitizeInput(document.getElementById('admin-event-title').value.trim());
+      const date = document.getElementById('admin-event-date').value;
+      const time = document.getElementById('admin-event-time').value;
+      const location = sanitizeInput(document.getElementById('admin-event-location').value.trim());
+      const passInfo = sanitizeInput(document.getElementById('admin-event-pass').value.trim());
+      const desc = sanitizeInput(document.getElementById('admin-event-desc').value.trim());
+      const fileInput = document.getElementById('admin-event-photo');
+      const btn = document.getElementById('btn-publish-event');
+
+      if (!title || !date || !time) return alert("Title, Date & Time required!");
+      btn.innerText = "Scheduling..."; btn.disabled = true;
+
+      let photoBase64 = "";
+      if (fileInput.files && fileInput.files[0]) {
+        try { photoBase64 = await readFileAsBase64(fileInput.files[0]); } catch(e) {}
+      }
+
+      const formattedDate = new Date(`${date}T${time}`).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
+
+      try {
+        await db.collection("milo_events").add({
+          title, displayDateTime: formattedDate, location: location || "Club", passInfo: passInfo || "Passes", desc: desc || "Event meetup", photoUrl: photoBase64, createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        alert("Event Scheduled Successfully! 🪔");
+        document.getElementById('admin-event-title').value = '';
+        document.getElementById('admin-event-date').value = '';
+        document.getElementById('admin-event-time').value = '';
+        document.getElementById('admin-event-location').value = '';
+        document.getElementById('admin-event-pass').value = '';
+        document.getElementById('admin-event-desc').value = '';
+        fileInput.value = '';
+      } catch(err) { alert("Error scheduling event: " + err.message); } finally { btn.innerText = "Schedule Event"; btn.disabled = false; }
     }
 
     function renderUpcomingEventsArena() {
       const list = document.getElementById('events-full-list');
       if (!list) return; list.innerHTML = '';
+      if (globalEvents.length === 0) {
+        list.innerHTML = `<div class="text-center py-8 text-xs text-zinc-500">No scheduled events. Publish one from Admin Console!</div>`;
+        return;
+      }
       globalEvents.forEach(evt => {
         list.innerHTML += `
           <div class="rounded-2xl overflow-hidden navratri-glass-card border border-amber-500/30 p-3 bg-[#120822] space-y-1">
@@ -1066,6 +1166,14 @@
             <p class="text-[11px] text-zinc-300">${sanitizeInput(evt.desc)} • 📍 ${sanitizeInput(evt.location)}</p>
           </div>
         `;
+      });
+    }
+
+    function renderAdminEventsList() {
+      const c = document.getElementById('admin-events-list');
+      if (!c) return; c.innerHTML = '';
+      globalEvents.forEach(e => {
+        c.innerHTML += `<div class="p-2 bg-zinc-950 rounded-xl flex items-center justify-between text-xs"><span>${sanitizeInput(e.title)}</span><button onclick="db.collection('milo_events').doc('${e.id}').delete()" class="text-rose-400"><i class="fa-solid fa-trash"></i></button></div>`;
       });
     }
 
@@ -1163,12 +1271,11 @@
     async function uploadPhotoFromGallery(event) {
       const file = event.target.files[0];
       if (!file || !currentUser) return;
-      const reader = new FileReader();
-      reader.onload = async function(e) {
-        await db.collection("milo_users").doc(currentUser.email.toLowerCase()).update({ photoUrl: e.target.result });
-        alert("Photo updated!");
-      };
-      reader.readAsDataURL(file);
+      try {
+        const b64 = await readFileAsBase64(file);
+        await db.collection("milo_users").doc(currentUser.email.toLowerCase()).update({ photoUrl: b64 });
+        alert("Photo updated successfully!");
+      } catch(e) { alert("Error uploading photo: " + e.message); }
     }
 
     async function saveCompleteUserProfile() {
