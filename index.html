@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Milo - Traditional Navratri Nights</title>
+  <title>Milo - Navratri Dating & Social Club</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
@@ -75,6 +75,12 @@
       width: 100%; background: #0b0213; border-top: 1px solid rgba(251, 191, 36, 0.2);
       color: #d1d5db; padding: 20px 16px 80px 16px; text-align: center; font-size: 11px; line-height: 1.5;
     }
+
+    @keyframes spinWheel {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(1440deg); }
+    }
+    .spinning { animation: spinWheel 1.5s cubic-bezier(0.15, 0.9, 0.2, 1) forwards; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between relative pb-16">
@@ -88,13 +94,18 @@
       <div>
         <div class="flex items-center gap-1.5">
           <span class="text-lg font-black tracking-widest bg-gradient-to-r from-amber-400 via-rose-400 to-orange-400 bg-clip-text text-transparent">MILO</span>
-          <span class="text-[8px] bg-rose-950 text-amber-300 border border-amber-500/40 px-1.5 py-0.2 rounded-full font-bold">Garba</span>
+          <span class="text-[8px] bg-rose-950 text-amber-300 border border-amber-500/40 px-1.5 py-0.2 rounded-full font-bold">Dating</span>
         </div>
-        <span class="block text-[8px] tracking-widest text-amber-400/80 font-bold uppercase">Traditional Nights</span>
+        <span class="block text-[8px] tracking-widest text-amber-400/80 font-bold uppercase">Navratri Club</span>
       </div>
     </div>
     
     <div id="top-user-pill" class="hidden flex items-center gap-2">
+      <!-- SPIN WHEEL BUTTON -->
+      <button onclick="openSpinWheelModal()" class="relative w-8 h-8 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-300 border border-amber-500/40 active:scale-90" title="Spin the Wheel">
+        <i class="fa-solid fa-dharmachakra text-xs"></i>
+      </button>
+
       <button onclick="openRequestsModal()" class="relative w-8 h-8 rounded-full bg-rose-950/80 flex items-center justify-center text-amber-400 border border-amber-500/40 active:scale-90">
         <i class="fa-solid fa-bell text-xs"></i>
         <span id="requests-badge-count" class="hidden absolute -top-1 -right-1 bg-rose-600 text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center border-2 border-[#120822]">0</span>
@@ -121,10 +132,10 @@
     <div class="navratri-glass-card w-full rounded-3xl p-6 shadow-2xl border border-amber-500/40">
       <div class="text-center mb-5">
         <span class="text-[9px] font-bold tracking-widest text-amber-300 bg-rose-950/80 px-3 py-1 rounded-full border border-amber-500/40 uppercase">
-          🪔 Navratri Romantic Nights
+          🪔 Navratri Romantic Dating Club
         </span>
         <h2 class="text-2xl font-black text-amber-100 mt-2.5">Welcome to Milo</h2>
-        <p class="text-xs text-zinc-400 mt-1">Dandiya, garba raas & traditional partners</p>
+        <p class="text-xs text-zinc-400 mt-1">Find your Garba Raas partner & soulmate</p>
       </div>
 
       <div class="space-y-3 text-xs">
@@ -212,8 +223,8 @@
           <input type="text" id="onboard-city" value="Sinnar, Maharashtra" class="w-full bg-[#120822] border border-purple-800 rounded-xl p-2.5 text-xs text-zinc-100 outline-none" />
         </div>
         <div>
-          <label class="block text-amber-200 mb-1 font-semibold">Profession / Studies</label>
-          <input type="text" id="onboard-studies" placeholder="E.g. Computer Science Student" class="w-full bg-[#120822] border border-purple-800 rounded-xl p-2.5 text-xs text-zinc-100 outline-none" />
+          <label class="block text-amber-200 mb-1 font-semibold">Tonight's Ground / Venue Status</label>
+          <input type="text" id="onboard-status" placeholder="E.g. Heading to Sinnar Club Ground tonight 🪔" class="w-full bg-[#120822] border border-purple-800 rounded-xl p-2.5 text-xs text-zinc-100 outline-none" />
         </div>
         <div>
           <label class="block text-amber-200 mb-1 font-semibold">Garba Style</label>
@@ -245,7 +256,7 @@
             <i class="fa-solid fa-user-plus"></i>
           </span>
           <div>
-            <h4 class="font-bold text-xs text-amber-100">Partner Requests</h4>
+            <h4 class="font-bold text-xs text-amber-100">Partner Requests & Secret Crushes</h4>
             <span id="requests-bar-subtitle" class="text-[10px] text-zinc-400">Tap to Review</span>
           </div>
         </div>
@@ -273,7 +284,7 @@
       </div>
     </div>
 
-    <!-- CHAT ROOM (Supports Both 1-on-1 & Groups) -->
+    <!-- CHAT ROOM (Supports Both 1-on-1 & Groups with Icebreakers) -->
     <div id="chats-room-view" class="hidden navratri-glass-card rounded-3xl overflow-hidden shadow-2xl flex flex-col h-[76vh] border border-amber-500/30">
       <div class="p-3 border-b border-purple-900/50 flex items-center justify-between bg-[#120822]/80">
         <div class="flex items-center gap-2.5">
@@ -295,6 +306,14 @@
           </div>
         </div>
         <span class="text-[9px] text-amber-300 bg-rose-950 px-2 py-0.5 rounded-full font-bold border border-amber-500/30">🔒 Secure</span>
+      </div>
+
+      <!-- ICEBREAKER SUGGESTIONS BAR -->
+      <div id="icebreaker-bar" class="px-3 py-1.5 bg-[#120822]/90 border-b border-purple-900/40 flex items-center gap-2 overflow-x-auto whitespace-nowrap text-[10px]">
+        <span class="text-amber-400 font-bold">✨ Icebreakers:</span>
+        <button onclick="sendIcebreaker('Aaj kaunse ground par ja rahe ho? 🪔')" class="px-2.5 py-1 rounded-full bg-purple-950/80 text-amber-200 border border-amber-500/30">Aaj kaunse ground par ja rahe ho? 🪔</button>
+        <button onclick="sendIcebreaker('Aapka favorite Navratri song kaunsa hai? 🎶')" class="px-2.5 py-1 rounded-full bg-purple-950/80 text-amber-200 border border-amber-500/30">Favorite Navratri song? 🎶</button>
+        <button onclick="sendIcebreaker('Traditional Raas or High-Energy Dandiya? ✨')" class="px-2.5 py-1 rounded-full bg-purple-950/80 text-amber-200 border border-amber-500/30">Raas or Dandiya? ✨</button>
       </div>
 
       <div id="private-messages-stream" class="flex-1 p-3 overflow-y-auto space-y-2.5 text-xs relative bg-[#0e071c]/50"></div>
@@ -376,6 +395,25 @@
 
   <!-- SCREEN 4: EVENTS -->
   <section id="screen-events" class="hidden relative z-20 flex-1 max-w-md mx-auto w-full px-4 py-3 pt-16">
+    <!-- ANONYMOUS CONFESSIONS WALL -->
+    <div class="navratri-glass-card rounded-3xl p-4 shadow-xl mb-4 border border-amber-500/30">
+      <div class="flex items-center justify-between pb-3 border-b border-purple-900/60 mb-3">
+        <div class="flex items-center gap-2">
+          <span class="w-8 h-8 rounded-xl bg-rose-950 text-amber-400 flex items-center justify-center font-bold text-xs border border-amber-500/30">
+            <i class="fa-solid fa-masks-theater"></i>
+          </span>
+          <div>
+            <h3 class="font-bold text-sm text-amber-100">Midnight Confessions 🌙</h3>
+            <p class="text-[10px] text-zinc-400">Anonymous cute notes & crushes</p>
+          </div>
+        </div>
+        <button onclick="openConfessionModal()" class="px-2.5 py-1 rounded-xl navratri-btn text-[10px] font-bold">Post Note ✨</button>
+      </div>
+      <div id="confessions-list" class="space-y-2 max-h-48 overflow-y-auto">
+        <div class="text-center py-4 text-xs text-zinc-500">Loading confessions...</div>
+      </div>
+    </div>
+
     <div class="navratri-glass-card rounded-3xl p-4 shadow-xl mb-4 border border-amber-500/30">
       <div class="flex items-center justify-between pb-3 border-b border-purple-900/60 mb-3">
         <div class="flex items-center gap-2">
@@ -435,7 +473,7 @@
       <div id="admin-launcher-box" class="hidden mt-3">
         <button onclick="promptAdminPasscode()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-rose-700 via-orange-600 to-amber-600 text-white font-black text-xs flex items-center justify-center gap-2 shadow-lg shadow-rose-700/30">
           <i class="fa-solid fa-shield-halved"></i>
-          <span>Admin Console 🛡️️</span>
+          <span>Admin Console 🛡️</span>
         </button>
       </div>
 
@@ -459,6 +497,11 @@
           <button onclick="detectUserCity()" id="btn-detect-city" class="px-2.5 py-1.5 rounded-xl bg-purple-950 text-amber-300 font-bold text-[10px] border border-amber-500/30">
             Detect 📍
           </button>
+        </div>
+
+        <div class="p-3 bg-[#120822] rounded-2xl border border-purple-900/60">
+          <label class="text-[10px] text-amber-400 font-bold block mb-1">TONIGHT'S GROUND / VENUE STATUS</label>
+          <input type="text" id="profile-status-input" class="w-full bg-[#1a0e2e] border border-purple-900 rounded-xl px-2.5 py-1.5 text-zinc-200 outline-none text-xs" />
         </div>
 
         <div class="grid grid-cols-2 gap-2">
@@ -499,11 +542,6 @@
         <div class="p-3 bg-[#120822] rounded-2xl border border-purple-900/60">
           <label class="text-[10px] text-zinc-400 font-bold block mb-1">BIO</label>
           <input type="text" id="profile-bio-input" class="w-full bg-[#1a0e2e] border border-purple-900 rounded-xl px-2.5 py-1.5 text-zinc-200 outline-none text-xs" />
-        </div>
-
-        <div class="p-3 bg-[#120822] rounded-2xl border border-purple-900/60">
-          <label class="text-[10px] text-zinc-400 font-bold block mb-1">INSTAGRAM</label>
-          <input type="text" id="profile-insta-input" placeholder="username" class="w-full bg-[#1a0e2e] border border-purple-900 rounded-xl px-2.5 py-1.5 text-zinc-200 outline-none text-xs" />
         </div>
 
         <button onclick="saveCompleteUserProfile()" class="w-full py-2.5 rounded-xl navratri-btn text-xs font-black uppercase tracking-wider shadow-md">
@@ -620,10 +658,40 @@
   <div id="modal-requests" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="modal-sheet-anim navratri-glass-card w-full max-w-sm rounded-3xl p-5 shadow-2xl max-h-[85vh] overflow-y-auto border border-amber-500/40">
       <div class="flex items-center justify-between pb-3 border-b border-purple-900/60 mb-3">
-        <h3 class="font-bold text-sm text-amber-100">Partner Requests</h3>
+        <h3 class="font-bold text-sm text-amber-100">Partner Requests & Secret Crushes</h3>
         <button onclick="closeRequestsModal()" class="w-7 h-7 rounded-full bg-purple-950 text-amber-300 flex items-center justify-center">&times;</button>
       </div>
       <div id="requests-list-container" class="space-y-2.5"></div>
+    </div>
+  </div>
+
+  <!-- SPIN WHEEL MODAL -->
+  <div id="modal-spin-wheel" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="modal-sheet-anim navratri-glass-card w-full max-w-sm rounded-3xl p-6 shadow-2xl text-center border-2 border-amber-400 relative">
+      <button onclick="closeSpinWheelModal()" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-purple-950 text-amber-300 flex items-center justify-center font-bold text-xs">&times;</button>
+      <h3 class="text-lg font-black text-amber-100 mb-1">🎰 Spin the Garba Wheel</h3>
+      <p class="text-xs text-zinc-400 mb-5">Spin to instantly discover your lucky match!</p>
+      
+      <div class="w-32 h-32 mx-auto rounded-full bg-gradient-to-tr from-rose-600 via-orange-500 to-amber-400 p-1 flex items-center justify-center shadow-xl mb-6">
+        <div id="wheel-inner-box" class="w-full h-full bg-[#120822] rounded-full flex items-center justify-center text-amber-300 font-black text-xs p-2 text-center">
+          Tap Spin Below! 🪔
+        </div>
+      </div>
+
+      <button onclick="spinTheWheelAction()" id="btn-spin-action" class="w-full py-3 rounded-xl navratri-btn text-xs font-bold uppercase tracking-wider shadow-lg">
+        Spin Wheel Now 🎡
+      </button>
+    </div>
+  </div>
+
+  <!-- CONFESSION POST MODAL -->
+  <div id="modal-confession" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="modal-sheet-anim navratri-glass-card w-full max-w-sm rounded-3xl p-6 shadow-2xl border border-amber-500/40 relative">
+      <button onclick="closeConfessionModal()" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-purple-950 text-amber-300 flex items-center justify-center font-bold text-xs">&times;</button>
+      <h3 class="text-base font-black text-amber-100 mb-2">✨ Post Midnight Confession</h3>
+      <p class="text-[11px] text-zinc-400 mb-4">Share your secret crush or thought anonymously.</p>
+      <textarea id="confession-text-input" rows="3" placeholder="Type anonymously..." class="w-full bg-[#120822] border border-purple-800 rounded-xl p-3 text-xs text-zinc-100 outline-none mb-3"></textarea>
+      <button onclick="submitAnonymousConfession()" class="w-full py-2.5 rounded-xl navratri-btn text-xs font-bold uppercase">Post Anonymously 🌙</button>
     </div>
   </div>
 
@@ -638,11 +706,22 @@
         </div>
         <h3 id="detail-user-name" class="text-lg font-black text-amber-100"></h3>
         <p id="detail-username-tag" class="text-xs text-amber-400 font-bold"></p>
-        <div class="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-950 text-xs font-bold text-amber-300 border border-amber-500/30">
-          📍 <span id="detail-user-city"></span>
+        
+        <div class="mt-2 flex items-center justify-center gap-2">
+          <span class="px-3 py-0.5 rounded-full bg-rose-950 text-[11px] font-bold text-amber-300 border border-amber-500/30">📍 <span id="detail-user-city"></span></span>
+          <span id="detail-chemistry-pill" class="px-3 py-0.5 rounded-full bg-amber-500/20 text-[11px] font-bold text-amber-300 border border-amber-400/40">🔥 92% Duet Match</span>
         </div>
+
+        <div class="mt-2 text-[10px] text-zinc-400 italic" id="detail-user-status"></div>
         <div class="mt-3 p-3 bg-[#120822] rounded-xl text-left text-xs text-zinc-300 italic border border-purple-900/60" id="detail-user-bio"></div>
-        <div class="mt-5 pt-3 border-t border-purple-900/60" id="detail-action-container"></div>
+        
+        <!-- COMPLIMENT / PANCHNAMA BADGES -->
+        <div class="mt-3 flex items-center justify-center gap-1.5 flex-wrap" id="detail-badges-box">
+          <span class="px-2 py-0.5 rounded-full bg-purple-950 text-[9px] text-amber-300 border border-purple-800">✨ Best Vibe</span>
+          <span class="px-2 py-0.5 rounded-full bg-purple-950 text-[9px] text-amber-300 border border-purple-800">🪔 Fast Garba Steps</span>
+        </div>
+
+        <div class="mt-5 pt-3 border-t border-purple-900/60 grid grid-cols-2 gap-2" id="detail-action-container"></div>
       </div>
     </div>
   </div>
@@ -735,18 +814,15 @@
     const MASTER_ADMIN_PASSCODE = "milo@2026";
 
     let currentUser = null, currentUserProfile = null, activePartnerEmail = null, activeRoomId = null;
-    let unsubscribePrivateChat = null, unsubscribeUsers = null, unsubscribeRequests = null, unsubscribeEvents = null, unsubscribeBanners = null, unsubscribeSettings = null, unsubscribeTyping = null, unsubscribeGroups = null, unsubscribeGroupReqs = null;
+    let unsubscribePrivateChat = null, unsubscribeUsers = null, unsubscribeRequests = null, unsubscribeEvents = null, unsubscribeBanners = null, unsubscribeGroups = null, unsubscribeGroupReqs = null, unsubscribeConfessions = null;
     
-    let userRequestsMap = {}, incomingPendingRequests = [], globalEvents = [], globalBanners = [], globalGroups = [], globalGroupRequests = [];
+    let userRequestsMap = {}, incomingPendingRequests = [], globalEvents = [], globalBanners = [], globalGroups = [], globalGroupRequests = [], globalConfessions = [];
     let cachedUsersMap = {}, globalAllUsers = [];
-    let autoSlideInterval = null;
-    let typingTimeout = null;
     let currentGenderFilter = 'ALL';
     let currentExploreTab = 'partners';
     let currentChatSubTab = 'direct';
     let isGroupChat = false;
 
-    // Fast Compressed Image Reader
     function compressImageFile(file, maxWidth = 350, quality = 0.5) {
       return new Promise((resolve) => {
         const reader = new FileReader();
@@ -813,6 +889,66 @@
         pSec.classList.add('hidden');
         renderGroupsList();
       }
+    }
+
+    // SPIN WHEEL
+    function openSpinWheelModal() { document.getElementById('modal-spin-wheel').classList.remove('hidden'); }
+    function closeSpinWheelModal() { document.getElementById('modal-spin-wheel').classList.add('hidden'); }
+
+    function spinTheWheelAction() {
+      const box = document.getElementById('wheel-inner-box');
+      if (globalAllUsers.length <= 1) { alert("Not enough users to spin!"); return; }
+      box.classList.add('spinning');
+      box.innerText = "Spinning... 🪔";
+      setTimeout(() => {
+        box.classList.remove('spinning');
+        const otherUsers = globalAllUsers.filter(u => u.email.toLowerCase() !== currentUser.email.toLowerCase());
+        const randomMatch = otherUsers[Math.floor(Math.random() * otherUsers.length)];
+        box.innerHTML = `<span class="text-amber-300 font-bold">Match Found!<br>${sanitizeInput(randomMatch.name)}</span>`;
+        setTimeout(() => {
+          closeSpinWheelModal();
+          openBuddyProfileModal(randomMatch.email);
+        }, 1200);
+      }, 1500);
+    }
+
+    // ANONYMOUS CONFESSIONS
+    function openConfessionModal() { document.getElementById('modal-confession').classList.remove('hidden'); }
+    function closeConfessionModal() { document.getElementById('modal-confession').classList.add('hidden'); }
+
+    async function submitAnonymousConfession() {
+      const text = sanitizeInput(document.getElementById('confession-text-input').value.trim());
+      if (!text) return alert("Write something!");
+      try {
+        await db.collection("milo_confessions").add({
+          text, createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        document.getElementById('confession-text-input').value = '';
+        closeConfessionModal();
+        alert("Midnight Confession posted anonymously! 🌙");
+      } catch(e) { alert("Error: " + e.message); }
+    }
+
+    function listenToConfessions() {
+      db.collection("milo_confessions").orderBy("createdAt", "desc").onSnapshot(snapshot => {
+        globalConfessions = [];
+        snapshot.forEach(doc => globalConfessions.push({ id: doc.id, ...doc.data() }));
+        renderConfessionsList();
+      });
+    }
+
+    function renderConfessionsList() {
+      const container = document.getElementById('confessions-list');
+      if (!container) return; container.innerHTML = '';
+      if (globalConfessions.length === 0) { container.innerHTML = `<div class="text-center py-4 text-xs text-zinc-500">No confessions yet. Be the first!</div>`; return; }
+      globalConfessions.forEach(c => {
+        container.innerHTML += `
+          <div class="p-3 bg-[#120822] rounded-2xl border border-purple-900 text-xs">
+            <p class="text-amber-100 italic">"${sanitizeInput(c.text)}"</p>
+            <span class="text-[9px] text-amber-400 block mt-1">🌙 Anonymous Confession</span>
+          </div>
+        `;
+      });
     }
 
     async function requestGroupCreation() {
@@ -1212,7 +1348,7 @@
         const docSnap = await userRef.get();
         if (!docSnap.exists) {
           await userRef.set({
-            email: cleanEmail, name: sanitizeInput(user.displayName) || generateRandomFestiveName(), username: cleanEmail.split('@')[0] + '_07', gender: "Other", seeking: "Both", city: "Sinnar", studies: "Student", garbaStyle: "Traditional Raas", bio: "Ready for Garba nights 🪔", photoUrl: user.photoURL || "", isVerified: true, role: SUPER_ADMINS.includes(cleanEmail) ? "admin" : "member", lastSeen: firebase.firestore.FieldValue.serverTimestamp()
+            email: cleanEmail, name: sanitizeInput(user.displayName) || generateRandomFestiveName(), username: cleanEmail.split('@')[0] + '_07', gender: "Other", seeking: "Both", city: "Sinnar", tonightStatus: "Heading to Garba tonight 🪔", studies: "Student", garbaStyle: "Traditional Raas", bio: "Ready for Garba nights 🪔", photoUrl: user.photoURL || "", isVerified: true, role: SUPER_ADMINS.includes(cleanEmail) ? "admin" : "member", lastSeen: firebase.firestore.FieldValue.serverTimestamp()
           });
         }
       } catch (err) { showAuthError(err.message); }
@@ -1236,7 +1372,7 @@
           }
         });
         userRef.onSnapshot(doc => { if (doc.exists) { currentUserProfile = doc.data(); updateUIWithProfile(currentUserProfile); } });
-        listenToRequests(); listenToRegisteredUsers(); listenToBanners(); listenToEvents(); listenToGroupsAndRequests();
+        listenToRequests(); listenToRegisteredUsers(); listenToBanners(); listenToEvents(); listenToGroupsAndRequests(); listenToConfessions();
       } else {
         currentUser = null; currentUserProfile = null;
         document.getElementById('screen-auth').classList.remove('hidden');
@@ -1261,13 +1397,14 @@
       const gender = document.getElementById('onboard-gender').value;
       const seeking = document.getElementById('onboard-seeking').value;
       const city = sanitizeInput(document.getElementById('onboard-city').value.trim());
+      const tonightStatus = sanitizeInput(document.getElementById('onboard-status').value.trim());
       const bio = sanitizeInput(document.getElementById('onboard-bio').value.trim());
       const cleanEmail = currentUser.email.toLowerCase();
 
       if (await isUsernameTaken(username, cleanEmail)) return alert("Username taken!");
 
       await db.collection("milo_users").doc(cleanEmail).set({
-        email: cleanEmail, name, username, gender, seeking, city: city || "Sinnar", bio: bio || "Ready for meetups", photoUrl: currentUser.photoURL || "", isVerified: true, role: SUPER_ADMINS.includes(cleanEmail) ? "admin" : "member", lastSeen: firebase.firestore.FieldValue.serverTimestamp()
+        email: cleanEmail, name, username, gender, seeking, city: city || "Sinnar", tonightStatus: tonightStatus || "Heading to Garba tonight 🪔", bio: bio || "Ready for meetups", photoUrl: currentUser.photoURL || "", isVerified: true, role: SUPER_ADMINS.includes(cleanEmail) ? "admin" : "member", lastSeen: firebase.firestore.FieldValue.serverTimestamp()
       }, { merge: true });
 
       document.getElementById('screen-onboarding').classList.add('hidden');
@@ -1285,6 +1422,7 @@
       document.getElementById('profile-username-input').value = profile.username;
       document.getElementById('profile-city-input').value = profile.city || '';
       document.getElementById('profile-display-city').innerText = profile.city || 'Sinnar';
+      document.getElementById('profile-status-input').value = profile.tonightStatus || '';
       document.getElementById('profile-bio-input').value = profile.bio || '';
       
       const headBox = document.getElementById('header-avatar-box');
@@ -1308,8 +1446,9 @@
       const name = sanitizeInput(document.getElementById('profile-name-input').value.trim());
       const username = sanitizeInput(document.getElementById('profile-username-input').value.trim()).toLowerCase();
       const city = sanitizeInput(document.getElementById('profile-city-input').value.trim());
+      const tonightStatus = sanitizeInput(document.getElementById('profile-status-input').value.trim());
       const bio = sanitizeInput(document.getElementById('profile-bio-input').value.trim());
-      await db.collection("milo_users").doc(currentUser.email.toLowerCase()).update({ name, username, city, bio });
+      await db.collection("milo_users").doc(currentUser.email.toLowerCase()).update({ name, username, city, tonightStatus, bio });
       alert("Profile updated!");
     }
 
@@ -1352,7 +1491,10 @@
         userRequestsMap = {}; incomingPendingRequests = [];
         snapshot.forEach(doc => {
           const req = { id: doc.id, ...doc.data() };
-          if (req.to.toLowerCase() === myEmail && req.status === 'pending') incomingPendingRequests.push(req);
+          if (req.to.toLowerCase() === myEmail && (req.status === 'pending' || req.status === 'secret_crush')) {
+            userRequestsMap[req.from.toLowerCase()] = req;
+            incomingPendingRequests.push(req);
+          }
         });
         const badge = document.getElementById('requests-badge-count');
         const bar = document.getElementById('incoming-requests-bar');
@@ -1365,14 +1507,18 @@
     function renderRequestsModalContent() {
       const container = document.getElementById('requests-list-container');
       container.innerHTML = '';
-      if (incomingPendingRequests.length === 0) { container.innerHTML = `<div class="text-center py-4 text-xs text-zinc-500">No requests.</div>`; return; }
+      if (incomingPendingRequests.length === 0) { container.innerHTML = `<div class="text-center py-4 text-xs text-zinc-500">No requests or secret crushes.</div>`; return; }
       incomingPendingRequests.forEach(req => {
+        const isCrush = req.status === 'secret_crush';
         container.innerHTML += `
           <div class="p-3 bg-[#120822] rounded-2xl border border-purple-900 flex items-center justify-between text-xs">
-            <span>${sanitizeInput(req.fromName || req.from)}</span>
+            <div>
+              <span class="font-bold text-amber-100 block">${sanitizeInput(req.fromName || req.from)}</span>
+              <span class="text-[10px] text-amber-400">${isCrush ? '💖 Sent you a Secret Crush!' : '💌 Partner Request'}</span>
+            </div>
             <div class="flex gap-1">
-              <button onclick="respondToRequest('${req.id}', 'accepted')" class="px-2 py-1 bg-emerald-600 text-white rounded">Accept</button>
-              <button onclick="respondToRequest('${req.id}', 'rejected')" class="px-2 py-1 bg-rose-950 text-rose-300 rounded">Reject</button>
+              <button onclick="respondToRequest('${req.id}', 'accepted')" class="px-2.5 py-1 bg-emerald-600 text-white rounded font-bold">Accept</button>
+              <button onclick="respondToRequest('${req.id}', 'rejected')" class="px-2.5 py-1 bg-rose-950 text-rose-300 rounded font-bold">Reject</button>
             </div>
           </div>
         `;
@@ -1382,13 +1528,29 @@
     async function sendConnectionRequest(targetEmail) {
       if (!currentUser) return;
       await db.collection("milo_requests").add({ from: currentUser.email.toLowerCase(), fromName: currentUserProfile?.name || 'User', to: targetEmail.toLowerCase(), status: "pending", createdAt: firebase.firestore.FieldValue.serverTimestamp() });
-      alert("Request sent!");
+      alert("Partner Request sent! 💌");
+    }
+
+    async function sendSecretCrush(targetEmail, targetName) {
+      if (!currentUser) return;
+      const myEmail = currentUser.email.toLowerCase();
+      // Check if target also sent secret crush to me
+      const snapshot = await db.collection("milo_requests").where("from", "==", targetEmail.toLowerCase()).where("to", "==", myEmail).where("status", "==", "secret_crush").get();
+      
+      if (!snapshot.empty) {
+        // Mutual Crush! Make accepted directly
+        await db.collection("milo_requests").add({ from: myEmail, fromName: currentUserProfile?.name || 'User', to: targetEmail.toLowerCase(), status: "accepted", createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+        alert(`🎉 It's a Mutual Secret Crush Match with ${targetName}! Check your Direct Chats! 💖`);
+      } else {
+        await db.collection("milo_requests").add({ from: myEmail, fromName: currentUserProfile?.name || 'User', to: targetEmail.toLowerCase(), status: "secret_crush", createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+        alert("💖 Secret Crush sent anonymously! If they like you back, it's a match!");
+      }
     }
 
     async function respondToRequest(id, status) {
       if (status === 'accepted') await db.collection("milo_requests").doc(id).update({ status: "accepted" });
       else await db.collection("milo_requests").doc(id).delete();
-      alert(status === 'accepted' ? "Accepted!" : "Rejected.");
+      alert(status === 'accepted' ? "Accepted! Chat unlocked 💬" : "Rejected.");
     }
 
     function openBuddyProfileModal(userEmail) {
@@ -1398,11 +1560,15 @@
       document.getElementById('detail-user-name').innerText = u.name;
       document.getElementById('detail-username-tag').innerText = `@${u.username}`;
       document.getElementById('detail-user-city').innerText = u.city || 'Sinnar';
+      document.getElementById('detail-user-status').innerText = u.tonightStatus ? `📍 Status: "${u.tonightStatus}"` : '';
       document.getElementById('detail-user-bio').innerText = `"${u.bio || 'Ready'}"`;
       document.getElementById('detail-avatar-box').innerHTML = u.photoUrl ? `<img src="${u.photoUrl}" class="w-full h-full object-cover" />` : u.name[0];
       
       const act = document.getElementById('detail-action-container');
-      act.innerHTML = `<button onclick="sendConnectionRequest('${u.email}'); closeBuddyProfileModal();" class="w-full py-2.5 rounded-xl navratri-btn text-xs font-bold">Send Partner Request 💌</button>`;
+      act.innerHTML = `
+        <button onclick="sendConnectionRequest('${u.email}'); closeBuddyProfileModal();" class="py-2.5 rounded-xl navratri-btn text-[11px] font-bold">Request 💌</button>
+        <button onclick="sendSecretCrush('${u.email}', '${sanitizeInput(u.name)}'); closeBuddyProfileModal();" class="py-2.5 rounded-xl bg-purple-950 text-amber-300 border border-amber-500/40 text-[11px] font-bold">Secret Crush 💖</button>
+      `;
     }
 
     function closeBuddyProfileModal() { document.getElementById('modal-buddy-profile').classList.add('hidden'); }
@@ -1431,10 +1597,13 @@
       if (filtered.length === 0) { buddiesSlider.innerHTML = `<div class="col-span-2 text-center py-10 text-xs text-zinc-500">No partners found.</div>`; return; }
 
       filtered.forEach(u => {
+        // Calculate random festive chemistry score based on names
+        const chemistry = 75 + Math.abs((u.name.charCodeAt(0) * 3) % 23);
         buddiesSlider.innerHTML += `
           <div class="buddy-card-item" onclick="openBuddyProfileModal('${u.email}')">
             <div class="w-16 h-16 rounded-full overflow-hidden bg-[#120822] flex items-center justify-center font-bold text-amber-400 text-lg mb-2 relative shadow-md border border-amber-500/30">
               ${u.photoUrl ? `<img src="${u.photoUrl}" class="w-full h-full object-cover" />` : u.name[0]}
+              <span class="absolute bottom-0 right-0 bg-rose-600 text-white text-[8px] font-black px-1.5 py-0.2 rounded-full border border-[#120822]">${chemistry}%</span>
             </div>
             <h4 class="font-bold text-xs text-amber-100 truncate w-full">${sanitizeInput(u.name)}</h4>
             <span class="text-[10px] text-amber-400 truncate w-full">@${sanitizeInput(u.username)}</span>
@@ -1464,7 +1633,7 @@
       } else {
         const connectedUsers = globalAllUsers.filter(u => u.email.toLowerCase() !== myEmail && userRequestsMap[u.email.toLowerCase()]?.status === 'accepted');
         document.getElementById('active-contacts-count').innerText = connectedUsers.length;
-        if (connectedUsers.length === 0) { chatList.innerHTML = `<div class="text-center py-8 text-xs text-zinc-500">No active direct chats.</div>`; return; }
+        if (connectedUsers.length === 0) { chatList.innerHTML = `<div class="text-center py-8 text-xs text-zinc-500">No active direct chats. Send requests or secret crushes!</div>`; return; }
 
         connectedUsers.forEach(u => {
           chatList.innerHTML += `
@@ -1475,6 +1644,11 @@
           `;
         });
       }
+    }
+
+    function sendIcebreaker(text) {
+      document.getElementById('personal-chat-input').value = text;
+      sendPersonalMessage();
     }
 
     async function open1on1Chat(partnerEmail) {
@@ -1517,7 +1691,7 @@
 
       unsubscribePrivateChat = db.collection("milo_private_messages").where("roomId", "==", activeRoomId).onSnapshot(snapshot => {
         stream.innerHTML = '';
-        if (snapshot.empty) { stream.innerHTML = `<div class="text-center py-8 text-xs text-zinc-500">Start conversation!</div>`; return; }
+        if (snapshot.empty) { stream.innerHTML = `<div class="text-center py-8 text-xs text-zinc-500">Start conversation with icebreakers!</div>`; return; }
         const msgs = [];
         snapshot.forEach(doc => msgs.push(doc.data()));
         msgs.sort((a, b) => (a.localTime - b.localTime));
