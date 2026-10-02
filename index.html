@@ -811,7 +811,7 @@
       return temp.innerHTML;
     }
 
-    // BACKGROUND MUSIC CONTROL
+    // BACKGROUND MUSIC CONTROL & FIRST INTERACTION AUTO-START
     let isMusicPlaying = false;
     function toggleBackgroundMusic() {
       const audio = document.getElementById('navratri-bgm');
@@ -829,9 +829,23 @@
           isMusicPlaying = true;
           icon.className = "fa-solid fa-volume-high";
           text.innerText = "Playing 🎵";
-        }).catch(e => { console.log("Audio autoplay prevented", e); alert("Tap anywhere or click play to start Navratri BGM"); });
+        }).catch(e => { console.log("Audio play blocked", e); });
       }
     }
+
+    // Auto-start music on first user click/tap anywhere on screen
+    window.addEventListener('click', () => {
+      const audio = document.getElementById('navratri-bgm');
+      if (audio && !isMusicPlaying) {
+        audio.play().then(() => {
+          isMusicPlaying = true;
+          const icon = document.getElementById('music-icon');
+          const text = document.getElementById('music-status-text');
+          if (icon) icon.className = "fa-solid fa-volume-high";
+          if (text) text.innerText = "Playing 🎵";
+        }).catch(e => {});
+      }
+    }, { once: true });
 
     window.addEventListener('scroll', () => {
       const topBtn = document.getElementById('btn-back-to-top');
