@@ -6,8 +6,6 @@
   <title>Milo - Navratri Dating & Social Club</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <!-- RAZORPAY CHECKOUT SCRIPT -->
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
   <style>
     *, *::before, *::after { box-sizing: border-box; }
@@ -93,6 +91,17 @@
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between relative pb-16">
+
+  <!-- BACKGROUND NAVRATRI MUSIC AUDIO LOOP -->
+  <audio id="navratri-bgm" loop preload="auto">
+    <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf7f6.mp3?filename=indian-bollywood-garba-folk-instrumental-111586.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- FLOATING MUSIC TOGGLE BUTTON -->
+  <button id="btn-bgm-toggle" onclick="toggleBackgroundMusic()" class="fixed top-16 right-4 z-40 px-3 py-1.5 rounded-full bg-rose-950/90 text-amber-300 border border-amber-500/50 shadow-2xl flex items-center gap-1.5 text-[11px] font-bold active:scale-95 transition">
+    <i id="music-icon" class="fa-solid fa-volume-xmark"></i>
+    <span id="music-status-text">Music Off</span>
+  </button>
 
   <!-- TOP HEADER -->
   <header id="main-app-header" class="fixed top-0 left-0 right-0 z-50 w-full px-4 py-3 flex items-center justify-between navratri-glass-card border-b border-amber-500/30 shadow-xl">
@@ -802,6 +811,28 @@
       return temp.innerHTML;
     }
 
+    // BACKGROUND MUSIC CONTROL
+    let isMusicPlaying = false;
+    function toggleBackgroundMusic() {
+      const audio = document.getElementById('navratri-bgm');
+      const icon = document.getElementById('music-icon');
+      const text = document.getElementById('music-status-text');
+      
+      if (!audio) return;
+      if (isMusicPlaying) {
+        audio.pause();
+        isMusicPlaying = false;
+        icon.className = "fa-solid fa-volume-xmark";
+        text.innerText = "Music Off";
+      } else {
+        audio.play().then(() => {
+          isMusicPlaying = true;
+          icon.className = "fa-solid fa-volume-high";
+          text.innerText = "Playing 🎵";
+        }).catch(e => { console.log("Audio autoplay prevented", e); alert("Tap anywhere or click play to start Navratri BGM"); });
+      }
+    }
+
     window.addEventListener('scroll', () => {
       const topBtn = document.getElementById('btn-back-to-top');
       if (!topBtn) return;
@@ -882,7 +913,7 @@
       const oneHourMs = 60 * 60 * 1000;
       const remainingMs = oneHourMs - elapsedMs;
       if (remainingMs <= 0) return 0;
-      return Math.ceil(remainingMs / (60 * 1000)); // Minutes remaining
+      return Math.ceil(remainingMs / (60 * 1000));
     }
 
     function compressImageFile(file, maxWidth = 350, quality = 0.5) {
@@ -1038,7 +1069,7 @@
           const oppositeGender = myGender === 'Male' ? 'Female' : 'Male';
           const oppositeUsers = otherUsers.filter(u => u.gender === oppositeGender);
           
-          const hitGirl = Math.random() < 0.35; // 35% chance for free male users
+          const hitGirl = Math.random() < 0.35;
           if (hitGirl && oppositeUsers.length > 0) {
             selectedMatch = oppositeUsers[Math.floor(Math.random() * oppositeUsers.length)];
           } else {
@@ -1524,7 +1555,7 @@
             switchTab('buddies');
             userRef.update({ lastSeen: firebase.firestore.FieldValue.serverTimestamp() });
             
-            // Trigger startup spin wheel popup for non-admin or first visit
+            // Trigger startup spin wheel popup
             setTimeout(() => { openSpinWheelModal(); }, 600);
           }
         });
