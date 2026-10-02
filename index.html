@@ -92,20 +92,21 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between relative pb-16">
 
-  <!-- BACKGROUND NAVRATRI MUSIC AUDIO LOOP -->
+  <!-- BACKGROUND NAVRATRI MUSIC AUDIO LOOP (WORKING DIRECT STREAM) -->
   <audio id="navratri-bgm" loop preload="auto">
-    <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf7f6.mp3?filename=indian-bollywood-garba-folk-instrumental-111586.mp3" type="audio/mpeg">
+    <source src="https://actions.google.com/sounds/v1/ambiences/indian_market.ogg" type="audio/ogg">
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
   </audio>
 
   <!-- FLOATING MUSIC TOGGLE BUTTON -->
-  <button id="btn-bgm-toggle" onclick="toggleBackgroundMusic()" class="fixed top-16 right-4 z-40 px-3 py-1.5 rounded-full bg-rose-950/90 text-amber-300 border border-amber-500/50 shadow-2xl flex items-center gap-1.5 text-[11px] font-bold active:scale-95 transition">
+  <button id="btn-bgm-toggle" onclick="playClickSFX(); toggleBackgroundMusic();" class="fixed top-16 right-4 z-40 px-3 py-1.5 rounded-full bg-rose-950/90 text-amber-300 border border-amber-500/50 shadow-2xl flex items-center gap-1.5 text-[11px] font-bold active:scale-95 transition">
     <i id="music-icon" class="fa-solid fa-volume-xmark"></i>
     <span id="music-status-text">Music Off</span>
   </button>
 
   <!-- TOP HEADER -->
   <header id="main-app-header" class="fixed top-0 left-0 right-0 z-50 w-full px-4 py-3 flex items-center justify-between navratri-glass-card border-b border-amber-500/30 shadow-xl">
-    <div class="flex items-center gap-2.5 shrink-0 cursor-pointer" onclick="handleSecretLogoTaps()">
+    <div class="flex items-center gap-2.5 shrink-0 cursor-pointer" onclick="playClickSFX(); handleSecretLogoTaps();">
       <div class="w-9 h-9 rounded-2xl bg-gradient-to-tr from-rose-600 via-orange-500 to-amber-400 p-[2px] shadow-lg shadow-rose-600/40">
         <div class="w-full h-full bg-[#120822] rounded-[14px] flex items-center justify-center font-black text-amber-400 text-sm">🪔</div>
       </div>
@@ -120,21 +121,21 @@
     
     <div id="top-user-pill" class="hidden flex items-center gap-2">
       <!-- UPGRADE TO GOLD BUTTON -->
-      <button onclick="openUpgradeModal()" class="px-2.5 py-1 rounded-full gold-badge-glow text-[10px] flex items-center gap-1 shadow-md active:scale-95">
+      <button onclick="playClickSFX(); openUpgradeModal();" class="px-2.5 py-1 rounded-full gold-badge-glow text-[10px] flex items-center gap-1 shadow-md active:scale-95">
         <i class="fa-solid fa-crown text-[9px]"></i> <span>Gold</span>
       </button>
 
       <!-- SPIN WHEEL BUTTON -->
-      <button onclick="openSpinWheelModal()" class="relative w-8 h-8 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-300 border border-amber-500/40 active:scale-90" title="Spin the Wheel">
+      <button onclick="playClickSFX(); openSpinWheelModal();" class="relative w-8 h-8 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-300 border border-amber-500/40 active:scale-90" title="Spin the Wheel">
         <i class="fa-solid fa-dharmachakra text-xs"></i>
       </button>
 
-      <button onclick="openRequestsModal()" class="relative w-8 h-8 rounded-full bg-rose-950/80 flex items-center justify-center text-amber-400 border border-amber-500/40 active:scale-90">
+      <button onclick="playClickSFX(); openRequestsModal();" class="relative w-8 h-8 rounded-full bg-rose-950/80 flex items-center justify-center text-amber-400 border border-amber-500/40 active:scale-90">
         <i class="fa-solid fa-bell text-xs"></i>
         <span id="requests-badge-count" class="hidden absolute -top-1 -right-1 bg-rose-600 text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center border-2 border-[#120822]">0</span>
       </button>
 
-      <button onclick="switchTab('profile')" class="flex items-center gap-2 bg-purple-950/70 px-3 py-1 rounded-full border border-amber-500/30 text-xs active:scale-95">
+      <button onclick="playClickSFX(); switchTab('profile');" class="flex items-center gap-2 bg-purple-950/70 px-3 py-1 rounded-full border border-amber-500/30 text-xs active:scale-95">
         <div class="w-6 h-6 rounded-full overflow-hidden bg-gradient-to-tr from-rose-500 to-amber-500 flex items-center justify-center font-bold text-[10px] text-white" id="header-avatar-box">
           <span id="header-avatar-letter">U</span>
         </div>
@@ -146,7 +147,7 @@
   </header>
 
   <!-- FLOATING BACK TO TOP -->
-  <button id="btn-back-to-top" onclick="window.scrollTo({top:0, behavior:'smooth'})" class="hidden fixed bottom-20 right-4 z-40 w-9 h-9 rounded-full bg-rose-600 text-amber-300 border border-amber-400/50 shadow-2xl flex items-center justify-center text-xs active:scale-90 transition">
+  <button id="btn-back-to-top" onclick="playClickSFX(); window.scrollTo({top:0, behavior:'smooth'});" class="hidden fixed bottom-20 right-4 z-40 w-9 h-9 rounded-full bg-rose-600 text-amber-300 border border-amber-400/50 shadow-2xl flex items-center justify-center text-xs active:scale-90 transition">
     <i class="fa-solid fa-arrow-up"></i>
   </button>
 
@@ -180,10 +181,10 @@
         </div>
 
         <div class="grid grid-cols-2 gap-2 pt-1">
-          <button type="button" onclick="handleSignUp()" class="py-2.5 rounded-xl bg-purple-950 border border-purple-800 text-amber-200 font-bold hover:bg-purple-900 transition shadow-sm">
+          <button type="button" onclick="playClickSFX(); handleSignUp();" class="py-2.5 rounded-xl bg-purple-950 border border-purple-800 text-amber-200 font-bold hover:bg-purple-900 transition shadow-sm">
             Sign Up
           </button>
-          <button type="button" onclick="handleSignIn()" class="py-2.5 rounded-xl navratri-btn uppercase tracking-wider">
+          <button type="button" onclick="playClickSFX(); handleSignIn();" class="py-2.5 rounded-xl navratri-btn uppercase tracking-wider">
             Sign In ➔
           </button>
         </div>
@@ -194,7 +195,7 @@
           <div class="flex-1 border-t border-purple-900"></div>
         </div>
 
-        <button type="button" onclick="handleGoogleSignIn()" class="w-full py-3 rounded-2xl bg-white text-zinc-900 font-bold flex items-center justify-center gap-2.5 shadow-md active:scale-95">
+        <button type="button" onclick="playClickSFX(); handleGoogleSignIn();" class="w-full py-3 rounded-2xl bg-white text-zinc-900 font-bold flex items-center justify-center gap-2.5 shadow-md active:scale-95">
           <i class="fa-brands fa-google text-rose-600 text-base"></i>
           <span>Sign in with Google</span>
         </button>
@@ -263,7 +264,7 @@
           <input type="text" id="onboard-bio" placeholder="Ready for Navratri nights 🪔" class="w-full bg-[#120822] border border-purple-800 rounded-xl p-2.5 text-xs text-zinc-100 outline-none" />
         </div>
 
-        <button onclick="saveOnboardingProfile()" class="w-full mt-2 py-3 rounded-xl navratri-btn font-black text-xs uppercase tracking-wider shadow-md">
+        <button onclick="playClickSFX(); saveOnboardingProfile();" class="w-full mt-2 py-3 rounded-xl navratri-btn font-black text-xs uppercase tracking-wider shadow-md">
           Start Exploring 🚀
         </button>
       </div>
@@ -273,7 +274,7 @@
   <!-- SCREEN 2: CHATS -->
   <section id="screen-chats" class="hidden relative z-20 flex-1 max-w-xl mx-auto w-full px-4 py-3 pt-16">
     <div id="chats-contacts-view" class="space-y-3.5">
-      <div id="incoming-requests-bar" class="hidden navratri-glass-card rounded-2xl p-3 shadow-md border border-amber-400/50 flex items-center justify-between cursor-pointer" onclick="openRequestsModal()">
+      <div id="incoming-requests-bar" class="hidden navratri-glass-card rounded-2xl p-3 shadow-md border border-amber-400/50 flex items-center justify-between cursor-pointer" onclick="playClickSFX(); openRequestsModal();">
         <div class="flex items-center gap-2">
           <span class="w-8 h-8 rounded-full bg-rose-950 text-amber-300 flex items-center justify-center text-xs font-bold border border-amber-400/40">
             <i class="fa-solid fa-user-plus"></i>
@@ -289,8 +290,8 @@
       <!-- CHAT SUB-TABS (DIRECT / COMMUNITIES) -->
       <div class="navratri-glass-card rounded-3xl p-4 shadow-xl border border-amber-500/20">
         <div class="flex items-center gap-1.5 p-1 bg-[#120822] rounded-xl border border-amber-500/30 text-xs font-bold mb-3">
-          <button onclick="switchChatSubTab('direct')" id="chattab-direct" class="flex-1 py-1.5 rounded-lg bg-rose-600 text-white transition">Direct Chats 💬</button>
-          <button onclick="switchChatSubTab('communities')" id="chattab-communities" class="flex-1 py-1.5 rounded-lg text-zinc-400 hover:text-white transition">Communities 👥</button>
+          <button onclick="playClickSFX(); switchChatSubTab('direct');" id="chattab-direct" class="flex-1 py-1.5 rounded-lg bg-rose-600 text-white transition">Direct Chats 💬</button>
+          <button onclick="playClickSFX(); switchChatSubTab('communities');" id="chattab-communities" class="flex-1 py-1.5 rounded-lg text-zinc-400 hover:text-white transition">Communities 👥</button>
         </div>
 
         <div class="flex items-center justify-between pb-3 border-b border-purple-900/50 mb-3">
@@ -311,13 +312,13 @@
     <div id="chats-room-view" class="hidden navratri-glass-card rounded-3xl overflow-hidden shadow-2xl flex flex-col h-[76vh] border border-amber-500/30">
       <div class="p-3 border-b border-purple-900/50 flex items-center justify-between bg-[#120822]/80">
         <div class="flex items-center gap-2.5">
-          <button onclick="backToContactsList()" class="w-8 h-8 rounded-full bg-purple-950 hover:bg-purple-900 flex items-center justify-center text-amber-300 text-xs transition border border-amber-500/30">
+          <button onclick="playClickSFX(); backToContactsList();" class="w-8 h-8 rounded-full bg-purple-950 hover:bg-purple-900 flex items-center justify-center text-amber-300 text-xs transition border border-amber-500/30">
             <i class="fa-solid fa-arrow-left"></i>
           </button>
-          <div class="w-9 h-9 rounded-full overflow-hidden bg-gradient-to-tr from-rose-500 to-amber-500 flex items-center justify-center font-bold text-xs text-white shadow-sm cursor-pointer relative" onclick="openPartnerDetailsModal()" id="room-partner-avatar-box">
+          <div class="w-9 h-9 rounded-full overflow-hidden bg-gradient-to-tr from-rose-500 to-amber-500 flex items-center justify-center font-bold text-xs text-white shadow-sm cursor-pointer relative" onclick="playClickSFX(); openPartnerDetailsModal();" id="room-partner-avatar-box">
             <span id="room-partner-avatar">P</span>
           </div>
-          <div class="cursor-pointer" onclick="openPartnerDetailsModal()">
+          <div class="cursor-pointer" onclick="playClickSFX(); openPartnerDetailsModal();">
             <div class="flex items-center gap-1.5">
               <h4 id="room-partner-name" class="font-bold text-xs text-amber-100"></h4>
               <span id="room-partner-badge" class="hidden text-amber-400 text-xs"><i class="fa-solid fa-circle-check"></i></span>
@@ -334,9 +335,9 @@
       <!-- ICEBREAKER SUGGESTIONS BAR -->
       <div id="icebreaker-bar" class="px-3 py-1.5 bg-[#120822]/90 border-b border-purple-900/40 flex items-center gap-2 overflow-x-auto whitespace-nowrap text-[10px]">
         <span class="text-amber-400 font-bold">✨ Icebreakers:</span>
-        <button onclick="sendIcebreaker('Aaj kaunse ground par ja rahe ho? 🪔')" class="px-2.5 py-1 rounded-full bg-purple-950/80 text-amber-200 border border-amber-500/30">Aaj kaunse ground par ja rahe ho? 🪔</button>
-        <button onclick="sendIcebreaker('Aapka favorite Navratri song kaunsa hai? 🎶')" class="px-2.5 py-1 rounded-full bg-purple-950/80 text-amber-200 border border-amber-500/30">Favorite Navratri song? 🎶</button>
-        <button onclick="sendIcebreaker('Traditional Raas or High-Energy Dandiya? ✨')" class="px-2.5 py-1 rounded-full bg-purple-950/80 text-amber-200 border border-amber-500/30">Raas or Dandiya? ✨</button>
+        <button onclick="playClickSFX(); sendIcebreaker('Aaj kaunse ground par ja rahe ho? 🪔');" class="px-2.5 py-1 rounded-full bg-purple-950/80 text-amber-200 border border-amber-500/30">Aaj kaunse ground par ja rahe ho? 🪔</button>
+        <button onclick="playClickSFX(); sendIcebreaker('Aapka favorite Navratri song kaunsa hai? 🎶');" class="px-2.5 py-1 rounded-full bg-purple-950/80 text-amber-200 border border-amber-500/30">Favorite Navratri song? 🎶</button>
+        <button onclick="playClickSFX(); sendIcebreaker('Traditional Raas or High-Energy Dandiya? ✨');" class="px-2.5 py-1 rounded-full bg-purple-950/80 text-amber-200 border border-amber-500/30">Raas or Dandiya? ✨</button>
       </div>
 
       <div id="private-messages-stream" class="flex-1 p-3 overflow-y-auto space-y-2.5 text-xs relative bg-[#0e071c]/50"></div>
@@ -344,7 +345,7 @@
       <div class="p-2.5 border-t border-purple-900/50 flex flex-col gap-1.5 bg-[#120822]/90">
         <div class="flex items-center gap-2">
           <input id="personal-chat-input" type="text" onkeydown="if(event.key==='Enter') sendPersonalMessage()" placeholder="Type a message..." class="flex-1 bg-[#1a0e2e] border border-purple-800 rounded-xl px-3.5 py-2.5 text-xs outline-none focus:border-amber-400 text-zinc-100 placeholder:text-zinc-500 shadow-inner" />
-          <button onclick="sendPersonalMessage()" id="personal-send-btn" class="w-9 h-9 rounded-xl navratri-btn flex items-center justify-center text-white font-black">
+          <button onclick="playClickSFX(); sendPersonalMessage();" id="personal-send-btn" class="w-9 h-9 rounded-xl navratri-btn flex items-center justify-center text-white font-black">
             <i class="fa-solid fa-paper-plane text-xs"></i>
           </button>
         </div>
@@ -360,7 +361,7 @@
           <span class="text-amber-400 text-xs animate-bounce"><i class="fa-solid fa-wand-magic-sparkles"></i></span>
           <h4 class="font-bold text-xs text-amber-200 uppercase tracking-wider">Garba Highlights</h4>
         </div>
-        <button onclick="switchTab('events')" class="text-[10px] font-bold text-amber-400 hover:underline">Events Arena ➔</button>
+        <button onclick="playClickSFX(); switchTab('events');" class="text-[10px] font-bold text-amber-400 hover:underline">Events Arena ➔</button>
       </div>
 
       <div id="buddies-banners-slider" class="banner-carousel-track">
@@ -371,16 +372,16 @@
     <!-- GROUPS & PARTNERS SWITCH & FILTERS -->
     <div class="mb-3 p-3 rounded-2xl navratri-glass-card space-y-2.5 border border-amber-500/25">
       <div class="flex items-center gap-1.5 p-1 bg-[#120822] rounded-xl border border-amber-500/30 text-xs font-bold">
-        <button onclick="switchExploreTab('partners')" id="ex-tab-partners" class="flex-1 py-1.5 rounded-lg bg-rose-600 text-white transition">Partners</button>
-        <button onclick="switchExploreTab('groups')" id="ex-tab-groups" class="flex-1 py-1.5 rounded-lg text-zinc-400 hover:text-white transition">Communities 👥</button>
+        <button onclick="playClickSFX(); switchExploreTab('partners');" id="ex-tab-partners" class="flex-1 py-1.5 rounded-lg bg-rose-600 text-white transition">Partners</button>
+        <button onclick="playClickSFX(); switchExploreTab('groups');" id="ex-tab-groups" class="flex-1 py-1.5 rounded-lg text-zinc-400 hover:text-white transition">Communities 👥</button>
       </div>
 
       <!-- PARTNERS FILTERS -->
       <div id="explore-sec-partners" class="space-y-2">
         <div class="flex items-center gap-1.5 p-1 bg-[#120822] rounded-xl border border-amber-500/30 text-xs font-bold">
-          <button onclick="setGenderFilter('ALL')" id="gfilter-ALL" class="flex-1 py-1 rounded-lg bg-rose-600 text-white transition">All</button>
-          <button onclick="setGenderFilter('Male')" id="gfilter-Male" class="flex-1 py-1 rounded-lg text-zinc-400 hover:text-white transition">Boys ♂</button>
-          <button onclick="setGenderFilter('Female')" id="gfilter-Female" class="flex-1 py-1 rounded-lg text-zinc-400 hover:text-white transition">Girls ♀</button>
+          <button onclick="playClickSFX(); setGenderFilter('ALL');" id="gfilter-ALL" class="flex-1 py-1 rounded-lg bg-rose-600 text-white transition">All</button>
+          <button onclick="playClickSFX(); setGenderFilter('Male');" id="gfilter-Male" class="flex-1 py-1 rounded-lg text-zinc-400 hover:text-white transition">Boys ♂</button>
+          <button onclick="playClickSFX(); setGenderFilter('Female');" id="gfilter-Female" class="flex-1 py-1 rounded-lg text-zinc-400 hover:text-white transition">Girls ♀</button>
         </div>
 
         <div class="flex items-center gap-2">
@@ -400,7 +401,7 @@
 
       <!-- GROUPS ACTIONS -->
       <div id="explore-sec-groups" class="hidden space-y-2">
-        <button onclick="requestGroupCreation()" class="w-full py-2.5 rounded-xl navratri-btn text-xs font-bold flex items-center justify-center gap-2 shadow-md">
+        <button onclick="playClickSFX(); requestGroupCreation();" class="w-full py-2.5 rounded-xl navratri-btn text-xs font-bold flex items-center justify-center gap-2 shadow-md">
           <i class="fa-solid fa-paper-plane"></i> Request Group Creation to Admin 👥
         </button>
       </div>
@@ -429,7 +430,7 @@
             <p class="text-[10px] text-zinc-400">Anonymous cute notes & crushes</p>
           </div>
         </div>
-        <button onclick="openConfessionModal()" class="px-2.5 py-1 rounded-xl navratri-btn text-[10px] font-bold">Post Note ✨</button>
+        <button onclick="playClickSFX(); openConfessionModal();" class="px-2.5 py-1 rounded-xl navratri-btn text-[10px] font-bold">Post Note ✨</button>
       </div>
       <div id="confessions-list" class="space-y-2 max-h-48 overflow-y-auto">
         <div class="text-center py-4 text-xs text-zinc-500">Loading confessions...</div>
@@ -486,19 +487,19 @@
       </div>
 
       <div class="mt-3 space-y-2">
-        <button onclick="openUpgradeModal()" class="w-full py-3 rounded-2xl gold-badge-glow text-xs flex items-center justify-center gap-2 shadow-lg active:scale-95">
+        <button onclick="playClickSFX(); openUpgradeModal();" class="w-full py-3 rounded-2xl gold-badge-glow text-xs flex items-center justify-center gap-2 shadow-lg active:scale-95">
           <i class="fa-solid fa-crown text-sm"></i>
           <span>Upgrade to Milo Gold (₹199) 👑</span>
         </button>
 
-        <button onclick="requestNotificationPermission()" class="w-full py-2.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 font-bold text-xs flex items-center justify-center gap-2">
+        <button onclick="playClickSFX(); requestNotificationPermission();" class="w-full py-2.5 rounded-xl bg-amber-500/25 hover:bg-amber-500/35 border border-amber-500/45 text-amber-300 font-bold text-xs flex items-center justify-center gap-2">
           <i class="fa-solid fa-bell"></i>
           <span>Enable Notifications 🔔</span>
         </button>
       </div>
 
       <div id="admin-launcher-box" class="hidden mt-3">
-        <button onclick="promptAdminPasscode()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-rose-700 via-orange-600 to-amber-600 text-white font-black text-xs flex items-center justify-center gap-2 shadow-lg shadow-rose-700/30">
+        <button onclick="playClickSFX(); promptAdminPasscode();" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-rose-700 via-orange-600 to-amber-600 text-white font-black text-xs flex items-center justify-center gap-2 shadow-lg shadow-rose-700/30">
           <i class="fa-solid fa-shield-halved"></i>
           <span>Admin Console 🛡️</span>
         </button>
@@ -571,13 +572,13 @@
           <input type="text" id="profile-bio-input" class="w-full bg-[#1a0e2e] border border-purple-900 rounded-xl px-2.5 py-1.5 text-zinc-200 outline-none text-xs" />
         </div>
 
-        <button onclick="saveCompleteUserProfile()" class="w-full py-2.5 rounded-xl navratri-btn text-xs font-black uppercase tracking-wider shadow-md">
+        <button onclick="playClickSFX(); saveCompleteUserProfile();" class="w-full py-2.5 rounded-xl navratri-btn text-xs font-black uppercase tracking-wider shadow-md">
           Save Changes ✨
         </button>
       </div>
 
       <div class="mt-4 pt-3 border-t border-purple-900/50">
-        <button type="button" onclick="handleSignOut()" class="w-full py-2.5 rounded-xl bg-rose-950 text-rose-300 font-bold text-xs flex items-center justify-center gap-2 border border-rose-800">
+        <button type="button" onclick="playClickSFX(); handleSignOut();" class="w-full py-2.5 rounded-xl bg-rose-950 text-rose-300 font-bold text-xs flex items-center justify-center gap-2 border border-rose-800">
           <i class="fa-solid fa-right-from-bracket"></i> Logout
         </button>
       </div>
@@ -589,14 +590,14 @@
     <div class="navratri-glass-card rounded-3xl p-5 shadow-2xl space-y-4 border-2 border-amber-400/50">
       <div class="flex items-center justify-between pb-3 border-b border-purple-900/60">
         <h2 class="text-base font-black text-amber-100">Admin Console 🛡️</h2>
-        <button onclick="exitAdminPage()" class="px-3 py-1.5 rounded-xl bg-purple-950 text-amber-300 text-xs font-bold border border-amber-500/30">Exit ➔</button>
+        <button onclick="playClickSFX(); exitAdminPage();" class="px-3 py-1.5 rounded-xl bg-purple-950 text-amber-300 text-xs font-bold border border-amber-500/30">Exit ➔</button>
       </div>
 
       <div class="grid grid-cols-4 gap-1 p-1 rounded-xl bg-[#120822] border border-amber-500/30 text-[10px] font-bold">
-        <button onclick="switchAdminSubTab('banners')" id="adtab-btn-banners" class="py-2 rounded-lg bg-rose-600 text-white">Banners</button>
-        <button onclick="switchAdminSubTab('groups')" id="adtab-btn-groups" class="py-2 rounded-lg text-zinc-400">Groups 👥</button>
-        <button onclick="switchAdminSubTab('events')" id="adtab-btn-events" class="py-2 rounded-lg text-zinc-400">Events</button>
-        <button onclick="switchAdminSubTab('users')" id="adtab-btn-users" class="py-2 rounded-lg text-zinc-400">Users</button>
+        <button onclick="playClickSFX(); switchAdminSubTab('banners');" id="adtab-btn-banners" class="py-2 rounded-lg bg-rose-600 text-white">Banners</button>
+        <button onclick="playClickSFX(); switchAdminSubTab('groups');" id="adtab-btn-groups" class="py-2 rounded-lg text-zinc-400">Groups 👥</button>
+        <button onclick="playClickSFX(); switchAdminSubTab('events');" id="adtab-btn-events" class="py-2 rounded-lg text-zinc-400">Events</button>
+        <button onclick="playClickSFX(); switchAdminSubTab('users');" id="adtab-btn-users" class="py-2 rounded-lg text-zinc-400">Users</button>
       </div>
 
       <!-- ADMIN SUB-TAB 1: BANNERS -->
@@ -610,7 +611,7 @@
           <input type="text" id="admin-banner-title" placeholder="Title" class="w-full bg-[#1a0e2e] border border-purple-800 rounded-xl p-2 text-xs text-zinc-100 outline-none" />
           <input type="text" id="admin-banner-subtitle" placeholder="Subtitle" class="w-full bg-[#1a0e2e] border border-purple-800 rounded-xl p-2 text-xs text-zinc-100 outline-none" />
           <input type="file" id="admin-banner-photo" accept="image/*" class="text-xs text-zinc-300 w-full" />
-          <button onclick="adminPublishBanner()" id="btn-publish-banner" class="w-full py-2.5 rounded-xl navratri-btn font-bold text-xs uppercase">Publish Banner</button>
+          <button onclick="playClickSFX(); adminPublishBanner();" id="btn-publish-banner" class="w-full py-2.5 rounded-xl navratri-btn font-bold text-xs uppercase">Publish Banner</button>
         </div>
         <div id="admin-banners-list" class="space-y-2"></div>
       </div>
@@ -640,7 +641,7 @@
           </div>
 
           <input type="text" id="admin-group-desc" placeholder="Description / Vibe" class="w-full bg-[#1a0e2e] border border-purple-800 rounded-xl p-2 text-xs text-white outline-none" />
-          <button onclick="adminCreateGroup()" class="w-full py-2.5 rounded-xl navratri-btn font-bold text-xs uppercase">Create Group Live 👥</button>
+          <button onclick="playClickSFX(); adminCreateGroup();" class="w-full py-2.5 rounded-xl navratri-btn font-bold text-xs uppercase">Create Group Live 👥</button>
         </div>
 
         <div>
@@ -669,7 +670,7 @@
           <input type="text" id="admin-event-pass" placeholder="Pass info" class="w-full bg-[#1a0e2e] border border-purple-800 rounded-xl p-2 text-xs text-zinc-100 outline-none" />
           <textarea id="admin-event-desc" rows="2" placeholder="Details..." class="w-full bg-[#1a0e2e] border border-purple-800 rounded-xl p-2 text-xs text-zinc-100 outline-none"></textarea>
           <input type="file" id="admin-event-photo" accept="image/*" class="text-xs text-zinc-300 w-full" />
-          <button onclick="adminPublishEvent()" id="btn-publish-event" class="w-full py-2.5 rounded-xl navratri-btn font-bold text-xs uppercase">Schedule Event</button>
+          <button onclick="playClickSFX(); adminPublishEvent();" id="btn-publish-event" class="w-full py-2.5 rounded-xl navratri-btn font-bold text-xs uppercase">Schedule Event</button>
         </div>
         <div id="admin-events-list" class="space-y-2"></div>
       </div>
@@ -686,7 +687,7 @@
     <div class="modal-sheet-anim navratri-glass-card w-full max-w-sm rounded-3xl p-5 shadow-2xl max-h-[85vh] overflow-y-auto border border-amber-500/40">
       <div class="flex items-center justify-between pb-3 border-b border-purple-900/60 mb-3">
         <h3 class="font-bold text-sm text-amber-100">Partner Requests & Secret Crushes</h3>
-        <button onclick="closeRequestsModal()" class="w-7 h-7 rounded-full bg-purple-950 text-amber-300 flex items-center justify-center">&times;</button>
+        <button onclick="playClickSFX(); closeRequestsModal();" class="w-7 h-7 rounded-full bg-purple-950 text-amber-300 flex items-center justify-center">&times;</button>
       </div>
       <div id="requests-list-container" class="space-y-2.5"></div>
     </div>
@@ -695,7 +696,7 @@
   <!-- UPGRADE TO GOLD MODAL -->
   <div id="modal-upgrade" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="modal-sheet-anim navratri-glass-card w-full max-w-sm rounded-3xl p-6 shadow-2xl text-center border-2 border-amber-400 relative">
-      <button onclick="closeUpgradeModal()" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-purple-950 text-amber-300 flex items-center justify-center font-bold text-xs">&times;</button>
+      <button onclick="playClickSFX(); closeUpgradeModal();" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-purple-950 text-amber-300 flex items-center justify-center font-bold text-xs">&times;</button>
       <div class="w-12 h-12 mx-auto rounded-2xl gold-badge-glow flex items-center justify-center text-xl mb-3 shadow-lg"><i class="fa-solid fa-crown"></i></div>
       <h3 class="text-lg font-black text-amber-100 mb-1">Milo Gold Pass</h3>
       <p class="text-xs text-amber-300/90 mb-4">Unlock unlimited wheel spins, direct messages, city teleport, & unblur all secret crushes!</p>
@@ -707,7 +708,7 @@
         <div>✨ Priority Profile Visibility</div>
       </div>
 
-      <button onclick="startRazorpayPayment()" class="w-full py-3 rounded-xl gold-badge-glow text-xs font-black uppercase tracking-wider shadow-xl">
+      <button onclick="playClickSFX(); startRazorpayPayment();" class="w-full py-3 rounded-xl gold-badge-glow text-xs font-black uppercase tracking-wider shadow-xl">
         Upgrade Now for ₹199 👑
       </button>
     </div>
@@ -716,7 +717,7 @@
   <!-- STARTUP & HOURLY SPIN WHEEL MODAL -->
   <div id="modal-spin-wheel" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="modal-sheet-anim navratri-glass-card w-full max-w-sm rounded-3xl p-6 shadow-2xl text-center border-2 border-amber-400 relative">
-      <button onclick="closeSpinWheelModal()" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-purple-950 text-amber-300 flex items-center justify-center font-bold text-xs">&times;</button>
+      <button onclick="playClickSFX(); closeSpinWheelModal();" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-purple-950 text-amber-300 flex items-center justify-center font-bold text-xs">&times;</button>
       <h3 class="text-lg font-black text-amber-100 mb-1">🎰 Spin the Garba Wheel</h3>
       <p id="spin-counter-label" class="text-xs text-amber-400 mb-4">Hourly Spin Available</p>
       
@@ -726,7 +727,7 @@
         </div>
       </div>
 
-      <button onclick="spinTheWheelAction()" id="btn-spin-action" class="w-full py-3 rounded-xl navratri-btn text-xs font-bold uppercase tracking-wider shadow-lg">
+      <button onclick="playClickSFX(); spinTheWheelAction();" id="btn-spin-action" class="w-full py-3 rounded-xl navratri-btn text-xs font-bold uppercase tracking-wider shadow-lg">
         Spin Wheel Now 🎡
       </button>
     </div>
@@ -735,17 +736,17 @@
   <!-- CONFESSION POST MODAL -->
   <div id="modal-confession" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="modal-sheet-anim navratri-glass-card w-full max-w-sm rounded-3xl p-6 shadow-2xl border border-amber-500/40 relative">
-      <button onclick="closeConfessionModal()" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-purple-950 text-amber-300 flex items-center justify-center font-bold text-xs">&times;</button>
+      <button onclick="playClickSFX(); closeConfessionModal();" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-purple-950 text-amber-300 flex items-center justify-center font-bold text-xs">&times;</button>
       <h3 class="text-base font-black text-amber-100 mb-2">✨ Post Midnight Confession</h3>
       <p class="text-[11px] text-zinc-400 mb-4">Share your secret crush or thought anonymously.</p>
       <textarea id="confession-text-input" rows="3" placeholder="Type anonymously..." class="w-full bg-[#120822] border border-purple-800 rounded-xl p-3 text-xs text-zinc-100 outline-none mb-3"></textarea>
-      <button onclick="submitAnonymousConfession()" class="w-full py-2.5 rounded-xl navratri-btn text-xs font-bold uppercase">Post Anonymously 🌙</button>
+      <button onclick="playClickSFX(); submitAnonymousConfession();" class="w-full py-2.5 rounded-xl navratri-btn text-xs font-bold uppercase">Post Anonymously 🌙</button>
     </div>
   </div>
 
   <div id="modal-buddy-profile" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
     <div class="modal-sheet-anim navratri-glass-card w-full max-w-sm rounded-t-[32px] sm:rounded-3xl p-5 shadow-2xl relative border border-amber-500/40">
-      <button onclick="closeBuddyProfileModal()" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-purple-950 text-amber-300 flex items-center justify-center font-bold text-xs">&times;</button>
+      <button onclick="playClickSFX(); closeBuddyProfileModal();" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-purple-950 text-amber-300 flex items-center justify-center font-bold text-xs">&times;</button>
       <div class="text-center pt-2">
         <div class="relative w-28 h-28 mx-auto mb-3">
           <div class="w-28 h-28 rounded-full overflow-hidden bg-gradient-to-tr from-rose-600 to-amber-500 p-[3px]">
@@ -770,19 +771,19 @@
 
   <!-- NAVIGATION BAR -->
   <nav id="bottom-nav-bar" class="hidden fixed bottom-3 inset-x-0 mx-auto w-[92%] max-w-md z-40 navratri-glass-card rounded-full p-1.5 shadow-2xl flex items-center justify-around text-xs border border-amber-500/30">
-    <button onclick="switchTab('chats')" id="bnav-btn-chats" class="flex-1 py-2 px-1 rounded-full flex flex-col items-center gap-0.5 transition text-zinc-400 font-bold">
+    <button onclick="playClickSFX(); switchTab('chats');" id="bnav-btn-chats" class="flex-1 py-2 px-1 rounded-full flex flex-col items-center gap-0.5 transition text-zinc-400 font-bold">
       <i class="fa-solid fa-comments text-sm"></i>
       <span class="text-[9px]">Chats</span>
     </button>
-    <button onclick="switchTab('buddies')" id="bnav-btn-buddies" class="flex-1 py-2 px-1 rounded-full flex flex-col items-center gap-0.5 transition text-zinc-400 font-bold bottom-nav-active">
+    <button onclick="playClickSFX(); switchTab('buddies');" id="bnav-btn-buddies" class="flex-1 py-2 px-1 rounded-full flex flex-col items-center gap-0.5 transition text-zinc-400 font-bold bottom-nav-active">
       <i class="fa-solid fa-fire text-sm"></i>
       <span class="text-[9px]">Explore</span>
     </button>
-    <button onclick="switchTab('events')" id="bnav-btn-events" class="flex-1 py-2 px-1 rounded-full flex flex-col items-center gap-0.5 transition text-zinc-400 font-bold">
+    <button onclick="playClickSFX(); switchTab('events');" id="bnav-btn-events" class="flex-1 py-2 px-1 rounded-full flex flex-col items-center gap-0.5 transition text-zinc-400 font-bold">
       <i class="fa-solid fa-ticket text-sm"></i>
       <span class="text-[9px]">Events</span>
     </button>
-    <button onclick="switchTab('profile')" id="bnav-btn-profile" class="flex-1 py-2 px-1 rounded-full flex flex-col items-center gap-0.5 transition text-zinc-400 font-bold">
+    <button onclick="playClickSFX(); switchTab('profile');" id="bnav-btn-profile" class="flex-1 py-2 px-1 rounded-full flex flex-col items-center gap-0.5 transition text-zinc-400 font-bold">
       <i class="fa-solid fa-user text-sm"></i>
       <span class="text-[9px]">Profile</span>
     </button>
@@ -811,7 +812,26 @@
       return temp.innerHTML;
     }
 
-    // BACKGROUND MUSIC CONTROL & FIRST INTERACTION AUTO-START
+    // AUDIO CONTEXT SOUND EFFECTS (SFX)
+    let audioCtx = null;
+    function playClickSFX() {
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // D5 note
+        osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.08);
+        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.08);
+      } catch(e) {}
+    }
+
+    // BACKGROUND MUSIC CONTROL
     let isMusicPlaying = false;
     function toggleBackgroundMusic() {
       const audio = document.getElementById('navratri-bgm');
@@ -833,7 +853,7 @@
       }
     }
 
-    // Auto-start music on first user click/tap anywhere on screen
+    // Auto-start music on first user tap
     window.addEventListener('click', () => {
       const audio = document.getElementById('navratri-bgm');
       if (audio && !isMusicPlaying) {
@@ -1305,7 +1325,7 @@
 
       availableGroups.forEach(g => {
         buddiesSlider.innerHTML += `
-          <div class="buddy-card-item" onclick="joinGroup('${g.id}', '${sanitizeInput(g.name)}')">
+          <div class="buddy-card-item" onclick="playClickSFX(); joinGroup('${g.id}', '${sanitizeInput(g.name)}')">
             <div class="w-16 h-16 rounded-full overflow-hidden bg-gradient-to-tr from-rose-600 to-amber-500 p-0.5 flex items-center justify-center mb-2 shadow-md">
               <div class="w-full h-full bg-[#120822] rounded-full flex items-center justify-center text-amber-400 font-black"><i class="fa-solid fa-robot"></i></div>
             </div>
@@ -1428,7 +1448,7 @@
       globalBanners.forEach(b => {
         const mediaHtml = b.photoUrl ? `<img src="${b.photoUrl}" class="w-full h-36 object-cover" />` : `<div class="w-full h-36 bg-gradient-to-tr from-rose-700 to-amber-500 flex items-center justify-center text-white text-xl"><i class="fa-solid fa-sparkles"></i></div>`;
         slider.innerHTML += `
-          <div class="navratri-banner-card cursor-pointer" onclick="switchTab('events')">
+          <div class="navratri-banner-card cursor-pointer" onclick="playClickSFX(); switchTab('events');">
             <div class="relative w-full overflow-hidden">
               ${mediaHtml}
               <div class="absolute inset-0 bg-gradient-to-t from-black/9 to-transparent"></div>
@@ -1737,10 +1757,10 @@
             </div>
             <div class="flex gap-1">
               ${isCrush && !isGold ? `
-                <button onclick="openUpgradeModal()" class="px-3 py-1 gold-badge-glow rounded text-[10px] font-bold">Reveal 👑</button>
+                <button onclick="playClickSFX(); openUpgradeModal();" class="px-3 py-1 gold-badge-glow rounded text-[10px] font-bold">Reveal 👑</button>
               ` : `
-                <button onclick="respondToRequest('${req.id}', 'accepted')" class="px-2.5 py-1 bg-emerald-600 text-white rounded font-bold">Accept</button>
-                <button onclick="respondToRequest('${req.id}', 'rejected')" class="px-2.5 py-1 bg-rose-950 text-rose-300 rounded font-bold">Reject</button>
+                <button onclick="playClickSFX(); respondToRequest('${req.id}', 'accepted');" class="px-2.5 py-1 bg-emerald-600 text-white rounded font-bold">Accept</button>
+                <button onclick="playClickSFX(); respondToRequest('${req.id}', 'rejected');" class="px-2.5 py-1 bg-rose-950 text-rose-300 rounded font-bold">Reject</button>
               `}
             </div>
           </div>
@@ -1787,8 +1807,8 @@
       
       const act = document.getElementById('detail-action-container');
       act.innerHTML = `
-        <button onclick="sendConnectionRequest('${u.email}'); closeBuddyProfileModal();" class="py-2.5 rounded-xl navratri-btn text-[11px] font-bold">Request 💌</button>
-        <button onclick="sendSecretCrush('${u.email}', '${sanitizeInput(u.name)}'); closeBuddyProfileModal();" class="py-2.5 rounded-xl bg-purple-950 text-amber-300 border border-amber-500/40 text-[11px] font-bold">Secret Crush 💖</button>
+        <button onclick="playClickSFX(); sendConnectionRequest('${u.email}'); closeBuddyProfileModal();" class="py-2.5 rounded-xl navratri-btn text-[11px] font-bold">Request 💌</button>
+        <button onclick="playClickSFX(); sendSecretCrush('${u.email}', '${sanitizeInput(u.name)}'); closeBuddyProfileModal();" class="py-2.5 rounded-xl bg-purple-950 text-amber-300 border border-amber-500/40 text-[11px] font-bold">Secret Crush 💖</button>
       `;
     }
 
@@ -1820,7 +1840,7 @@
       filtered.forEach(u => {
         const chemistry = 75 + Math.abs((u.name.charCodeAt(0) * 3) % 23);
         buddiesSlider.innerHTML += `
-          <div class="buddy-card-item" onclick="openBuddyProfileModal('${u.email}')">
+          <div class="buddy-card-item" onclick="playClickSFX(); openBuddyProfileModal('${u.email}')">
             <div class="w-16 h-16 rounded-full overflow-hidden bg-[#120822] flex items-center justify-center font-bold text-amber-400 text-lg mb-2 relative shadow-md border border-amber-500/30">
               ${u.photoUrl ? `<img src="${u.photoUrl}" class="w-full h-full object-cover" />` : u.name[0]}
               <span class="absolute bottom-0 right-0 bg-rose-600 text-white text-[8px] font-black px-1.5 py-0.2 rounded-full border border-[#120822]">${chemistry}%</span>
@@ -1844,7 +1864,7 @@
         
         joinedGroups.forEach(g => {
           chatList.innerHTML += `
-            <div class="p-3 rounded-2xl bg-[#120822] cursor-pointer border border-purple-900 flex items-center justify-between text-xs" onclick="openGroupChat('${g.id}', '${sanitizeInput(g.name)}')">
+            <div class="p-3 rounded-2xl bg-[#120822] cursor-pointer border border-purple-900 flex items-center justify-between text-xs" onclick="playClickSFX(); openGroupChat('${g.id}', '${sanitizeInput(g.name)}')">
               <span>👥 ${sanitizeInput(g.name)}</span>
               <button class="px-2.5 py-1 navratri-btn rounded-lg font-bold">Open</button>
             </div>
@@ -1857,7 +1877,7 @@
 
         connectedUsers.forEach(u => {
           chatList.innerHTML += `
-            <div class="p-3 rounded-2xl bg-[#120822] cursor-pointer border border-purple-900 flex items-center justify-between text-xs" onclick="open1on1Chat('${u.email}')">
+            <div class="p-3 rounded-2xl bg-[#120822] cursor-pointer border border-purple-900 flex items-center justify-between text-xs" onclick="playClickSFX(); open1on1Chat('${u.email}')">
               <span>💬 ${sanitizeInput(u.name)}</span>
               <button class="px-2.5 py-1 navratri-btn rounded-lg font-bold">Chat</button>
             </div>
