@@ -535,7 +535,7 @@
         <div id="admin-launcher-box" class="hidden mt-3">
           <button onclick="playClickSFX(); promptAdminPasscode();" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-rose-700 via-orange-600 to-amber-600 text-white font-black text-xs flex items-center justify-center gap-2 shadow-lg shadow-rose-700/30">
             <i class="fa-solid fa-shield-halved"></i>
-            <span>Admin Console 🛡️️</span>
+            <span>Admin Console 🛡️</span>
           </button>
         </div>
 
@@ -562,7 +562,7 @@
           </div>
 
           <div class="p-3 bg-[#120822] rounded-2xl border border-purple-900/60">
-            <label class="text-[10px] text-amber-400 font-bold block mb-1">TONIGHT'S GROUND / VENUE STATUS</label>
+            <label class="text-[10px] text-zinc-400 font-bold block mb-1">TONIGHT'S GROUND / VENUE STATUS</label>
             <input type="text" id="profile-status-input" class="w-full bg-[#1a0e2e] border border-purple-900 rounded-xl px-2.5 py-1.5 text-zinc-200 outline-none text-xs" />
           </div>
 
@@ -628,7 +628,7 @@
     <section id="screen-admin-page" class="hidden relative z-40 flex-1 max-w-xl mx-auto w-full px-4 py-4 min-h-screen pb-28 pt-16">
       <div class="navratri-glass-card rounded-3xl p-5 shadow-2xl space-y-4 border-2 border-amber-400/50">
         <div class="flex items-center justify-between pb-3 border-b border-purple-900/60">
-          <h2 class="text-base font-black text-amber-100">Admin Console 🛡️</h2>
+          <h2 class="text-base font-black text-amber-100">Admin Console 🛡️️</h2>
           <button onclick="playClickSFX(); exitAdminPage();" class="px-3 py-1.5 rounded-xl bg-purple-950 text-amber-300 text-xs font-bold border border-amber-500/30">Exit ➔</button>
         </div>
 
@@ -716,10 +716,14 @@
           <div id="admin-events-list" class="space-y-2"></div>
         </div>
 
-        <!-- ADMIN SUB-TAB 4: POPUP MANAGEMENT -->
+        <!-- ADMIN SUB-TAB 4: POPUP & BANNER CONFIGURATION -->
         <div id="admin-sec-popup" class="hidden space-y-3">
           <div class="p-3 bg-[#120822] rounded-2xl border border-amber-500/30 text-xs space-y-3">
-            <h4 class="font-bold text-amber-200">📢 Configure Login Popup (For All Users)</h4>
+            <h4 class="font-bold text-amber-200">📢 Configure Login Popup & Banner Alert</h4>
+            <div>
+              <label class="block text-[10px] text-zinc-400 mb-1">Popup Banner Image</label>
+              <input type="file" id="admin-popup-banner-file" accept="image/*" class="text-xs text-zinc-300 w-full bg-[#1a0e2e] p-2 rounded-xl border border-purple-800" />
+            </div>
             <div>
               <label class="block text-[10px] text-zinc-400 mb-1">Popup Title</label>
               <input type="text" id="admin-popup-title" placeholder="E.g. 🔥 Upgrade to Milo Gold!" class="w-full bg-[#1a0e2e] border border-purple-800 rounded-xl p-2 text-xs text-zinc-100 outline-none" />
@@ -737,7 +741,7 @@
                 <option value="none">Just Close Popup</option>
               </select>
             </div>
-            <button onclick="playClickSFX(); adminSavePopupConfig();" class="w-full py-2.5 rounded-xl navratri-btn font-bold text-xs uppercase">Save & Broadcast Popup Live 🚀</button>
+            <button onclick="playClickSFX(); adminSavePopupConfig();" id="btn-save-popup" class="w-full py-2.5 rounded-xl navratri-btn font-bold text-xs uppercase">Save & Broadcast Popup Live 🚀</button>
           </div>
         </div>
 
@@ -769,16 +773,21 @@
       </div>
     </div>
 
-    <!-- DYNAMIC LOGIN POPUP MODAL (ADMIN CONTROLLED) -->
+    <!-- DYNAMIC LOGIN POPUP & BANNER MODAL (ADMIN CONTROLLED) -->
     <div id="modal-dynamic-popup" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
-      <div class="modal-sheet-anim navratri-glass-card w-full max-w-sm rounded-3xl p-6 shadow-2xl text-center border-2 border-amber-400 relative">
-        <button onclick="playClickSFX(); closeDynamicPopup();" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-purple-950 text-amber-300 flex items-center justify-center font-bold text-xs">&times;</button>
-        <div class="w-12 h-12 mx-auto rounded-2xl gold-badge-glow flex items-center justify-center text-xl mb-3 shadow-lg"><i class="fa-solid fa-bullhorn"></i></div>
-        <h3 id="dyn-popup-title" class="text-lg font-black text-amber-100 mb-2">Special Navratri Alert 🪔</h3>
-        <p id="dyn-popup-msg" class="text-xs text-zinc-300 mb-5 leading-relaxed">Welcome to Milo! Check out tonight's Garba passes and upgrade your profile.</p>
-        <button onclick="playClickSFX(); handleDynamicPopupAction();" id="dyn-popup-btn" class="w-full py-3 rounded-xl gold-badge-glow text-xs font-black uppercase tracking-wider shadow-xl">
-          Explore Now 🚀
-        </button>
+      <div class="modal-sheet-anim navratri-glass-card w-full max-w-sm rounded-3xl overflow-hidden shadow-2xl text-center border-2 border-amber-400 relative">
+        <button onclick="playClickSFX(); closeDynamicPopup();" class="absolute top-3 right-3 z-10 w-7 h-7 rounded-full bg-black/70 text-amber-300 flex items-center justify-center font-bold text-xs">&times;</button>
+        <div id="dyn-popup-banner-container" class="w-full h-36 bg-gradient-to-tr from-rose-700 to-amber-500 overflow-hidden relative">
+          <img id="dyn-popup-img" src="" class="w-full h-full object-cover hidden" alt="Popup Banner" />
+          <div id="dyn-popup-default-icon" class="w-full h-full flex items-center justify-center text-3xl text-white"><i class="fa-solid fa-bullhorn"></i></div>
+        </div>
+        <div class="p-5 space-y-3">
+          <h3 id="dyn-popup-title" class="text-base font-black text-amber-100">Special Navratri Alert 🪔</h3>
+          <p id="dyn-popup-msg" class="text-xs text-zinc-300 leading-relaxed">Welcome to Milo! Check out tonight's Garba passes and upgrade your profile.</p>
+          <button onclick="playClickSFX(); handleDynamicPopupAction();" id="dyn-popup-btn" class="w-full py-3 rounded-xl gold-badge-glow text-xs font-black uppercase tracking-wider shadow-xl">
+            Explore Now 🚀
+          </button>
+        </div>
       </div>
     </div>
 
@@ -1034,7 +1043,7 @@
     let currentExploreTab = 'partners';
     let currentChatSubTab = 'direct';
     let isGroupChat = false;
-    let currentPopupConfig = { title: "Special Navratri Alert 🪔", message: "Welcome to Milo! Check out tonight's Garba passes and upgrade your profile.", actionType: "upgrade" };
+    let currentPopupConfig = { title: "Special Navratri Alert 🪔", message: "Welcome to Milo! Check out tonight's Garba passes and upgrade your profile.", actionType: "upgrade", bannerUrl: "" };
 
     function canUserSpinNow() {
       const isGold = isUserPremiumActive();
@@ -1248,7 +1257,7 @@
       });
     }
 
-    // ADMIN POPUP MANAGEMENT & LISTENER
+    // ADMIN POPUP MANAGEMENT & LISTENER WITH BANNER IMAGE
     function listenToPopupConfig() {
       if (unsubscribePopup) unsubscribePopup();
       unsubscribePopup = db.collection("milo_settings").doc("popup_config").onSnapshot(doc => {
@@ -1262,15 +1271,23 @@
       const title = sanitizeInput(document.getElementById('admin-popup-title').value.trim());
       const message = sanitizeInput(document.getElementById('admin-popup-msg').value.trim());
       const actionType = document.getElementById('admin-popup-action').value;
+      const fileInput = document.getElementById('admin-popup-banner-file');
+      const btn = document.getElementById('btn-save-popup');
 
       if (!title || !message) return alert("Title and Message required!");
+      btn.innerText = "Saving..."; btn.disabled = true;
+
+      let bannerBase64 = currentPopupConfig.bannerUrl || "";
+      if (fileInput.files && fileInput.files[0]) {
+        try { bannerBase64 = await compressImageFile(fileInput.files[0], 400, 0.6); } catch(e) {}
+      }
 
       try {
         await db.collection("milo_settings").doc("popup_config").set({
-          title, message, actionType, updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          title, message, actionType, bannerUrl: bannerBase64, updatedAt: firebase.firestore.FieldValue.serverTimestamp()
         });
-        alert("📢 Popup broadcast updated successfully for all users!");
-      } catch(e) { alert("Error: " + e.message); }
+        alert("📢 Popup & Banner broadcast updated successfully!");
+      } catch(e) { alert("Error: " + e.message); } finally { btn.innerText = "Save & Broadcast Popup Live 🚀"; btn.disabled = false; }
     }
 
     function showDynamicPopupOnLogin() {
@@ -1278,6 +1295,17 @@
       document.getElementById('dyn-popup-msg').innerText = currentPopupConfig.message || "Welcome to Milo!";
       const btn = document.getElementById('dyn-popup-btn');
       
+      const imgTag = document.getElementById('dyn-popup-img');
+      const iconTag = document.getElementById('dyn-popup-default-icon');
+      if (currentPopupConfig.bannerUrl) {
+        imgTag.src = currentPopupConfig.bannerUrl;
+        imgTag.classList.remove('hidden');
+        iconTag.classList.add('hidden');
+      } else {
+        imgTag.classList.add('hidden');
+        iconTag.classList.remove('hidden');
+      }
+
       if (currentPopupConfig.actionType === 'upgrade') btn.innerText = "Upgrade to Gold Pass 👑";
       else if (currentPopupConfig.actionType === 'spin') btn.innerText = "Spin the Wheel 🎡";
       else if (currentPopupConfig.actionType === 'events') btn.innerText = "Explore Events Arena 🪔";
@@ -1617,19 +1645,6 @@
       document.getElementById('bottom-nav-bar').classList.remove('hidden');
       document.getElementById('main-app-header').classList.remove('hidden');
       switchTab('buddies');
-    }
-
-    function switchAdminSubTab(tab) {
-      ['banners', 'groups', 'events', 'popup', 'users'].forEach(t => {
-        const el = document.getElementById(`admin-sec-${t}`);
-        if(el) el.classList.add('hidden');
-        const btn = document.getElementById(`adtab-btn-${t}`);
-        if(btn) btn.className = "py-2 rounded-lg text-zinc-400";
-      });
-      const targetSec = document.getElementById(`admin-sec-${tab}`);
-      if(targetSec) targetSec.classList.remove('hidden');
-      const targetBtn = document.getElementById(`adtab-btn-${tab}`);
-      if(targetBtn) targetBtn.className = "py-2 rounded-lg bg-rose-600 text-white";
     }
 
     function openRequestsModal() { document.getElementById('modal-requests').classList.remove('hidden'); }
