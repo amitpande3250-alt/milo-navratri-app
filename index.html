@@ -493,7 +493,7 @@
         <span id="profile-display-city">Sinnar</span>
       </div>
 
-      <!-- REFERRAL CARD IN PROFILE -->
+      <!-- REFERRAL CARD IN PROFILE WITH SHARE BUTTON -->
       <div class="mt-3 p-3 bg-[#120822] rounded-2xl border border-amber-500/40 text-left text-xs space-y-1.5">
         <div class="font-bold text-amber-300 flex items-center justify-between">
           <span>🎁 Refer & Get Free Gold Pass</span>
@@ -502,7 +502,7 @@
         <p class="text-[10px] text-zinc-400">Share your code. When 10 friends join, you get 1 Month Gold Free!</p>
         <div class="flex items-center gap-2 pt-1">
           <input type="text" id="my-referral-code-box" readonly class="flex-1 bg-[#1a0e2e] border border-purple-800 rounded-xl px-2.5 py-1.5 text-amber-200 font-mono font-bold text-xs text-center" />
-          <button onclick="playClickSFX(); copyReferralCode();" class="px-3 py-1.5 navratri-btn rounded-xl font-bold text-[10px]">Copy 📋</button>
+          <button onclick="playClickSFX(); shareReferralCode();" class="px-3 py-1.5 navratri-btn rounded-xl font-bold text-[10px]">Share 🚀</button>
         </div>
       </div>
 
@@ -1012,7 +1012,6 @@
       if (SUPER_ADMINS.includes(cleanEmail)) return true;
       if (!currentUserProfile || !currentUserProfile.isPremium) return false;
 
-      // Check referral reward unlock (10 referrals)
       if (currentUserProfile.referralCount && currentUserProfile.referralCount >= 10) return true;
 
       if (currentUserProfile.premiumActivatedAt) {
@@ -1094,11 +1093,21 @@
     function openUpgradeModal() { document.getElementById('modal-upgrade').classList.remove('hidden'); }
     function closeUpgradeModal() { document.getElementById('modal-upgrade').classList.add('hidden'); }
 
-    function copyReferralCode() {
-      const codeInput = document.getElementById('my-referral-code-box');
-      codeInput.select();
-      navigator.clipboard.writeText(codeInput.value);
-      alert("📋 Referral code copied! Share it with your friends. (10 referrals = Free Gold Pass!)");
+    // WEB SHARE API FOR REFERRAL CODE
+    function shareReferralCode() {
+      const code = document.getElementById('my-referral-code-box').value;
+      const shareText = `🪔 Join Milo - Maharashtra's Best Navratri Dating & Garba Partner App! Use my referral code: ${code} to sign up and find your partner tonight! ✨`;
+      
+      if (navigator.share) {
+        navigator.share({
+          title: 'Milo - Navratri Dating App',
+          text: shareText,
+          url: window.location.href,
+        }).catch(() => {});
+      } else {
+        navigator.clipboard.writeText(shareText);
+        alert("📋 Referral message copied to clipboard! Share it on WhatsApp!");
+      }
     }
 
     async function submitPaymentProof() {
@@ -1695,7 +1704,7 @@
         if (!docSnap.exists) {
           const genCode = generateReferralCode(user.displayName || 'user');
           await userRef.set({
-            email: cleanEmail, name: sanitizeInput(user.displayName) || generateRandomFestiveName(), username: cleanEmail.split('@')[0] + '_07', gender: "Other", seeking: "Both", city: "Sinnar", tonightStatus: "Heading to Garba tonight 🪔", isPremium: isAdmin ? true : false, premiumActivatedAt: isAdmin ? firebase.firestore.FieldValue.serverTimestamp() : null, studies: "Student", garbaStyle: "Traditional Raas", bio: "Ready for Garba nights 🪔", photoUrl: user.photoURL || "", isVerified: true, referralCode: genCode, referralCount: 0, referredBy: "", role: isAdmin ? "admin" : "member", lastSeen: firebase.firestore.FieldValue.serverTimestamp()
+            email: cleanEmail, name: sanitizeInput(user.displayName) || generateRandomFestiveName(), username: cleanEmail.split('@')[0] + '_07', gender: "Other", seeking: "Both", city: "Sinnar", tonightStatus: "Heading to Garba tonight 🪔", isPremium: isAdmin ? true : false, premiumActivatedAt: isAdmin ? firebase.firestore.FieldValue.serverTimestamp() : null, studies: "Student", garbaStyle: "Traditional Raas", bio: "Ready for Garba nights 🪔", photoUrl: user.photoURL || "", isVerified: true, referralCode: genCode, referralCount: 0, role: isAdmin ? "admin" : "member", lastSeen: firebase.firestore.FieldValue.serverTimestamp()
           });
         } else if (isAdmin && !docSnap.data().isPremium) {
           await userRef.update({ isPremium: true, role: "admin", premiumActivatedAt: firebase.firestore.FieldValue.serverTimestamp() });
@@ -1755,7 +1764,6 @@
       
       try {
         const res = await auth.createUserWithEmailAndPassword(email, pass);
-        // Check and apply referral if valid
         if (refCodeInput) {
           const querySnap = await db.collection("milo_users").where("referralCode", "==", refCodeInput).get();
           if (!querySnap.empty) {
@@ -1817,7 +1825,6 @@
       document.getElementById('profile-status-input').value = profile.tonightStatus || '';
       document.getElementById('profile-bio-input').value = profile.bio || '';
 
-      // Referral UI update
       const refCode = profile.referralCode || `MILO-${profile.username?.toUpperCase() || '07'}`;
       document.getElementById('my-referral-code-box').value = refCode;
       const refCount = profile.referralCount || 0;
