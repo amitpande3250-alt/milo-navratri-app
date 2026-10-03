@@ -527,7 +527,7 @@
         </div>
 
         <div class="p-3 bg-[#120822] rounded-2xl border border-purple-900/60">
-          <label class="text-[10px] text-amber-400 font-bold block mb-1">TONIGHT'S GROUND / VENUE STATUS</label>
+          <label class="text-[10px] text-zinc-400 font-bold block mb-1">TONIGHT'S GROUND / VENUE STATUS</label>
           <input type="text" id="profile-status-input" class="w-full bg-[#1a0e2e] border border-purple-900 rounded-xl px-2.5 py-1.5 text-zinc-200 outline-none text-xs" />
         </div>
 
@@ -588,7 +588,7 @@
   <section id="screen-admin-page" class="hidden relative z-40 flex-1 max-w-xl mx-auto w-full px-4 py-4 min-h-screen pb-28 pt-16">
     <div class="navratri-glass-card rounded-3xl p-5 shadow-2xl space-y-4 border-2 border-amber-400/50">
       <div class="flex items-center justify-between pb-3 border-b border-purple-900/60">
-        <h2 class="text-base font-black text-amber-100">Admin Console 🛡️</h2>
+        <h2 class="text-base font-black text-amber-100">Admin Console 🛡️️</h2>
         <button onclick="playClickSFX(); exitAdminPage();" class="px-3 py-1.5 rounded-xl bg-purple-950 text-amber-300 text-xs font-bold border border-amber-500/30">Exit ➔</button>
       </div>
 
@@ -702,20 +702,20 @@
     </div>
   </div>
 
-  <!-- UPGRADE TO GOLD MODAL (DIRECT UPI & SCREENSHOT UPLOAD) -->
+  <!-- UPGRADE TO GOLD MODAL (UPI QR CODE & SCREENSHOT UPLOAD) -->
   <div id="modal-upgrade" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="modal-sheet-anim navratri-glass-card w-full max-w-sm rounded-3xl p-6 shadow-2xl text-center border-2 border-amber-400 relative max-h-[90vh] overflow-y-auto">
       <button onclick="playClickSFX(); closeUpgradeModal();" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-purple-950 text-amber-300 flex items-center justify-center font-bold text-xs">&times;</button>
       <div class="w-12 h-12 mx-auto rounded-2xl gold-badge-glow flex items-center justify-center text-xl mb-3 shadow-lg"><i class="fa-solid fa-crown"></i></div>
       <h3 class="text-lg font-black text-amber-100 mb-1">Milo Gold Pass (1 Month)</h3>
-      <p class="text-xs text-amber-300/90 mb-3">Pay ₹50 directly via UPI & upload screenshot for 1-month activation!</p>
+      <p class="text-xs text-amber-300/90 mb-3">Scan QR or pay via UPI, then upload screenshot for 1-month activation!</p>
       
       <div class="p-3 bg-[#120822] rounded-2xl border border-amber-500/40 mb-4 text-center text-xs space-y-2.5">
+        <div class="text-[11px] text-amber-400 font-bold">Scan & Pay ₹50</div>
+        <div class="bg-white p-2 rounded-xl inline-block mx-auto shadow-md">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=130x130&data=upi://pay?pa=9270956352@axl&pn=Milo%20Gold&am=50.00&cu=INR" alt="UPI QR Code" class="w-28 h-28 mx-auto" />
+        </div>
         <div class="text-[11px] text-zinc-300">UPI ID: <span class="text-amber-300 font-mono font-bold select-all">9270956352@axl</span></div>
-        <div class="text-[10px] text-zinc-400">Tap below to pay via GPay / PhonePe / Paytm:</div>
-        <a href="upi://pay?pa=9270956352@axl&pn=Milo%20Gold&am=50.00&cu=INR" class="block w-full py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-black text-xs uppercase tracking-wider shadow-lg">
-          Pay ₹50 via UPI App 🚀
-        </a>
       </div>
 
       <div class="space-y-2 text-left text-xs mb-4">
