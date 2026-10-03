@@ -48,48 +48,11 @@
       box-shadow: 0 0 15px rgba(251, 191, 36, 0.6);
     }
 
-    /* LIQUID NAVIGATION BAR STYLES */
-    .liquid-nav-container {
-      background: rgba(22, 8, 38, 0.92);
-      backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-      border: 1px solid rgba(251, 191, 36, 0.35);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
+    .bottom-nav-active {
+      color: #fbbf24 !important;
+      background: rgba(245, 158, 11, 0.18);
+      border: 1px solid rgba(251, 191, 36, 0.4);
       border-radius: 9999px;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      padding: 6px;
-    }
-
-    .liquid-nav-item {
-      position: relative;
-      flex: 1;
-      text-align: center;
-      padding: 10px 0;
-      color: #9ca3af;
-      font-weight: 700;
-      font-size: 11px;
-      z-index: 2;
-      transition: color 0.3s ease, transform 0.2s ease;
-    }
-
-    .liquid-nav-item.active {
-      color: #fbbf24;
-      transform: translateY(-2px);
-    }
-
-    .liquid-pill-indicator {
-      position: absolute;
-      top: 6px;
-      bottom: 6px;
-      width: 23%;
-      background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(225, 29, 72, 0.3));
-      border: 1px solid rgba(251, 191, 36, 0.5);
-      border-radius: 9999px;
-      transition: transform 0.35s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-      z-index: 1;
-      box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
     }
 
     .banner-carousel-track {
@@ -718,24 +681,29 @@
     </div>
   </div>
 
-  <!-- UPGRADE TO GOLD MODAL (UPI DIRECT QR & ID) -->
+  <!-- UPGRADE TO GOLD MODAL (UPI & SCREENSHOT UPLOAD FOR ADMIN VERIFICATION) -->
   <div id="modal-upgrade" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="modal-sheet-anim navratri-glass-card w-full max-w-sm rounded-3xl p-6 shadow-2xl text-center border-2 border-amber-400 relative">
+    <div class="modal-sheet-anim navratri-glass-card w-full max-w-sm rounded-3xl p-6 shadow-2xl text-center border-2 border-amber-400 relative max-h-[90vh] overflow-y-auto">
       <button onclick="playClickSFX(); closeUpgradeModal();" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-purple-950 text-amber-300 flex items-center justify-center font-bold text-xs">&times;</button>
       <div class="w-12 h-12 mx-auto rounded-2xl gold-badge-glow flex items-center justify-center text-xl mb-3 shadow-lg"><i class="fa-solid fa-crown"></i></div>
-      <h3 class="text-lg font-black text-amber-100 mb-1">Milo Gold Pass</h3>
-      <p class="text-xs text-amber-300/90 mb-3">Pay ₹50 to unlock unlimited wheel spins & unblur secret crushes!</p>
+      <h3 class="text-lg font-black text-amber-100 mb-1">Milo Gold Pass (1 Month)</h3>
+      <p class="text-xs text-amber-300/90 mb-3">Pay ₹50 via UPI & upload screenshot for instant 30-day activation!</p>
       
       <div class="p-3 bg-[#120822] rounded-2xl border border-amber-500/40 mb-4 text-center text-xs space-y-2">
-        <div class="text-[11px] text-amber-400 font-bold">Scan & Pay via any UPI App</div>
+        <div class="text-[11px] text-amber-400 font-bold">Scan & Pay ₹50</div>
         <div class="bg-white p-2 rounded-xl inline-block mx-auto shadow-md">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=upi://pay?pa=amitpande3250@okhdfcbank&pn=Milo%20Gold&am=50.00&cu=INR" alt="UPI QR Code" class="w-32 h-32 mx-auto" />
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=130x130&data=upi://pay?pa=amitpande3250@okhdfcbank&pn=Milo%20Gold&am=50.00&cu=INR" alt="UPI QR Code" class="w-28 h-28 mx-auto" />
         </div>
         <div class="text-[11px] text-zinc-300">UPI ID: <span class="text-amber-300 font-mono font-bold select-all">amitpande3250@okhdfcbank</span></div>
       </div>
 
-      <button onclick="playClickSFX(); confirmUpiPaymentSubmission();" class="w-full py-3 rounded-xl gold-badge-glow text-xs font-black uppercase tracking-wider shadow-xl">
-        I Have Paid ₹50 - Activate Gold 👑
+      <div class="space-y-2.5 text-left text-xs mb-4">
+        <label class="block text-amber-200 font-bold">Upload Payment Screenshot 📷</label>
+        <input type="file" id="payment-screenshot-input" accept="image/*" class="w-full text-xs text-zinc-300 bg-[#120822] p-2 rounded-xl border border-purple-800" />
+      </div>
+
+      <button onclick="playClickSFX(); submitPaymentProof();" id="btn-submit-proof" class="w-full py-3 rounded-xl gold-badge-glow text-xs font-black uppercase tracking-wider shadow-xl">
+        Submit Screenshot & Activate 👑
       </button>
     </div>
   </div>
@@ -795,28 +763,24 @@
     </div>
   </div>
 
-  <!-- LIQUID NAVIGATION BAR -->
-  <nav id="bottom-nav-bar" class="hidden fixed bottom-3 inset-x-0 mx-auto w-[92%] max-w-md z-40">
-    <div class="liquid-nav-container">
-      <div id="liquid-indicator" class="liquid-pill-indicator" style="transform: translateX(100%);"></div>
-      
-      <button onclick="playClickSFX(); switchTab('chats');" id="bnav-btn-chats" class="liquid-nav-item">
-        <i class="fa-solid fa-comments text-sm block mb-0.5"></i>
-        <span class="text-[9px]">Chats</span>
-      </button>
-      <button onclick="playClickSFX(); switchTab('buddies');" id="bnav-btn-buddies" class="liquid-nav-item active">
-        <i class="fa-solid fa-fire text-sm block mb-0.5"></i>
-        <span class="text-[9px]">Explore</span>
-      </button>
-      <button onclick="playClickSFX(); switchTab('events');" id="bnav-btn-events" class="liquid-nav-item">
-        <i class="fa-solid fa-ticket text-sm block mb-0.5"></i>
-        <span class="text-[9px]">Events</span>
-      </button>
-      <button onclick="playClickSFX(); switchTab('profile');" id="bnav-btn-profile" class="liquid-nav-item">
-        <i class="fa-solid fa-user text-sm block mb-0.5"></i>
-        <span class="text-[9px]">Profile</span>
-      </button>
-    </div>
+  <!-- STANDARD NAVIGATION BAR -->
+  <nav id="bottom-nav-bar" class="hidden fixed bottom-3 inset-x-0 mx-auto w-[92%] max-w-md z-40 navratri-glass-card rounded-full p-1.5 shadow-2xl flex items-center justify-around text-xs border border-amber-500/30">
+    <button onclick="playClickSFX(); switchTab('chats');" id="bnav-btn-chats" class="flex-1 py-2 px-1 rounded-full flex flex-col items-center gap-0.5 transition text-zinc-400 font-bold">
+      <i class="fa-solid fa-comments text-sm"></i>
+      <span class="text-[9px]">Chats</span>
+    </button>
+    <button onclick="playClickSFX(); switchTab('buddies');" id="bnav-btn-buddies" class="flex-1 py-2 px-1 rounded-full flex flex-col items-center gap-0.5 transition text-zinc-400 font-bold bottom-nav-active">
+      <i class="fa-solid fa-fire text-sm"></i>
+      <span class="text-[9px]">Explore</span>
+    </button>
+    <button onclick="playClickSFX(); switchTab('events');" id="bnav-btn-events" class="flex-1 py-2 px-1 rounded-full flex flex-col items-center gap-0.5 transition text-zinc-400 font-bold">
+      <i class="fa-solid fa-ticket text-sm"></i>
+      <span class="text-[9px]">Events</span>
+    </button>
+    <button onclick="playClickSFX(); switchTab('profile');" id="bnav-btn-profile" class="flex-1 py-2 px-1 rounded-full flex flex-col items-center gap-0.5 transition text-zinc-400 font-bold">
+      <i class="fa-solid fa-user text-sm"></i>
+      <span class="text-[9px]">Profile</span>
+    </button>
   </nav>
 
   <!-- FOOTER -->
@@ -917,7 +881,7 @@
 
     // Hourly Spin Cool-down Management (Free Users: 1 hour)
     function canUserSpinNow() {
-      const isGold = (currentUser && SUPER_ADMINS.includes(currentUser.email.toLowerCase())) || (currentUserProfile && currentUserProfile.isPremium);
+      const isGold = isUserPremiumActive();
       if (isGold) return true;
 
       const lastSpinTime = localStorage.getItem('milo_last_spin_time');
@@ -940,6 +904,24 @@
       const remainingMs = oneHourMs - elapsedMs;
       if (remainingMs <= 0) return 0;
       return Math.ceil(remainingMs / (60 * 1000));
+    }
+
+    // 1-MONTH SUBSCRIPTION EXPIRY CHECK
+    function isUserPremiumActive() {
+      if (!currentUser) return false;
+      const cleanEmail = currentUser.email.toLowerCase();
+      if (SUPER_ADMINS.includes(cleanEmail)) return true;
+      if (!currentUserProfile || !currentUserProfile.isPremium) return false;
+
+      // Check if 30 days have passed since activation
+      if (currentUserProfile.premiumActivatedAt) {
+        const activatedTime = currentUserProfile.premiumActivatedAt.toDate ? currentUserProfile.premiumActivatedAt.toDate().getTime() : new Date(currentUserProfile.premiumActivatedAt).getTime();
+        const thirtyDaysMs = 30 * 24 * 60 * 60 * 1000;
+        if (Date.now() - activatedTime > thirtyDaysMs) {
+          return false; // Subscription expired after 1 month
+        }
+      }
+      return true;
     }
 
     function compressImageFile(file, maxWidth = 350, quality = 0.5) {
@@ -1010,29 +992,46 @@
       }
     }
 
-    // UPI DIRECT PAYMENT (₹50)
+    // DIRECT UPI PAYMENT & SCREENSHOT SUBMISSION
     function openUpgradeModal() { document.getElementById('modal-upgrade').classList.remove('hidden'); }
     function closeUpgradeModal() { document.getElementById('modal-upgrade').classList.add('hidden'); }
 
-    async function confirmUpiPaymentSubmission() {
+    async function submitPaymentProof() {
       if (!currentUser || !currentUserProfile) { alert("Please login first!"); return; }
-      const utr = prompt("Enter your UPI Transaction ID / UTR Number after paying ₹50 to amitpande3250@okhdfcbank:");
-      if (!utr) return;
+      const fileInput = document.getElementById('payment-screenshot-input');
+      const btn = document.getElementById('btn-submit-proof');
+
+      if (!fileInput.files || !fileInput.files[0]) {
+        return alert("Please upload your payment screenshot to verify! 📷");
+      }
+
+      btn.innerText = "Submitting Proof...";
+      btn.disabled = true;
+
       try {
-        await db.collection("milo_users").doc(currentUser.email.toLowerCase()).update({
-          isPremium: true,
-          premiumPaymentId: utr,
-          premiumActivatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        const b64Photo = await compressImageFile(fileInput.files[0], 400, 0.6);
+        await db.collection("milo_payment_proofs").add({
+          email: currentUser.email.toLowerCase(),
+          name: currentUserProfile.name || 'User',
+          screenshotUrl: b64Photo,
+          status: "pending",
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
         });
-        alert("🎉 Payment Verified! Milo Gold Pass Activated 👑");
+
+        alert("✅ Payment screenshot submitted successfully! Admin will verify and activate your 1-month Gold Pass soon.");
         closeUpgradeModal();
-        location.reload();
-      } catch(e) { alert("Error upgrading: " + e.message); }
+        fileInput.value = '';
+      } catch(e) {
+        alert("Error submitting proof: " + e.message);
+      } finally {
+        btn.innerText = "Submit Screenshot & Activate 👑";
+        btn.disabled = false;
+      }
     }
 
     // SPIN WHEEL MODAL & PROBABILITY
     function openSpinWheelModal() {
-      const isGold = (currentUser && SUPER_ADMINS.includes(currentUser.email.toLowerCase())) || (currentUserProfile && currentUserProfile.isPremium);
+      const isGold = isUserPremiumActive();
       const minutesLeft = getRemainingSpinCooldown();
 
       if (!isGold && minutesLeft > 0) {
@@ -1045,7 +1044,7 @@
     function closeSpinWheelModal() { document.getElementById('modal-spin-wheel').classList.add('hidden'); }
 
     function spinTheWheelAction() {
-      const isGold = (currentUser && SUPER_ADMINS.includes(currentUser.email.toLowerCase())) || (currentUserProfile && currentUserProfile.isPremium);
+      const isGold = isUserPremiumActive();
       const minutesLeft = getRemainingSpinCooldown();
 
       if (!isGold && minutesLeft > 0) {
@@ -1531,10 +1530,10 @@
         const docSnap = await userRef.get();
         if (!docSnap.exists) {
           await userRef.set({
-            email: cleanEmail, name: sanitizeInput(user.displayName) || generateRandomFestiveName(), username: cleanEmail.split('@')[0] + '_07', gender: "Other", seeking: "Both", city: "Sinnar", tonightStatus: "Heading to Garba tonight 🪔", isPremium: isAdmin ? true : false, studies: "Student", garbaStyle: "Traditional Raas", bio: "Ready for Garba nights 🪔", photoUrl: user.photoURL || "", isVerified: true, role: isAdmin ? "admin" : "member", lastSeen: firebase.firestore.FieldValue.serverTimestamp()
+            email: cleanEmail, name: sanitizeInput(user.displayName) || generateRandomFestiveName(), username: cleanEmail.split('@')[0] + '_07', gender: "Other", seeking: "Both", city: "Sinnar", tonightStatus: "Heading to Garba tonight 🪔", isPremium: isAdmin ? true : false, premiumActivatedAt: isAdmin ? firebase.firestore.FieldValue.serverTimestamp() : null, studies: "Student", garbaStyle: "Traditional Raas", bio: "Ready for Garba nights 🪔", photoUrl: user.photoURL || "", isVerified: true, role: isAdmin ? "admin" : "member", lastSeen: firebase.firestore.FieldValue.serverTimestamp()
           });
         } else if (isAdmin && !docSnap.data().isPremium) {
-          await userRef.update({ isPremium: true, role: "admin" });
+          await userRef.update({ isPremium: true, role: "admin", premiumActivatedAt: firebase.firestore.FieldValue.serverTimestamp() });
         }
       } catch (err) { showAuthError(err.message); }
     }
@@ -1552,7 +1551,7 @@
             document.getElementById('screen-onboarding').classList.remove('hidden');
           } else {
             if (isAdmin && !docSnap.data().isPremium) {
-              await userRef.update({ isPremium: true, role: "admin" });
+              await userRef.update({ isPremium: true, role: "admin", premiumActivatedAt: firebase.firestore.FieldValue.serverTimestamp() });
             }
             document.getElementById('screen-onboarding').classList.add('hidden');
             document.getElementById('top-user-pill').classList.remove('hidden');
@@ -1598,7 +1597,7 @@
       if (await isUsernameTaken(username, cleanEmail)) return alert("Username taken!");
 
       await db.collection("milo_users").doc(cleanEmail).set({
-        email: cleanEmail, name, username, gender, seeking, city: city || "Sinnar", tonightStatus: tonightStatus || "Heading to Garba tonight 🪔", isPremium: isAdmin ? true : false, bio: bio || "Ready for meetups", photoUrl: currentUser.photoURL || "", isVerified: true, role: isAdmin ? "admin" : "member", lastSeen: firebase.firestore.FieldValue.serverTimestamp()
+        email: cleanEmail, name, username, gender, seeking, city: city || "Sinnar", tonightStatus: tonightStatus || "Heading to Garba tonight 🪔", isPremium: isAdmin ? true : false, premiumActivatedAt: isAdmin ? firebase.firestore.FieldValue.serverTimestamp() : null, bio: bio || "Ready for meetups", photoUrl: currentUser.photoURL || "", isVerified: true, role: isAdmin ? "admin" : "member", lastSeen: firebase.firestore.FieldValue.serverTimestamp()
       }, { merge: true });
 
       document.getElementById('screen-onboarding').classList.add('hidden');
@@ -1626,7 +1625,7 @@
       if (SUPER_ADMINS.includes(profile.email) || profile.role === 'admin') document.getElementById('admin-launcher-box').classList.remove('hidden');
       
       const tierBadge = document.getElementById('header-tier-badge');
-      if (profile.isPremium || SUPER_ADMINS.includes(profile.email.toLowerCase())) {
+      if (isUserPremiumActive()) {
         tierBadge.innerText = "👑 Milo Gold";
         tierBadge.className = "text-[8px] gold-badge-glow px-1.5 py-0.2 rounded-full font-black";
       } else {
@@ -1679,25 +1678,10 @@
     function switchTab(tab) {
       ['chats', 'buddies', 'events', 'profile'].forEach(t => {
         document.getElementById(`screen-${t}`).classList.add('hidden');
+        document.getElementById(`bnav-btn-${t}`).className = "flex-1 py-2 px-1 rounded-full flex flex-col items-center gap-0.5 transition text-zinc-400 font-bold";
       });
       document.getElementById(`screen-${tab}`).classList.remove('hidden');
-
-      // LIQUID NAV BAR PILL ANIMATION
-      const tabsOrder = ['chats', 'buddies', 'events', 'profile'];
-      const index = tabsOrder.indexOf(tab);
-      const indicator = document.getElementById('liquid-indicator');
-      if (indicator) {
-        indicator.style.transform = `translateX(${index * 100}%)`;
-      }
-
-      tabsOrder.forEach(t => {
-        const btn = document.getElementById(`bnav-btn-${t}`);
-        if (btn) {
-          if (t === tab) btn.classList.add('active');
-          else btn.classList.remove('active');
-        }
-      });
-
+      document.getElementById(`bnav-btn-${tab}`).className = "flex-1 py-2 px-1 rounded-full flex flex-col items-center gap-0.5 transition bottom-nav-active font-bold";
       if (tab === 'chats') backToContactsList();
       window.scrollTo(0, 0);
     }
@@ -1728,7 +1712,7 @@
       container.innerHTML = '';
       if (incomingPendingRequests.length === 0) { container.innerHTML = `<div class="text-center py-4 text-xs text-zinc-500">No requests or secret crushes.</div>`; return; }
       
-      const isGold = (currentUser && SUPER_ADMINS.includes(currentUser.email.toLowerCase())) || (currentUserProfile && currentUserProfile.isPremium);
+      const isGold = isUserPremiumActive();
 
       incomingPendingRequests.forEach(req => {
         const isCrush = req.status === 'secret_crush';
