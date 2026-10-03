@@ -4,6 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Milo - Navratri Dating & Social Club</title>
+  <!-- SEO META TAGS -->
+  <meta name="description" content="Milo is Maharashtra's premier Navratri dating and social platform to find Garba partners, join squads, and attend events." />
+  <meta name="keywords" content="Navratri dating, Garba partner matching, Milo app, Maharashtra dandiya" />
+  
+  <!-- FAVICON -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪔</text></svg>">
+
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
@@ -500,7 +507,7 @@
       <div id="admin-launcher-box" class="hidden mt-3">
         <button onclick="playClickSFX(); promptAdminPasscode();" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-rose-700 via-orange-600 to-amber-600 text-white font-black text-xs flex items-center justify-center gap-2 shadow-lg shadow-rose-700/30">
           <i class="fa-solid fa-shield-halved"></i>
-          <span>Admin Console 🛡️</span>
+          <span>Admin Console 🛡️️</span>
         </button>
       </div>
 
@@ -527,7 +534,7 @@
         </div>
 
         <div class="p-3 bg-[#120822] rounded-2xl border border-purple-900/60">
-          <label class="text-[10px] text-zinc-400 font-bold block mb-1">TONIGHT'S GROUND / VENUE STATUS</label>
+          <label class="text-[10px] text-amber-400 font-bold block mb-1">TONIGHT'S GROUND / VENUE STATUS</label>
           <input type="text" id="profile-status-input" class="w-full bg-[#1a0e2e] border border-purple-900 rounded-xl px-2.5 py-1.5 text-zinc-200 outline-none text-xs" />
         </div>
 
@@ -576,7 +583,12 @@
         </button>
       </div>
 
-      <div class="mt-4 pt-3 border-t border-purple-900/50">
+      <div class="mt-4 pt-3 border-t border-purple-900/50 flex gap-2">
+        <button type="button" onclick="playClickSFX(); openLegalModal('privacy');" class="flex-1 py-2 rounded-xl bg-purple-950 text-amber-300 font-bold text-[10px] border border-amber-500/30">Privacy Policy</button>
+        <button type="button" onclick="playClickSFX(); openLegalModal('terms');" class="flex-1 py-2 rounded-xl bg-purple-950 text-amber-300 font-bold text-[10px] border border-amber-500/30">Terms & Conditions</button>
+      </div>
+
+      <div class="mt-2">
         <button type="button" onclick="playClickSFX(); handleSignOut();" class="w-full py-2.5 rounded-xl bg-rose-950 text-rose-300 font-bold text-xs flex items-center justify-center gap-2 border border-rose-800">
           <i class="fa-solid fa-right-from-bracket"></i> Logout
         </button>
@@ -588,7 +600,7 @@
   <section id="screen-admin-page" class="hidden relative z-40 flex-1 max-w-xl mx-auto w-full px-4 py-4 min-h-screen pb-28 pt-16">
     <div class="navratri-glass-card rounded-3xl p-5 shadow-2xl space-y-4 border-2 border-amber-400/50">
       <div class="flex items-center justify-between pb-3 border-b border-purple-900/60">
-        <h2 class="text-base font-black text-amber-100">Admin Console 🛡️️</h2>
+        <h2 class="text-base font-black text-amber-100">Admin Console 🛡️</h2>
         <button onclick="playClickSFX(); exitAdminPage();" class="px-3 py-1.5 rounded-xl bg-purple-950 text-amber-300 text-xs font-bold border border-amber-500/30">Exit ➔</button>
       </div>
 
@@ -759,6 +771,25 @@
     </div>
   </div>
 
+  <!-- LEGAL MODAL (PRIVACY & TERMS) -->
+  <div id="modal-legal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="modal-sheet-anim navratri-glass-card w-full max-w-md rounded-3xl p-6 shadow-2xl relative border border-amber-500/40 max-h-[85vh] overflow-y-auto">
+      <button onclick="playClickSFX(); closeLegalModal();" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-purple-950 text-amber-300 flex items-center justify-center font-bold text-xs">&times;</button>
+      <h3 id="legal-modal-title" class="text-base font-black text-amber-100 mb-3"></h3>
+      <div id="legal-modal-content" class="text-xs text-zinc-300 space-y-2 leading-relaxed"></div>
+    </div>
+  </div>
+
+  <!-- 404 CUSTOM MODAL / FALLBACK -->
+  <div id="modal-404" class="hidden fixed inset-0 z-50 bg-[#11051c] flex items-center justify-center p-6 text-center">
+    <div class="navratri-glass-card p-6 rounded-3xl max-w-sm space-y-3 border-2 border-amber-400">
+      <div class="text-4xl">🪔</div>
+      <h2 class="text-lg font-black text-amber-100">Page Not Found (404)</h2>
+      <p class="text-xs text-zinc-400">Oops! Looks like this Garba ground doesn't exist.</p>
+      <button onclick="window.location.href='/'" class="py-2.5 px-4 rounded-xl navratri-btn text-xs font-bold">Back to Home ➔</button>
+    </div>
+  </div>
+
   <div id="modal-buddy-profile" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
     <div class="modal-sheet-anim navratri-glass-card w-full max-w-sm rounded-t-[32px] sm:rounded-3xl p-5 shadow-2xl relative border border-amber-500/40">
       <button onclick="playClickSFX(); closeBuddyProfileModal();" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-purple-950 text-amber-300 flex items-center justify-center font-bold text-xs">&times;</button>
@@ -824,6 +855,38 @@
       temp.textContent = str;
       return temp.innerHTML;
     }
+
+    // ERROR MONITORING & GLOBAL TRAP
+    window.onerror = function(msg, url, line) {
+      console.error("Milo Error Monitored: ", msg, "at", url, ":", line);
+      return true;
+    };
+
+    function openLegalModal(type) {
+      const modal = document.getElementById('modal-legal');
+      const title = document.getElementById('legal-modal-title');
+      const content = document.getElementById('legal-modal-content');
+      modal.classList.remove('hidden');
+
+      if (type === 'privacy') {
+        title.innerText = "Privacy Policy - Milo";
+        content.innerHTML = `
+          <p>Welcome to Milo! We respect your privacy and protect your personal information.</p>
+          <p>1. <strong>Data Collection</strong>: We collect your display name, email, city, and garba preferences solely for partner matching during Navratri.</p>
+          <p>2. <strong>Security</strong>: All messages and requests are securely stored using Firebase Firestore with encryption.</p>
+          <p>3. <strong>Sharing</strong>: We never share your personal data with third parties.</p>
+        `;
+      } else {
+        title.innerText = "Terms & Conditions - Milo";
+        content.innerHTML = `
+          <p>By using Milo, you agree to the following terms:</p>
+          <p>1. <strong>Respect & Safety</strong>: Harassment or abusive behavior in chats or communities will lead to immediate account ban.</p>
+          <p>2. <strong>Gold Pass</strong>: The ₹50 Gold pass unlocks premium features for 30 days and requires manual screenshot verification by admin.</p>
+          <p>3. <strong>Events</strong>: Milo acts as a social discovery platform for Navratri events across Maharashtra.</p>
+        `;
+      }
+    }
+    function closeLegalModal() { document.getElementById('modal-legal').classList.add('hidden'); }
 
     // AUDIO CONTEXT SOUND EFFECTS (SFX)
     let audioCtx = null;
@@ -900,14 +963,11 @@
     let currentChatSubTab = 'direct';
     let isGroupChat = false;
 
-    // Hourly Spin Cool-down Management (Free Users: 1 hour)
     function canUserSpinNow() {
       const isGold = isUserPremiumActive();
       if (isGold) return true;
-
       const lastSpinTime = localStorage.getItem('milo_last_spin_time');
       if (!lastSpinTime) return true;
-
       const elapsedMs = Date.now() - parseInt(lastSpinTime);
       const oneHourMs = 60 * 60 * 1000;
       return elapsedMs >= oneHourMs;
@@ -927,7 +987,6 @@
       return Math.ceil(remainingMs / (60 * 1000));
     }
 
-    // 1-MONTH SUBSCRIPTION EXPIRY CHECK (30 Days)
     function isUserPremiumActive() {
       if (!currentUser) return false;
       const cleanEmail = currentUser.email.toLowerCase();
@@ -937,9 +996,7 @@
       if (currentUserProfile.premiumActivatedAt) {
         const activatedTime = currentUserProfile.premiumActivatedAt.toDate ? currentUserProfile.premiumActivatedAt.toDate().getTime() : new Date(currentUserProfile.premiumActivatedAt).getTime();
         const thirtyDaysMs = 30 * 24 * 60 * 60 * 1000;
-        if (Date.now() - activatedTime > thirtyDaysMs) {
-          return false; // Expired after 1 month
-        }
+        if (Date.now() - activatedTime > thirtyDaysMs) return false;
       }
       return true;
     }
@@ -1012,7 +1069,6 @@
       }
     }
 
-    // DIRECT UPI PAYMENT & SCREENSHOT SUBMISSION
     function openUpgradeModal() { document.getElementById('modal-upgrade').classList.remove('hidden'); }
     function closeUpgradeModal() { document.getElementById('modal-upgrade').classList.add('hidden'); }
 
@@ -1101,7 +1157,6 @@
       });
     }
 
-    // SPIN WHEEL MODAL & PROBABILITY
     function openSpinWheelModal() {
       const isGold = isUserPremiumActive();
       const minutesLeft = getRemainingSpinCooldown();
@@ -1165,7 +1220,6 @@
       }, 1500);
     }
 
-    // ANONYMOUS CONFESSIONS
     function openConfessionModal() { document.getElementById('modal-confession').classList.remove('hidden'); }
     function closeConfessionModal() { document.getElementById('modal-confession').classList.add('hidden'); }
 
@@ -1712,7 +1766,7 @@
       if (isUserPremiumActive()) {
         tierBadge.innerText = "👑 Milo Gold";
         tierBadge.className = "text-[8px] gold-badge-glow px-1.5 py-0.2 rounded-full font-black";
-        if (upgradeBtnWrapper) upgradeBtnWrapper.classList.add('hidden'); // Hide payment option completely if active
+        if (upgradeBtnWrapper) upgradeBtnWrapper.classList.add('hidden');
         if (headerUpgradeBtn) headerUpgradeBtn.classList.add('hidden');
       } else {
         tierBadge.innerText = "Free Pass";
